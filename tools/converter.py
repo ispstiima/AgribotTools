@@ -3,6 +3,20 @@ from pathlib import Path
 import numpy as np
 
 
+def save_yolo_file(file_name, output_dir, data):
+    if output_dir is not None:
+        Path(output_dir).mkdir(parents=True, exist_ok=True)
+
+        output_path = Path(output_dir) / f"{file_name}.txt"
+        with open(output_path, "w", encoding="utf-8") as file:
+            for item in data:
+                line = " ".join(map(str, item))
+                file.write(line + "\n")
+
+        return output_path
+    return None
+
+
 def seg_to_bbox(seg_info: list):
     # Example input: 5 0.046875 0.369141 0.0644531 0.384766 0.0800781 0.402344 ...
     class_id, *points = seg_info
@@ -10,7 +24,7 @@ def seg_to_bbox(seg_info: list):
     x_min, y_min, x_max, y_max = min(points[0::2]), min(points[1::2]), max(points[0::2]), max(points[1::2])
     width, height = x_max - x_min, y_max - y_min
     x_center, y_center = (x_min + x_max) / 2, (y_min + y_max) / 2
-    bbox_info = f"{int(class_id)-1} {x_center} {y_center} {width} {height}"
+    bbox_info = [int(class_id)-1, x_center, y_center, width, height]
     return bbox_info
 
 
@@ -79,21 +93,16 @@ def convert_binary_masks_to_yolo(masks_dir, output_seg_dir=None, output_box_dir=
                     seg_info_list.append(seg_info)
                     bbox_info_list.append(bbox_info)
 
-            if output_seg_dir is not None:
-                output_seg_path = Path(output_seg_dir) / f"{mask_path.stem}_seg.txt"
-                with open(output_seg_path, "w", encoding="utf-8") as file:
-                    for item in seg_info_list:
-                        line = " ".join(map(str, item))
-                        file.write(line + "\n")
+            res_path = save_yolo_file(f"{mask_path.stem}_seg", output_seg_dir, seg_info_list)
 
-                print(f"Processed and stored binary segmentation map at {output_seg_path} imgsz = {img_height} x {img_width}")
+            if res_path is not None:
+                print(f"Processed and stored binary segmentation map at {res_path} imgsz = {img_height} x {img_width}")
+            else:
+                print(f"There was an error trying to save the segmentation map from {mask_path.stem}.")
 
-            if output_box_dir is not None:
-                output_box_path = Path(output_box_dir) / f"{mask_path.stem}_box.txt"
-                with open(output_box_path, "w", encoding="utf-8") as file:
-                    for item in bbox_info_list:
-                        line = " ".join(map(str, item))
-                        file.write(line + "\n")
+            res_path = save_yolo_file(f"{mask_path.stem}_box", output_box_dir, bbox_info_list)
 
-                print(
-                    f"Processed and stored binary segmentation map at {output_box_path} imgsz = {img_height} x {img_width}")
+            if res_path is not None:
+                print(f"Processed and stored bounding boxes at {res_path} imgsz = {img_height} x {img_width}")
+            else:
+                print(f"There was an error trying to save the bounding boxes from {mask_path.stem}.")
