@@ -93,15 +93,15 @@ def convert_binary_masks_to_yolo(masks_dir, output_seg_dir=None, output_box_dir=
                     seg_info_list.append(seg_info)
                     bbox_info_list.append(bbox_info)
 
-            res_path = save_yolo_file(f"{mask_path.stem}_seg", output_seg_dir, seg_info_list)
+            out_name = mask_path.stem.replace("_mask", "")
 
+            res_path = save_yolo_file(out_name, output_seg_dir, seg_info_list)
             if res_path is not None:
                 print(f"Processed and stored binary segmentation map at {res_path} imgsz = {img_height} x {img_width}")
             else:
                 print(f"There was an error trying to save the segmentation map from {mask_path.stem}.")
 
-            res_path = save_yolo_file(f"{mask_path.stem}_box", output_box_dir, bbox_info_list)
-
+            res_path = save_yolo_file(out_name, output_box_dir, bbox_info_list)
             if res_path is not None:
                 print(f"Processed and stored bounding boxes at {res_path} imgsz = {img_height} x {img_width}")
             else:
