@@ -28,7 +28,7 @@ def seg_to_bbox(seg_info: list):
     return bbox_info
 
 
-def binmask_to_yolo(masks_dir, output_seg_dir=None, output_box_dir=None):
+def binmask_to_yolo(binmask_path, output_seg_path=None, output_box_path=None):
     """
     Converts a dataset of binary segmentation mask images to the YOLO format.
 
@@ -36,9 +36,9 @@ def binmask_to_yolo(masks_dir, output_seg_dir=None, output_box_dir=None):
     The converted files are saved in the specified output directories.
 
     Args:
-        masks_dir (str): The path to the directory where all mask images (png, jpg) are stored.
-        output_seg_dir (str): The path to the directory where the converted YOLO segmentation masks will be stored.
-        output_box_dir (str): The path to the directory where the converted YOLO bounding boxes will be stored.
+        binmask_path (str): The path to the directory where all mask images (png, jpg) are stored.
+        output_seg_path (str): The path to the directory where the converted YOLO segmentation masks will be stored.
+        output_box_path (str): The path to the directory where the converted YOLO bounding boxes will be stored.
 
     Notes:
         The expected directory structure for the masks is:
@@ -64,11 +64,11 @@ def binmask_to_yolo(masks_dir, output_seg_dir=None, output_box_dir=None):
                 └─ mask_image_04_box.txt
     """
 
-    for mask_path in Path(masks_dir).iterdir():
-        if mask_path.suffix in {".png", ".jpg"}:
-            mask = cv2.imread(str(mask_path), cv2.IMREAD_GRAYSCALE)  # Read the mask image in grayscale
+    for file_path in Path(binmask_path).iterdir():
+        if file_path.suffix in {".png", ".jpg"}:
+            mask = cv2.imread(str(file_path), cv2.IMREAD_GRAYSCALE)  # Read the mask image in grayscale
             img_height, img_width = mask.shape  # Get image dimensions
-            print(f"Processing {mask_path} imgsz = {img_height} x {img_width}")
+            print(f"Processing {file_path} imgsz = {img_height} x {img_width}")
 
             # Create a binary mask for the current class and find contours
             contours, _ = cv2.findContours(
@@ -93,17 +93,17 @@ def binmask_to_yolo(masks_dir, output_seg_dir=None, output_box_dir=None):
                     seg_info_list.append(seg_info)
                     bbox_info_list.append(bbox_info)
 
-            out_name = mask_path.stem.replace("_mask", "")
+            out_name = file_path.stem.replace("_mask", "")
 
-            res_path = save_yolo_file(out_name, output_seg_dir, seg_info_list)
+            res_path = save_yolo_file(out_name, output_seg_path, seg_info_list)
             if res_path is not None:
                 print(f"Processed and stored binary segmentation map at {res_path} imgsz = {img_height} x {img_width}")
             else:
-                print(f"There was an error trying to save the segmentation map from {mask_path.stem}.")
+                print(f"There was an error trying to save the segmentation map from {file_path.stem}.")
 
-            res_path = save_yolo_file(out_name, output_box_dir, bbox_info_list)
+            res_path = save_yolo_file(out_name, output_box_path, bbox_info_list)
             if res_path is not None:
                 print(f"Processed and stored bounding boxes at {res_path} imgsz = {img_height} x {img_width}")
             else:
-                print(f"There was an error trying to save the bounding boxes from {mask_path.stem}.")
+                print(f"There was an error trying to save the bounding boxes from {file_path.stem}.")
 
