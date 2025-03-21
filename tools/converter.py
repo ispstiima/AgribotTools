@@ -28,7 +28,7 @@ def seg_to_bbox(seg_info: list):
     return bbox_info
 
 
-def convert_binary_masks_to_yolo(masks_dir, output_seg_dir=None, output_box_dir=None):
+def binmask_to_yolo(masks_dir, output_seg_dir=None, output_box_dir=None):
     """
     Converts a dataset of binary segmentation mask images to the YOLO format.
 
@@ -106,3 +106,4 @@ def convert_binary_masks_to_yolo(masks_dir, output_seg_dir=None, output_box_dir=
                 print(f"Processed and stored bounding boxes at {res_path} imgsz = {img_height} x {img_width}")
             else:
                 print(f"There was an error trying to save the bounding boxes from {mask_path.stem}.")
+

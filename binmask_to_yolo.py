@@ -1,5 +1,5 @@
 import argparse
-from tools.converter import convert_binary_masks_to_yolo
+from tools.converter import binmask_to_yolo
 
 
 def main():
@@ -10,7 +10,7 @@ def main():
 
     args = parser.parse_args()
 
-    convert_binary_masks_to_yolo(args.mask_path, args.output_seg_path, args.output_box_path)
+    binmask_to_yolo(args.mask_path, args.output_seg_path, args.output_box_path)
 
 
 if __name__ == '__main__':
