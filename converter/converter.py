@@ -2,12 +2,10 @@ import json
 import os
 import cv2
 import logging
-from pathlib import Path
 import numpy as np
 import shutil
-
+from pathlib import Path
 from label_studio_sdk.converter.imports import yolo
-
 
 log = logging.getLogger("Converter")
 LS_ROOT = Path(os.environ["LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT"])
@@ -242,40 +240,110 @@ def ls_to_yolo(ls_data_name, output_dir, label_type):
     return True
 
 
-def yolo_to_ls(dataset_dir, dataset_name, label_type):
+def yolo_to_ls(yolo_dir, ls_dir_name, label_type):
     """
     Convert a YOLO-formatted dataset to a Label Studio (LS) format.
 
     Parameters:
-      dataset_dir (str): Path to the YOLO dataset.
-      dataset_name (str): Base name for the new LS dataset.
+      yolo_path (str or Path): Path to the YOLO dataset.
+      yolo_dir_name (str): Base name for the new LS dataset.
       label_type (str): Type of labels, e.g. "bbox" or "seg".
                         Must be either "bbox" or "seg".
     """
     if label_type not in ("bbox", "seg"):
         raise ValueError("label_type must be either 'bbox' or 'seg'")
 
-    # Construct paths based on the label type.
-    ls_path = f"{LS_ROOT}/{dataset_name}_{label_type}"
-    image_root = f"/data/local-files/?d={dataset_name}_{label_type}/images"
-    output_file = f"{ls_path}/task.json"
+    yolo_path = Path(yolo_dir)
+    ls_path = Path(LS_ROOT) / ls_dir_name
+    image_root = f"/data/local-files/?d={ls_dir_name}/images"
+    output_file = ls_path / "task.json"
 
-    # Create the destination directory.
-    os.makedirs(ls_path, exist_ok=True)
+    ls_path.mkdir(parents=True, exist_ok=True)
 
-    # Copy the "images" directory.
-    src_images = os.path.join(dataset_dir, "images")
-    dst_images = os.path.join(ls_path, "images")
+    src_images = yolo_path / "images"
+    dst_images = ls_path / "images"
     shutil.copytree(src_images, dst_images, dirs_exist_ok=True)
 
-    # Copy the "classes.txt" file.
-    src_classes = os.path.join(dataset_dir, "classes.txt")
-    dst_classes = os.path.join(ls_path, "classes.txt")
+    src_classes = yolo_path / "classes.txt"
+    dst_classes = ls_path / "classes.txt"
     shutil.copy(src_classes, dst_classes)
 
-    # Convert YOLO format to LS using the shared conversion function.
-    yolo.convert_yolo_to_ls(dataset_dir, output_file, image_root_url=image_root)
+    yolo.convert_yolo_to_ls(str(yolo_path), str(output_file), image_root_url=image_root)
 
 
-def seg_yolo_to_bbox_yolo():
-    pass
+def seg_yolo_to_bbox_yolo(yolo_root_dir, yolo_seg_dir_name):
+    """
+    Converts a YOLO dataset with segmentation labels into a YOLO dataset with bounding box labels.
+
+    The function expects the YOLO segmentation directory to have the following structure:
+        YOLO SEG FORMAT:
+            images/       --> images in jpg or png format
+            labels/       --> text files with segmentation labels (each line: <class_id> <x1> <y1> <x2> <y2> ... )
+            classes.txt  --> list of classes where each line corresponds to a class (order defines the index)
+
+    It creates a new YOLO dataset with bounding box labels in the same parent directory.
+    The new directory name is derived by replacing "YOLOseg" with "YOLObbox" in the original directory name.
+
+    For each label file in the segmentation dataset, the function:
+      - Reads each line.
+      - Splits the line into tokens.
+      - Converts the segmentation (polygon) data into a bounding box using the seg_to_bbox() function.
+      - Writes the new bounding box info (formatted as: <class_id> <x_center> <y_center> <width> <height>)
+        to a corresponding label file in the new YOLObbox dataset.
+
+    Parameters:
+        yolo_root_path (str or Path): Path to the parent directory containing the YOLO dataset directories.
+        yolo_seg_dir_name (str): Name of the YOLO segmentation directory (e.g., "Xylella_YOLOseg").
+
+    Output:
+        A new directory is created (e.g., "Xylella_YOLObbox") with:
+          - images/ (copied from the segmentation dataset)
+          - labels/ (converted from segmentation to bounding box labels)
+          - classes.txt (copied from the segmentation dataset)
+    """
+    yolo_root_path = Path(yolo_root_dir)
+
+    seg_dir = yolo_root_path / yolo_seg_dir_name
+
+    yolo_bbox_dir_name = yolo_seg_dir_name.replace("YOLOseg", "YOLObbox")
+    bbox_dir = yolo_root_path / yolo_bbox_dir_name
+
+    # (bbox_dir / "images").mkdir(parents=True, exist_ok=True)
+    (bbox_dir / "labels").mkdir(parents=True, exist_ok=True)
+
+    src_images = seg_dir / "images"
+    dst_images = bbox_dir / "images"
+    shutil.copytree(src_images, dst_images, dirs_exist_ok=True)
+
+    src_classes = seg_dir / "classes.txt"
+    dst_classes = bbox_dir / "classes.txt"
+    shutil.copy(src_classes, dst_classes)
+
+    src_labels_dir = seg_dir / "labels"
+    dst_labels_dir = bbox_dir / "labels"
+
+    # Process each label file in the segmentation dataset.
+    for label_file in src_labels_dir.iterdir():
+        if not label_file.is_file():
+            continue
+
+        dst_label_path = dst_labels_dir / label_file.name
+
+        with label_file.open("r") as f:
+            seg_lines = f.readlines()
+
+        bbox_lines = []
+
+        for seg_line in seg_lines:
+            seg_line = seg_line.strip()
+
+            if not seg_line:
+                continue
+
+            seg_info = seg_line.split()
+            bbox_info = seg_to_bbox(seg_info)
+            bbox_line = " ".join(str(x) for x in bbox_info)
+            bbox_lines.append(bbox_line)
+
+        with dst_label_path.open("w") as f:
+            f.writelines(bbox_lines)
