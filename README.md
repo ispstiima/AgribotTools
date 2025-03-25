@@ -60,10 +60,13 @@ It is a folder containing:
 
 It is a folder named as the dataset, e.g., `xylella`, containing:
 
-* A subfolder `train` containing the portion of the dataset where training data will be stored, containing:
+* A `train` subfolder containing the portion of the dataset where training data will be stored, containing:
    * A subfolder `images` containing the images in `jpg` or `png` format.
    * A subfolder `labels` containing, for each image in `images`, the corresponding labels in YOLO format.
-* A subfolder `val` containing the portion of the dataset where training data will be stored, containing:
+* A `val` subfolder containing the portion of the dataset where validation data will be stored, containing:
+   * A subfolder `images` containing the images in `jpg` or `png` format.
+   * A subfolder `labels` containing, for each image in `images`, the corresponding labels in YOLO format.
+* An optional `test` subfolder containing the portion of the dataset where testing data will be stored, containing:
    * A subfolder `images` containing the images in `jpg` or `png` format.
    * A subfolder `labels` containing, for each image in `images`, the corresponding labels in YOLO format.
 * A configuration file in `yaml` format with the same name of the dataset formatted as follows:
@@ -81,7 +84,7 @@ It is a folder named as the dataset, e.g., `xylella`, containing:
       ...
    ```
 
-> **Note**: the `train` and `val` subfolders share the same structure.
+> **Note**: the `train`, `val`, and `test` subfolders share the same structure.
 
 ### Use cases
 
