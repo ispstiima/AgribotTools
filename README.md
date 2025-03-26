@@ -88,6 +88,16 @@ It is a folder named as the dataset, e.g., `xylella`, containing:
 
 ### Use cases
 
+#### Object detection bounding boxes
+
+##### Convert binary masks to Label Studio format
+
+```mermaid
+flowchart LR
+    BM -- bm_to_yolo() --> YOLO -- yolo_to_ls() --> LS
+    LS -- ls_to_yolo() --> YOLO -- yolo_to_bm() --> BM
+```
+
 ##### Edit segmentation masks on Label Studio
 
 1. Import the dataset on Label Studio using the module `binmask_to_ls`.
