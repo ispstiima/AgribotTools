@@ -11,15 +11,33 @@
 | Binmask | **Binary mask** | Binary image where a $1$ represents a foreground pixel, while a $0$ represents a background pixel. |
 | Segmask | **Segmentation mask** | Mask used to highlight an object of interest. |
 | Bbox | **Bounding box** | Box that highlights an object of interest. |
+| YOLO | **YOLO format** | Format used by YOLOv1 for object detection. |
+| S-YOLO | **YOLO segmentation format** | Format used by YOLO for segmentation. |
+| OD | **Object detection** | An object detection task. |
+| S | **Segmentation** | A segmentation task. |
 
 ### Format Definition
 
 ##### BinMask format
 
-It is a folder containing:
+It is a folder structured as follows.
 
 * A subfolder `images` containing the labelled images in `jpg` or `png` format.
 * A subfolder `labels` containing, for each image in the `images` subfolder, a `png` image describing the segmask associated with the corresponding image.
+
+The structure can be summarised as follows.
+
+```
+binmask_dset
+|---images
+|-------img_01.png
+        ...
+        img_n.png
+|---labels
+|-------img_01.png
+        ...
+        img_n.png
+```
 
 ##### YOLO format
 
@@ -32,6 +50,21 @@ It is a folder containing:
  <class_id><x_center><y_canter><width><height>
  ```
 * A text file `classes.txt` highlighting the labelled classes, in which each row contains a single string with the name of the corresponding class. Each row's index represents the class's identifier in the `class_id` field of the text file contained in `labels`.
+
+The structure can be summarised as follows.
+
+```
+yolo_dset
+|---images
+|-------img_01.png
+        ...
+        img_n.png
+|---labels
+|-------img_01.txt
+        ...
+        img_n.txt
+|---classes.txt
+```
 
 ##### LS format
 
@@ -56,6 +89,18 @@ It is a folder containing:
    </View>
  ```
 
+The structure can be summarised as follows.
+
+```
+ls_dset
+|---images
+|-------img_01.png
+        ...
+        img_n.png
+|---info.json
+|---info.xml
+```
+
 ##### UL format
 
 It is a folder named as the dataset, e.g., `xylella`, containing:
@@ -70,32 +115,108 @@ It is a folder named as the dataset, e.g., `xylella`, containing:
    * A subfolder `images` containing the images in `jpg` or `png` format.
    * A subfolder `labels` containing the corresponding labels in YOLO format for each image in `images`.
 * A configuration file in `yaml` format with the same name of the dataset formatted as follows:
- ```yaml
-   # Dataset name
-   path: /path/to/dataset        # Path of the dataset
-   train: /train/images          # Path of training images (relative to path)
-   val: /val/images              # Path of validation images  (relative to path)
-   test: /test/images            # Path of test images (relative to path, optional)
 
-   # Classes names
-   names:
-      0: first class
-      1: second class
-      ...
- ```
+```yaml
+# Dataset name
+path: /path/to/dataset        # Path of the dataset
+train: /train/images          # Path of training images (relative to path)
+val: /val/images              # Path of validation images  (relative to path)
+test: /test/images            # Path of test images (relative to path, optional)
+
+# Classes names
+names:
+    0: first class
+    1: second class
+    ...
+```
+
+```
+ul_dset
+|---train
+|-------images
+|-----------img_01.png
+            ...
+            img_n.png
+|-------labels
+|-----------img_01.txt
+            ...
+            img_n.txt
+|---val
+|-------images
+|-----------img_01.png
+            ...
+            img_n.png
+|-------labels
+|-----------img_01.txt
+            ...
+            img_n.txt
+|---test
+|-------images
+|-----------img_01.png
+            ...
+            img_n.png
+|-------labels
+|-----------img_01.txt
+            ...
+            img_n.txt
+|---ul_dset.yaml
+```
 
 > **Note**: the `train`, `val`, and `test` subfolders share the same structure.
 
-### Use cases
+### Workflows
 
-#### Object detection bounding boxes
+#### Base workflows
 
-##### Convert binary masks to Label Studio format
+Base workflows are implemented using a single function, with the `reverse=True` parameter to perform the opposite transformation.
+
+##### Segmentation workflows
+
+| Type | Input format | Output format | Description | Implemented by |
+| ---- | ------------ | ------------- | ----------- | -------------- |
+| S | SegMask | BinMask | Converts a segmentation dataset from the SegMask to the BinMask format. | `seg_to_bin()` |
+| S | BinMask | SegMask | Converts a segmentation dataset from the BinMask to the SegMask format. | `seg_to_bin(reverse)` |
+| S | SegMask | S-YOLO | Converts a segmentation dataset from the SegMask to the YOLO Segmentation format. | `seg_to_yolo()` |
+| S | S-YOLO | SegMask | Converts a segmentation dataset from the BinMask to the SegMask format. | `seg_to_yolo(reverse)` |
+
+##### Segmentation to Object Detection workflow
+
+| Type | Input format | Output format | Description | Implemented by |
+| ---- | ------------ | ------------- | ----------- | -------------- |
+| S/OD | SegMask | Bbox | Converts a segmentation dataset using the SegMask format to the BBox format. | `seg_to_bbox()` |
+| S/OD | BBox | YOLO | Converts a BBox dataset to the YOLO format. | `bbox_to_yolo()` |
+
+##### Object detection workflows
+
+| Type | Input format | Output format | Description | Implemented by |
+| ---- | ------------ | ------------- | ----------- | -------------- |
+| OD | UL | YOLO | Converts an object detection dataset from the UL to the YOLO format. | `ul_to_yolo()` |
+| OD | YOLO | UL | Converts an object detection dataset from the YOLO to the UL format. | `ul_to_yolo(reverse=True)` |
+| OD | LS | YOLO | Converts an object detection dataset from the LS to the YOLO format. | `yolo_to_ls()` | 
+| OD | YOLO | LS | Converts an object detection dataset from the YOLO to the LS format. | `yolo_to_ls(reverse=true)` |
+
+#### General conversion pipelines
+
+Conversion pipelines are composed by a series of base cases to perform a more structured conversion.
 
 ```mermaid
-flowchart LR
-    BM -- bm_to_yolo() --> YOLO -- yolo_to_ls() --> LS
-    LS -- ls_to_yolo() --> YOLO -- yolo_to_bm() --> BM
+flowchart TB
+    subgraph S
+        direction LR
+        SM(SegMask) -- seg_to_bin() --> BM(Binmask)
+        BM -- seg_to_bin(reverse) --> SM
+        SM -- seg_to_yolo() --> SY(YOLO-Seg)
+        SY -- seg_to_yolo(reverse) --> SM
+    end
+    subgraph OD
+        direction LR
+        YOLO(YOLO) -- yolo_to_ls() --> LS(LS)
+        LS -- yolo_to_ls(reverse) --> YOLO
+        YOLO -- yolo_to_ul() --> UL(UL)
+        UL -- yolo_to_ul(reverse) --> YOLO
+    end
+    SM -- seg_to_bbox() --> BBox
+    BBox -- bbox_to_yolo() --> YOLO
 ```
 
 ##### Edit segmentation masks on Label Studio
