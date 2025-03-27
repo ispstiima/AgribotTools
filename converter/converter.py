@@ -6,11 +6,11 @@ from pathlib import Path
 import numpy as np
 import shutil
 
+from converter import LS_ROOT_PATH
 from label_studio_sdk.converter.imports import yolo
 
 
 log = logging.getLogger("Converter")
-LS_ROOT = Path(os.environ["LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT"])
 
 
 def save_yolo_file(file_name, output_dir, data):
@@ -172,7 +172,7 @@ def ls_to_yolo(ls_data_name, output_dir, label_type):
                 ├─ ...
                 └─ task.json
     """
-    ls_data_path = LS_ROOT / ls_data_name
+    ls_data_path = LS_ROOT_PATH / ls_data_name
 
     if label_type not in ("bbox", "seg"):
         log.error(f"Label type {label_type} not supported.")
@@ -256,7 +256,7 @@ def yolo_to_ls(dataset_dir, dataset_name, label_type):
         raise ValueError("label_type must be either 'bbox' or 'seg'")
 
     # Construct paths based on the label type.
-    ls_path = f"{LS_ROOT}/{dataset_name}_{label_type}"
+    ls_path = f"{LS_ROOT_PATH}/{dataset_name}_{label_type}"
     image_root = f"/data/local-files/?d={dataset_name}_{label_type}/images"
     output_file = f"{ls_path}/task.json"
 
