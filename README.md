@@ -19,7 +19,7 @@
 It is a folder containing:
 
 * A subfolder `images` containing the labeled images in `jpg` or `png` format.
-* A subfolder `labels` containing, for each image in the `images` subfolder, a `png` image which describes the segmask associated to the corresponding image.
+* A subfolder `labels` containing, for each image in the `images` subfolder, a `png` image, a file with the same name of the corresponding image, which describes the segmask associated to the corresponding image.
 
 ##### YOLO format
 
