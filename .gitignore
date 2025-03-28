@@ -1,2 +1,6 @@
+converter/__pycache__
 .idea
+yolo_temp
+venv
+datasets
 out
