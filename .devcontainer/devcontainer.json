@@ -1,0 +1,35 @@
+{
+    "name": "AgribotToolsDevcontainer",
+    "build": {
+        "dockerfile": "Dockerfile",
+    },
+    "capAdd": [
+        "SYS_ADMIN",
+        "NET_ADMIN"
+    ],
+    "containerEnv": {
+        "DISPLAY": ":0"
+    },
+    "mounts": [
+        "source=/home/${localEnv:USER}/.ssh,target=/home/ubuntu/.ssh,readonly,type=bind,consistency=cached"
+    ],
+    "runArgs": [
+        "--privileged"
+    ],
+    "containerUser": "ubuntu",
+    "remoteUser": "ubuntu",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/home/ubuntu/workspace,type=bind,consistency=cached",
+    "workspaceFolder": "/home/ubuntu/workspace",
+    "postCreateCommand": "python3 -m venv venv && . venv/bin/activate && pip install --no-cache-dir -r ./requirements.txt",
+    "postStartCommand": ". venv/bin/activate",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "eamodio.gitlens",
+                "ehaynes99.vscode-select-same-text"
+            ]
+        }
+    }
+}
