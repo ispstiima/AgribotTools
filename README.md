@@ -1,29 +1,32 @@
 # AgribotTools
 
-## Converter
+## Acronyms and Definitions
 
-### Acronyms and Definitions
+### Tasks
 
 | Acronym | Definition | Brief description |
 | ------- | ---------- | ----------------- |
-| LS | **Label Studio** | The software used for labeling. |
-| UL | **Ultralytics** | Target library for object detection and segmentation. |
-| Binmask | **Binary mask** | Binary image where a $1$ represents a foreground pixel, while a $0$ represents a background pixel. |
-| Segmask | **Segmentation mask** | Mask used to highlight an object of interest. |
-| Bbox | **Bounding box** | Box that highlights an object of interest. |
-| YOLO | **YOLO format** | Format used by YOLOv1 for object detection. |
-| S-YOLO | **YOLO segmentation format** | Format used by YOLO for segmentation. |
-| OD | **Object detection** | An object detection task. |
 | S | **Segmentation** | A segmentation task. |
+| OD | **Object detection** | An object detection task. |
 
-### Format Definition
+### Formats
 
-##### BinMask format
+| Acronym | Definition | Brief description |
+| ------- | ---------- | ----------------- |
+| BinMask | **Binary mask** | Segmentation mask for several classes in a grayscale format. |
+| YOLO | **YOLO format** | Standard YOLOv1-v3 format. |
+| LS | **Label Studio** | Format used by Label Studio. |
+| UL | **Ultralytics** | Format used by Ultralytics. |
+
+## Formats Definition
+
+### BinMask format
 
 It is a folder structured as follows.
 
 * A subfolder `images` containing the labelled images in `jpg` or `png` format.
 * A subfolder `labels` containing, for each image in the `images` subfolder, a `png` image describing the segmask associated with the corresponding image.
+* A `classes.txt` file describing the classes contained in the binary mask.
 
 The structure can be summarised as follows.
 
@@ -37,9 +40,10 @@ binmask_dset
 |-------img_01.png
         ...
         img_n.png
+|---classes.txt
 ```
 
-##### YOLO format
+### YOLO format
 
 It is a folder containing:
 
@@ -66,7 +70,9 @@ yolo_dset
 |---classes.txt
 ```
 
-##### LS format
+> **Note**: the YOLO format can be used for segmentation and object detection according to the labels' structure.
+
+### LS format
 
 It is a folder containing:
 
@@ -101,7 +107,9 @@ ls_dset
 |---info.xml
 ```
 
-##### UL format
+> **Note**: the LS format can be used for segmentation and object detection according to the labels' structure.
+
+### UL format
 
 It is a folder named as the dataset, e.g., `xylella`, containing:
 
@@ -164,78 +172,50 @@ ul_dset
 
 > **Note**: the `train`, `val`, and `test` subfolders share the same structure.
 
-### Workflows
+> **Note**: the UL format can be used for segmentation and object detection according to the labels' structure.
 
-#### Base workflows
+## Converters
 
-Base workflows are implemented using a single function, with the `reverse=True` parameter to perform the opposite transformation.
+| Input format | Output format | Description | Implemented by | Tasks |
+| ------------ | ------------- | ----------- | -------------- | ----- |
+| BinMask | YOLO | Converts from binary masks to the YOLO format. | `binmask_to_yolo()` | S/OD |
+| YOLO | BinMask | Converts from the YOLO to the binary masks format. | `binmask_to_yolo(reverse)` | S |
+| YOLO | UL | Converts from the YOLO to the UL format. | `yolo_to_ul()` | S/OD |
+| UL | YOLO | Converts from the UL to the YOLO format. | `yolo_to_ul(reverse)` | S/OD |
+| YOLO | LS | Converts from the YOLO to the LS format. | `yolo_to_ls()` | S/OD |
+| LS | YOLO | Converts from the LS to the YOLO format. | `yolo_to_ls(reverse)` | S/OD |
+| LS | UL | Converts from the LS to the UL format. | `ls_to_ul()` | S/OD |
+| UL | LS | Converts from the UL to the LS format. | `ls_to_ul(reverse)` | S/OD |
 
-##### Segmentation workflows
-
-| Type | Input format | Output format | Description | Implemented by |
-| ---- | ------------ | ------------- | ----------- | -------------- |
-| S | SegMask | BinMask | Converts a segmentation dataset from the SegMask to the BinMask format. | `seg_to_bin()` |
-| S | BinMask | SegMask | Converts a segmentation dataset from the BinMask to the SegMask format. | `seg_to_bin(reverse)` |
-| S | SegMask | S-YOLO | Converts a segmentation dataset from the SegMask to the YOLO Segmentation format. | `seg_to_yolo()` |
-| S | S-YOLO | SegMask | Converts a segmentation dataset from the BinMask to the SegMask format. | `seg_to_yolo(reverse)` |
-
-##### Segmentation to Object Detection workflow
-
-| Type | Input format | Output format | Description | Implemented by |
-| ---- | ------------ | ------------- | ----------- | -------------- |
-| S/OD | SegMask | Bbox | Converts a segmentation dataset using the SegMask format to the BBox format. | `seg_to_bbox()` |
-| S/OD | BBox | YOLO | Converts a BBox dataset to the YOLO format. | `bbox_to_yolo()` |
-
-##### Object detection workflows
-
-| Type | Input format | Output format | Description | Implemented by |
-| ---- | ------------ | ------------- | ----------- | -------------- |
-| OD | UL | YOLO | Converts an object detection dataset from the UL to the YOLO format. | `ul_to_yolo()` |
-| OD | YOLO | UL | Converts an object detection dataset from the YOLO to the UL format. | `ul_to_yolo(reverse=True)` |
-| OD | LS | YOLO | Converts an object detection dataset from the LS to the YOLO format. | `yolo_to_ls()` | 
-| OD | YOLO | LS | Converts an object detection dataset from the YOLO to the LS format. | `yolo_to_ls(reverse=true)` |
-
-#### General conversion pipelines
-
-Conversion pipelines are composed by a series of base cases to perform a more structured conversion.
+## Workflow
 
 ```mermaid
 flowchart TB
     subgraph S
         direction LR
-        SM(SegMask) -- seg_to_bin() --> BM(Binmask)
-        BM -- seg_to_bin(reverse) --> SM
-        SM -- seg_to_yolo() --> SY(YOLO-Seg)
-        SY -- seg_to_yolo(reverse) --> SM
+        YOLOS(YOLO-S) -- yolo_to_ls(s) --> LSS(LS-S)
+        LSS -- yolo_to_ls(s, reverse) --> YOLOS
+        YOLOS -- yolo_to_ul(s) --> ULS(UL-S)
+        ULS -- yolo_to_ul(s, reverse) --> YOLOS
+        LSS -- ls_to_ul(s) --> ULS
+        ULS -- ls_to_ul(s, reverse) --> LSS
     end
     subgraph OD
         direction LR
-        YOLO(YOLO) -- yolo_to_ls() --> LS(LS)
-        LS -- yolo_to_ls(reverse) --> YOLO
-        YOLO -- yolo_to_ul() --> UL(UL)
-        UL -- yolo_to_ul(reverse) --> YOLO
+        YOLOD(YOLO-OD) -- yolo_to_ls(d) --> LSD(LS-OD)
+        LSD -- yolo_to_ls(d, reverse) --> YOLOD
+        YOLOD -- yolo_to_ul(d) --> ULD(UL-OD)
+        ULD -- yolo_to_ul(d, reverse) --> YOLOD
+        LSD -- ls_to_ul(d) --> ULD
+        ULD -- ls_to_ul(d, reverse) --> LSD
     end
-    SM -- seg_to_bbox() --> BBox
-    BBox -- bbox_to_yolo() --> YOLO
+    BM(BinMask) -- binmask_to_yolo(s) --> YOLOS
+    BM -- binmask_to_yolo(d) --> YOLOD
+    YOLOS -- binmask_to_yolo(s, reverse) --> BM
+    style BM fill:#03ab
+    style S fill:#b03a
+    style OD fill:#ab03
 ```
-
-##### Edit segmentation masks on Label Studio
-
-1. Import the dataset on Label Studio using the module `binmask_to_ls`.
-2. Edit the segmentation masks.
-
-##### Edit bounding boxes on Label Studio
-
-1. Import the dataset on Label Studio:
- a. Using the `binmask_to_ls` module if the labels are in the binmask format.
- b. Using the model `seg_ls_to_bbox_ls` if the labels are segmasks in LS format.
- c. Directly from the dataset saved in the root folder.
-2. Edit bboxes.
-
-##### Convert LS labels in a UL dataset
-
-1. Select JSON as export type.
-2. Convert from the LS to the UL format using the `ls_to_ul` module.
 
 ## References
 
