@@ -437,7 +437,7 @@ def parse_seg_value(value, img_w, img_h):
     flat_binmask = decode_rle(value["rle"])
     binmask = np.reshape(flat_binmask, [img_h, img_w, 4])[:, :, 3]
     seg_yolo, _ = mask_to_yolo(binmask)
-    return seg_yolo
+    return seg_yolo[0]  # Extracting segmentation masks from the LS task should return just one mask
 
 
 def save_yolo_file(file_name, output_dir, data):

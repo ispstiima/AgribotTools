@@ -4,3 +4,6 @@ yolo_temp
 venv
 datasets
 out
+*/*.log
+
+.qodo
