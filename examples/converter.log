@@ -1,0 +1,854 @@
+2025-03-31 13:26:23,228 Reading YOLO notes and categories from /mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox
+2025-03-31 13:26:23,231 Found 1 categories
+2025-03-31 13:26:23,233 Label configuration file saved to: task.label_config.xml
+2025-03-31 13:26:23,234 Converting labels from /mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox/labels
+2025-03-31 13:26:23,234 image extensions->, ['.jpg', '.png']
+2025-03-31 14:26:29,965 The image '/mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox/images/Thumbs.db' has an unsupported extension. Skipping.
+2025-03-31 14:26:29,965 Saving Label Studio JSON to /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/task.json
+2025-03-31 14:26:33,124 Reading YOLO notes and categories from /mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg
+2025-03-31 14:26:33,127 Found 1 categories
+2025-03-31 14:26:33,129 Label configuration file saved to: task.label_config.xml
+2025-03-31 14:26:33,129 Converting labels from /mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg/labels
+2025-03-31 14:26:33,129 image extensions->, ['.jpg', '.png']
+2025-03-31 14:26:41,967 The image '/mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg/images/Thumbs.db' has an unsupported extension. Skipping.
+2025-03-31 14:26:41,967 Saving Label Studio JSON to /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/task.json
+2025-03-31 14:30:04,672 Reading YOLO notes and categories from /mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox
+2025-03-31 14:30:04,675 Found 1 categories
+2025-03-31 14:30:04,676 The label configuration file was not saved. Please provide a filename to save it.
+2025-03-31 14:30:04,676 Converting labels from /mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox/labels
+2025-03-31 14:30:04,676 image extensions->, ['.jpg', '.png']
+2025-03-31 13:30:16,556 The image '/mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox/images/Thumbs.db' has an unsupported extension. Skipping.
+2025-03-31 13:30:16,557 Saving Label Studio JSON to /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/task.json
+2025-03-31 14:30:49,508 Reading YOLO notes and categories from /mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox
+2025-03-31 14:30:49,511 Found 1 categories
+2025-03-31 14:30:49,513 The label configuration file was not saved. Please provide a filename to save it.
+2025-03-31 14:30:49,513 Converting labels from /mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox/labels
+2025-03-31 14:30:49,514 image extensions->, ['.jpg', '.png']
+2025-03-31 13:31:01,139 The image '/mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox/images/Thumbs.db' has an unsupported extension. Skipping.
+2025-03-31 13:31:01,139 Saving Label Studio JSON to /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/task.json
+2025-03-31 13:31:06,090 Reading YOLO notes and categories from /mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg
+2025-03-31 13:31:06,094 Found 1 categories
+2025-03-31 13:31:06,097 The label configuration file was not saved. Please provide a filename to save it.
+2025-03-31 13:31:06,097 Converting labels from /mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg/labels
+2025-03-31 13:31:06,097 image extensions->, ['.jpg', '.png']
+2025-03-31 13:31:15,361 The image '/mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg/images/Thumbs.db' has an unsupported extension. Skipping.
+2025-03-31 13:31:15,361 Saving Label Studio JSON to /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/task.json
+2025-03-31 13:32:55,551 Reading YOLO notes and categories from /mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox
+2025-03-31 13:32:55,554 Found 1 categories
+2025-03-31 13:32:55,561 Label configuration file saved to: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/template.label_config.xml
+2025-03-31 13:32:55,561 Converting labels from /mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox/labels
+2025-03-31 13:32:55,562 image extensions->, ['.jpg', '.png']
+2025-03-31 13:33:04,651 The image '/mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox/images/Thumbs.db' has an unsupported extension. Skipping.
+2025-03-31 13:33:04,651 Saving Label Studio JSON to /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/task.json
+2025-03-31 13:33:08,471 Reading YOLO notes and categories from /mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg
+2025-03-31 13:33:08,492 Found 1 categories
+2025-03-31 13:33:08,540 Label configuration file saved to: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/template.label_config.xml
+2025-03-31 13:33:08,541 Converting labels from /mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg/labels
+2025-03-31 13:33:08,542 image extensions->, ['.jpg', '.png']
+2025-03-31 13:33:17,585 The image '/mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg/images/Thumbs.db' has an unsupported extension. Skipping.
+2025-03-31 13:33:17,585 Saving Label Studio JSON to /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/task.json
+2025-03-31 14:36:27,928 Reading YOLO notes and categories from /mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox
+2025-03-31 14:36:27,933 Found 1 categories
+2025-03-31 14:36:27,939 Label configuration file saved to: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/template.label_config.xml
+2025-03-31 14:36:27,939 Converting labels from /mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox/labels
+2025-03-31 14:36:27,939 image extensions->, ['.jpg', '.png']
+2025-03-31 13:36:39,459 The image '/mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox/images/Thumbs.db' has an unsupported extension. Skipping.
+2025-03-31 13:36:39,460 Saving Label Studio JSON to /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/task.json
+2025-03-31 13:36:42,219 Reading YOLO notes and categories from /mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg
+2025-03-31 13:36:42,238 Found 1 categories
+2025-03-31 13:36:42,255 Label configuration file saved to: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/template.label_config.xml
+2025-03-31 13:36:42,258 Converting labels from /mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg/labels
+2025-03-31 13:36:42,262 image extensions->, ['.jpg', '.png']
+2025-03-31 14:36:48,945 The image '/mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg/images/Thumbs.db' has an unsupported extension. Skipping.
+2025-03-31 14:36:48,945 Saving Label Studio JSON to /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/task.json
+2025-03-31 13:49:37,521 > Reading YOLO files from: [/mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox]
+2025-03-31 13:49:37,524 Found 1 categories
+2025-03-31 13:49:37,529 Label configuration file saved to: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/template.label_config.xml
+2025-03-31 13:49:37,530 Converting labels from /mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox/labels
+2025-03-31 13:49:37,532 image extensions->, ['.jpg', '.png']
+2025-03-31 13:49:37,533 The specified label type is not supported. Please use 'bbox' or 'seg'.
+2025-03-31 13:49:40,753 > Reading YOLO files from: [/mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg]
+2025-03-31 13:49:40,756 Found 1 categories
+2025-03-31 13:49:40,762 Label configuration file saved to: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/template.label_config.xml
+2025-03-31 13:49:40,762 Converting labels from /mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg/labels
+2025-03-31 13:49:40,763 image extensions->, ['.jpg', '.png']
+2025-03-31 13:49:40,763 The specified label type is not supported. Please use 'bbox' or 'seg'.
+2025-03-31 13:50:05,719 > Reading YOLO files from: [/mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox]
+2025-03-31 13:50:05,721 Found 1 categories
+2025-03-31 13:50:05,727 Label configuration file saved to: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/template.label_config.xml
+2025-03-31 13:50:05,727 Converting labels from /mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox/labels
+2025-03-31 13:50:05,727 image extensions->, ['.jpg', '.png']
+2025-03-31 13:50:05,728 The specified label type 'RectangleLabels' is not supported. Please use 'bbox' or 'seg'.
+2025-03-31 13:50:09,075 > Reading YOLO files from: [/mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg]
+2025-03-31 13:50:09,078 Found 1 categories
+2025-03-31 13:50:09,082 Label configuration file saved to: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/template.label_config.xml
+2025-03-31 13:50:09,082 Converting labels from /mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg/labels
+2025-03-31 13:50:09,083 image extensions->, ['.jpg', '.png']
+2025-03-31 13:50:09,083 The specified label type 'BrushLabels' is not supported. Please use 'bbox' or 'seg'.
+2025-03-31 14:51:09,457 > Reading YOLO files from: [/mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox]
+2025-03-31 14:51:09,461 Found 1 categories
+2025-03-31 14:51:09,464 Label configuration file saved to: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/template.label_config.xml
+2025-03-31 14:51:09,464 Converting labels from /mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox/labels
+2025-03-31 14:51:09,464 image extensions->, ['.jpg', '.png']
+2025-03-31 14:51:09,925 The image '/mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox/images/Thumbs.db' has an unsupported extension. Skipping.
+2025-03-31 14:51:09,925 Saving Label Studio JSON to /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/task.json
+2025-03-31 14:51:12,585 > Reading YOLO files from: [/mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg]
+2025-03-31 14:51:12,590 Found 1 categories
+2025-03-31 14:51:12,595 Label configuration file saved to: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/template.label_config.xml
+2025-03-31 14:51:12,595 Converting labels from /mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg/labels
+2025-03-31 14:51:12,595 image extensions->, ['.jpg', '.png']
+2025-03-31 13:51:23,525 The image '/mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg/images/Thumbs.db' has an unsupported extension. Skipping.
+2025-03-31 13:51:23,525 Saving Label Studio JSON to /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/task.json
+2025-04-01 09:38:56,285 Creating output directory: /mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox_new
+2025-04-01 09:38:56,307 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0074.jpg
+2025-04-01 09:43:07,042 The selected output directory already exists. (/mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox_new)
+2025-04-01 09:43:07,043 Creating output directory: /mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox_new
+2025-04-01 09:45:49,186 Creating output directory: /mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox_new
+2025-04-01 09:45:49,231 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0074.jpg
+2025-04-01 09:45:49,254 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0076.jpg
+2025-04-01 09:45:49,273 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0078.jpg
+2025-04-01 09:45:49,302 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0080.jpg
+2025-04-01 09:45:49,322 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0081.jpg
+2025-04-01 09:45:49,338 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0082.jpg
+2025-04-01 09:45:49,353 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0083.jpg
+2025-04-01 09:45:49,373 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0085.jpg
+2025-04-01 09:45:49,387 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0087.jpg
+2025-04-01 09:45:49,400 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0089.jpg
+2025-04-01 09:45:49,410 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0091.jpg
+2025-04-01 09:45:49,423 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0092.jpg
+2025-04-01 09:45:49,436 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0093.jpg
+2025-04-01 09:45:49,450 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0095.jpg
+2025-04-01 09:45:49,464 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0097.jpg
+2025-04-01 09:45:49,479 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0100.jpg
+2025-04-01 09:45:49,496 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0102.jpg
+2025-04-01 09:45:49,514 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0103.jpg
+2025-04-01 09:45:49,529 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0105.jpg
+2025-04-01 09:45:49,543 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0107.jpg
+2025-04-01 09:45:49,555 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0109.jpg
+2025-04-01 09:45:49,566 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0111.jpg
+2025-04-01 09:45:49,581 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0113.jpg
+2025-04-01 09:45:49,594 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0114.jpg
+2025-04-01 09:45:49,608 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0116.jpg
+2025-04-01 09:45:49,627 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0117.jpg
+2025-04-01 09:45:49,642 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0118.jpg
+2025-04-01 09:45:49,659 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0120.jpg
+2025-04-01 09:45:49,680 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0122.jpg
+2025-04-01 09:45:49,693 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0123.jpg
+2025-04-01 09:45:49,705 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0125.jpg
+2025-04-01 09:45:49,718 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0126.jpg
+2025-04-01 09:45:49,732 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0127.jpg
+2025-04-01 09:45:49,746 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0128.jpg
+2025-04-01 09:45:49,755 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0129.jpg
+2025-04-01 09:45:49,766 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0130.jpg
+2025-04-01 09:45:49,777 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0131.jpg
+2025-04-01 09:45:49,790 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0132.jpg
+2025-04-01 09:45:49,800 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0133.jpg
+2025-04-01 09:45:49,812 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0134.jpg
+2025-04-01 09:45:49,824 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0135.jpg
+2025-04-01 09:45:49,834 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0136.jpg
+2025-04-01 09:56:47,099 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0074.jpg
+2025-04-01 09:56:47,109 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0076.jpg
+2025-04-01 09:56:47,117 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0078.jpg
+2025-04-01 09:56:47,126 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0080.jpg
+2025-04-01 09:56:47,135 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0081.jpg
+2025-04-01 09:56:47,143 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0082.jpg
+2025-04-01 09:56:47,151 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0083.jpg
+2025-04-01 09:56:47,162 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0085.jpg
+2025-04-01 09:56:47,170 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0087.jpg
+2025-04-01 09:56:47,178 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0089.jpg
+2025-04-01 09:56:47,187 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0091.jpg
+2025-04-01 09:56:47,196 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0092.jpg
+2025-04-01 09:56:47,205 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0093.jpg
+2025-04-01 09:56:47,214 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0095.jpg
+2025-04-01 09:56:47,224 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0097.jpg
+2025-04-01 09:56:47,233 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0100.jpg
+2025-04-01 09:56:47,242 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0102.jpg
+2025-04-01 09:56:47,250 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0103.jpg
+2025-04-01 09:56:47,260 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0105.jpg
+2025-04-01 09:56:47,278 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0107.jpg
+2025-04-01 09:56:47,296 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0109.jpg
+2025-04-01 09:56:47,316 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0111.jpg
+2025-04-01 09:56:47,335 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0113.jpg
+2025-04-01 09:56:47,354 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0114.jpg
+2025-04-01 09:56:47,381 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0116.jpg
+2025-04-01 09:56:47,414 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0117.jpg
+2025-04-01 09:56:47,460 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0118.jpg
+2025-04-01 09:56:47,485 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0120.jpg
+2025-04-01 09:56:47,505 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0122.jpg
+2025-04-01 09:56:47,523 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0123.jpg
+2025-04-01 09:56:47,543 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0125.jpg
+2025-04-01 09:56:47,563 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0126.jpg
+2025-04-01 09:56:47,585 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0127.jpg
+2025-04-01 09:56:47,622 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0128.jpg
+2025-04-01 09:56:47,660 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0129.jpg
+2025-04-01 09:56:47,698 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0130.jpg
+2025-04-01 09:56:47,723 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0131.jpg
+2025-04-01 09:56:47,746 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0132.jpg
+2025-04-01 09:56:47,776 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0133.jpg
+2025-04-01 09:56:47,797 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0134.jpg
+2025-04-01 09:56:47,823 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0135.jpg
+2025-04-01 09:56:47,847 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0136.jpg
+2025-04-01 09:56:58,021 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0074.jpg
+2025-04-01 10:03:47,534 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0074.jpg
+2025-04-01 10:03:47,554 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0076.jpg
+2025-04-01 10:03:47,583 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0078.jpg
+2025-04-01 10:03:47,608 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0080.jpg
+2025-04-01 10:03:47,633 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0081.jpg
+2025-04-01 10:03:47,659 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0082.jpg
+2025-04-01 10:03:47,686 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0083.jpg
+2025-04-01 10:03:47,724 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0085.jpg
+2025-04-01 10:03:47,749 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0087.jpg
+2025-04-01 10:03:47,765 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0089.jpg
+2025-04-01 10:03:47,775 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0091.jpg
+2025-04-01 10:03:47,782 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0092.jpg
+2025-04-01 10:03:47,789 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0093.jpg
+2025-04-01 10:03:47,798 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0095.jpg
+2025-04-01 10:03:47,805 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0097.jpg
+2025-04-01 10:03:47,811 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0100.jpg
+2025-04-01 10:03:47,818 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0102.jpg
+2025-04-01 10:03:47,824 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0103.jpg
+2025-04-01 10:03:47,830 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0105.jpg
+2025-04-01 10:03:47,837 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0107.jpg
+2025-04-01 10:03:47,844 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0109.jpg
+2025-04-01 10:03:47,859 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0111.jpg
+2025-04-01 10:03:47,866 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0113.jpg
+2025-04-01 10:03:47,873 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0114.jpg
+2025-04-01 10:03:47,880 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0116.jpg
+2025-04-01 10:03:47,887 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0117.jpg
+2025-04-01 10:03:47,895 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0118.jpg
+2025-04-01 10:03:47,903 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0120.jpg
+2025-04-01 10:03:47,910 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0122.jpg
+2025-04-01 10:03:47,917 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0123.jpg
+2025-04-01 10:03:47,925 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0125.jpg
+2025-04-01 10:03:47,932 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0126.jpg
+2025-04-01 10:03:47,938 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0127.jpg
+2025-04-01 10:03:47,944 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0128.jpg
+2025-04-01 10:03:47,974 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0129.jpg
+2025-04-01 10:03:47,998 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0130.jpg
+2025-04-01 10:03:48,021 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0131.jpg
+2025-04-01 10:03:48,033 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0132.jpg
+2025-04-01 10:03:48,049 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0133.jpg
+2025-04-01 10:03:48,059 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0134.jpg
+2025-04-01 10:03:48,071 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0135.jpg
+2025-04-01 10:03:48,102 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0136.jpg
+2025-04-01 10:03:57,554 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0074.jpg
+2025-04-01 10:03:57,766 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0076.jpg
+2025-04-01 10:03:58,369 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0078.jpg
+2025-04-01 10:03:58,646 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0080.jpg
+2025-04-01 10:03:58,887 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0081.jpg
+2025-04-01 10:03:59,280 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0082.jpg
+2025-04-01 10:03:59,824 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0083.jpg
+2025-04-01 10:04:00,345 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0085.jpg
+2025-04-01 10:04:00,504 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0087.jpg
+2025-04-01 10:04:00,616 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0089.jpg
+2025-04-01 10:04:00,742 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0091.jpg
+2025-04-01 10:04:01,761 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0092.jpg
+2025-04-01 10:04:02,716 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0093.jpg
+2025-04-01 10:04:03,181 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0095.jpg
+2025-04-01 10:04:03,460 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0097.jpg
+2025-04-01 10:04:04,401 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0100.jpg
+2025-04-01 10:04:04,687 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0102.jpg
+2025-04-01 10:04:04,927 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0103.jpg
+2025-04-01 10:04:05,013 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0105.jpg
+2025-04-01 10:04:05,106 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0107.jpg
+2025-04-01 10:04:05,286 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0109.jpg
+2025-04-01 10:04:05,422 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0111.jpg
+2025-04-01 10:04:05,624 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0113.jpg
+2025-04-01 10:04:05,873 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0114.jpg
+2025-04-01 10:04:06,126 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0116.jpg
+2025-04-01 10:04:06,295 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0117.jpg
+2025-04-01 10:04:06,513 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0118.jpg
+2025-04-01 10:04:06,751 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0120.jpg
+2025-04-01 10:04:06,915 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0122.jpg
+2025-04-01 10:04:07,018 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0123.jpg
+2025-04-01 10:04:07,137 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0125.jpg
+2025-04-01 10:04:07,254 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0126.jpg
+2025-04-01 10:04:07,302 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0127.jpg
+2025-04-01 10:04:07,350 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0128.jpg
+2025-04-01 10:04:07,396 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0129.jpg
+2025-04-01 10:04:07,425 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0130.jpg
+2025-04-01 10:04:07,460 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0131.jpg
+2025-04-01 10:04:07,485 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0132.jpg
+2025-04-01 10:04:07,518 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0133.jpg
+2025-04-01 10:04:07,678 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0134.jpg
+2025-04-01 10:04:07,826 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0135.jpg
+2025-04-01 10:04:07,860 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0136.jpg
+2025-04-01 10:05:08,833 > Reading YOLO files from: [/mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox_new]
+2025-04-01 10:05:08,841 Found 1 categories
+2025-04-01 10:05:08,848 Label configuration file saved to: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/template.label_config.xml
+2025-04-01 10:05:08,849 Converting labels from /mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox_new/labels
+2025-04-01 10:05:08,849 image extensions->, ['.jpg', '.png']
+2025-04-01 10:05:10,105 The image '/mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox_new/images/Thumbs.db' has an unsupported extension. Skipping.
+2025-04-01 10:05:10,106 Saving Label Studio JSON to /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/task.json
+2025-04-01 10:05:23,009 > Reading YOLO files from: [/mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg_new]
+2025-04-01 10:05:23,027 Found 1 categories
+2025-04-01 10:05:23,047 Label configuration file saved to: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/template.label_config.xml
+2025-04-01 10:05:23,051 Converting labels from /mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg_new/labels
+2025-04-01 10:05:23,053 image extensions->, ['.jpg', '.png']
+2025-04-01 10:18:13,899 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0074.jpg
+2025-04-01 10:18:13,914 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0076.jpg
+2025-04-01 10:18:13,931 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0078.jpg
+2025-04-01 10:18:13,946 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0080.jpg
+2025-04-01 10:18:13,961 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0081.jpg
+2025-04-01 10:18:13,974 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0082.jpg
+2025-04-01 10:18:13,989 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0083.jpg
+2025-04-01 10:18:14,010 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0085.jpg
+2025-04-01 10:18:14,024 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0087.jpg
+2025-04-01 10:18:14,043 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0089.jpg
+2025-04-01 10:18:14,055 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0091.jpg
+2025-04-01 10:18:14,071 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0092.jpg
+2025-04-01 10:18:14,092 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0093.jpg
+2025-04-01 10:18:14,112 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0095.jpg
+2025-04-01 10:18:14,129 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0097.jpg
+2025-04-01 10:18:14,145 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0100.jpg
+2025-04-01 10:18:14,161 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0102.jpg
+2025-04-01 10:18:14,177 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0103.jpg
+2025-04-01 10:18:14,190 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0105.jpg
+2025-04-01 10:18:14,202 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0107.jpg
+2025-04-01 10:18:14,214 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0109.jpg
+2025-04-01 10:18:14,223 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0111.jpg
+2025-04-01 10:18:14,236 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0113.jpg
+2025-04-01 10:18:14,247 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0114.jpg
+2025-04-01 10:18:14,259 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0116.jpg
+2025-04-01 10:18:14,271 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0117.jpg
+2025-04-01 10:18:14,285 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0118.jpg
+2025-04-01 10:18:14,296 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0120.jpg
+2025-04-01 10:18:14,306 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0122.jpg
+2025-04-01 10:18:14,319 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0123.jpg
+2025-04-01 10:18:14,332 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0125.jpg
+2025-04-01 10:18:14,343 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0126.jpg
+2025-04-01 10:18:14,356 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0127.jpg
+2025-04-01 10:18:14,367 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0128.jpg
+2025-04-01 10:18:14,378 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0129.jpg
+2025-04-01 10:18:14,388 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0130.jpg
+2025-04-01 10:18:14,399 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0131.jpg
+2025-04-01 10:18:14,407 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0132.jpg
+2025-04-01 10:18:14,414 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0133.jpg
+2025-04-01 10:18:14,423 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0134.jpg
+2025-04-01 10:18:14,433 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0135.jpg
+2025-04-01 10:18:14,443 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0136.jpg
+2025-04-01 10:20:51,404 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0074.jpg
+2025-04-01 10:20:51,424 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0076.jpg
+2025-04-01 10:20:51,438 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0078.jpg
+2025-04-01 10:20:51,448 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0080.jpg
+2025-04-01 10:20:51,456 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0081.jpg
+2025-04-01 10:20:51,463 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0082.jpg
+2025-04-01 10:20:51,471 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0083.jpg
+2025-04-01 10:20:51,479 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0085.jpg
+2025-04-01 10:20:51,488 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0087.jpg
+2025-04-01 10:20:51,495 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0089.jpg
+2025-04-01 10:20:51,503 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0091.jpg
+2025-04-01 10:20:51,513 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0092.jpg
+2025-04-01 10:20:51,524 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0093.jpg
+2025-04-01 10:20:51,542 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0095.jpg
+2025-04-01 10:20:51,567 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0097.jpg
+2025-04-01 10:20:51,600 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0100.jpg
+2025-04-01 10:20:51,627 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0102.jpg
+2025-04-01 10:20:51,659 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0103.jpg
+2025-04-01 10:20:51,675 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0105.jpg
+2025-04-01 10:20:51,689 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0107.jpg
+2025-04-01 10:20:51,701 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0109.jpg
+2025-04-01 10:20:51,710 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0111.jpg
+2025-04-01 10:20:51,722 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0113.jpg
+2025-04-01 10:20:51,731 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0114.jpg
+2025-04-01 10:20:51,741 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0116.jpg
+2025-04-01 10:20:51,751 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0117.jpg
+2025-04-01 10:20:51,771 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0118.jpg
+2025-04-01 10:20:51,797 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0120.jpg
+2025-04-01 10:20:51,823 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0122.jpg
+2025-04-01 10:20:51,846 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0123.jpg
+2025-04-01 10:20:51,873 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0125.jpg
+2025-04-01 10:20:51,898 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0126.jpg
+2025-04-01 10:20:51,923 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0127.jpg
+2025-04-01 10:20:51,947 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0128.jpg
+2025-04-01 10:20:51,970 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0129.jpg
+2025-04-01 10:20:51,993 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0130.jpg
+2025-04-01 10:20:52,015 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0131.jpg
+2025-04-01 10:20:52,038 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0132.jpg
+2025-04-01 10:20:52,061 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0133.jpg
+2025-04-01 10:20:52,083 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0134.jpg
+2025-04-01 10:20:52,105 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0135.jpg
+2025-04-01 10:20:52,124 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0136.jpg
+2025-04-01 10:25:13,532 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0074.jpg
+2025-04-01 10:25:13,564 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0076.jpg
+2025-04-01 10:25:13,600 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0078.jpg
+2025-04-01 10:25:13,638 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0080.jpg
+2025-04-01 10:25:13,674 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0081.jpg
+2025-04-01 10:25:13,731 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0082.jpg
+2025-04-01 10:25:13,743 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0083.jpg
+2025-04-01 10:25:13,808 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0085.jpg
+2025-04-01 10:25:13,842 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0087.jpg
+2025-04-01 10:25:13,879 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0089.jpg
+2025-04-01 10:25:13,892 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0091.jpg
+2025-04-01 10:25:13,917 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0092.jpg
+2025-04-01 10:25:13,928 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0093.jpg
+2025-04-01 10:25:13,938 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0095.jpg
+2025-04-01 10:25:13,950 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0097.jpg
+2025-04-01 10:25:13,967 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0100.jpg
+2025-04-01 10:25:13,981 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0102.jpg
+2025-04-01 10:25:13,989 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0103.jpg
+2025-04-01 10:25:13,998 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0105.jpg
+2025-04-01 10:25:14,011 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0107.jpg
+2025-04-01 10:25:14,027 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0109.jpg
+2025-04-01 10:25:14,038 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0111.jpg
+2025-04-01 10:25:14,049 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0113.jpg
+2025-04-01 10:25:14,062 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0114.jpg
+2025-04-01 10:25:14,075 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0116.jpg
+2025-04-01 10:25:14,089 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0117.jpg
+2025-04-01 10:25:14,100 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0118.jpg
+2025-04-01 10:25:14,113 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0120.jpg
+2025-04-01 10:25:14,124 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0122.jpg
+2025-04-01 10:25:14,135 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0123.jpg
+2025-04-01 10:25:14,145 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0125.jpg
+2025-04-01 10:25:14,154 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0126.jpg
+2025-04-01 10:25:14,163 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0127.jpg
+2025-04-01 10:25:14,172 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0128.jpg
+2025-04-01 10:25:14,182 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0129.jpg
+2025-04-01 10:25:14,193 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0130.jpg
+2025-04-01 10:25:14,202 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0131.jpg
+2025-04-01 10:25:14,213 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0132.jpg
+2025-04-01 10:25:14,224 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0133.jpg
+2025-04-01 10:25:14,236 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0134.jpg
+2025-04-01 10:25:14,248 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0135.jpg
+2025-04-01 10:25:14,257 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0136.jpg
+2025-04-01 10:29:20,310 > Reading YOLO files from: [/mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox]
+2025-04-01 10:29:20,313 Found 1 categories
+2025-04-01 10:29:20,317 Label configuration file saved to: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/template.label_config.xml
+2025-04-01 10:29:20,317 Converting labels from /mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox/labels
+2025-04-01 10:29:20,318 image extensions->, ['.jpg', '.png']
+2025-04-01 10:29:21,662 The image '/mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox/images/Thumbs.db' has an unsupported extension. Skipping.
+2025-04-01 10:29:21,662 Saving Label Studio JSON to /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/task.json
+2025-04-01 10:29:25,074 > Reading YOLO files from: [/mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg]
+2025-04-01 10:29:25,107 Found 1 categories
+2025-04-01 10:29:25,155 Label configuration file saved to: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/template.label_config.xml
+2025-04-01 10:29:25,158 Converting labels from /mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg/labels
+2025-04-01 10:29:25,161 image extensions->, ['.jpg', '.png']
+2025-04-01 10:29:35,344 The image '/mnt/c/Users/gvero/Documents/Datasets/canon_yolo_temp/canon_seg/images/Thumbs.db' has an unsupported extension. Skipping.
+2025-04-01 10:29:35,344 Saving Label Studio JSON to /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/task.json
+2025-04-01 10:32:04,797 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0074.jpg
+2025-04-01 10:32:04,803 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0076.jpg
+2025-04-01 10:32:04,808 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0078.jpg
+2025-04-01 10:32:04,814 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0080.jpg
+2025-04-01 10:32:04,819 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0081.jpg
+2025-04-01 10:32:04,827 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0082.jpg
+2025-04-01 10:32:04,832 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0083.jpg
+2025-04-01 10:32:04,839 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0085.jpg
+2025-04-01 10:32:04,845 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0087.jpg
+2025-04-01 10:32:04,854 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0089.jpg
+2025-04-01 10:32:04,861 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0091.jpg
+2025-04-01 10:32:04,866 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0092.jpg
+2025-04-01 10:32:04,902 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0093.jpg
+2025-04-01 10:32:04,908 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0095.jpg
+2025-04-01 10:32:04,914 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0097.jpg
+2025-04-01 10:32:04,919 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0100.jpg
+2025-04-01 10:32:04,925 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0102.jpg
+2025-04-01 10:32:04,932 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0103.jpg
+2025-04-01 10:32:04,938 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0105.jpg
+2025-04-01 10:32:04,949 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0107.jpg
+2025-04-01 10:32:04,955 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0109.jpg
+2025-04-01 10:32:04,964 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0111.jpg
+2025-04-01 10:32:04,970 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0113.jpg
+2025-04-01 10:32:04,977 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0114.jpg
+2025-04-01 10:32:04,983 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0116.jpg
+2025-04-01 10:32:04,999 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0117.jpg
+2025-04-01 10:32:05,007 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0118.jpg
+2025-04-01 10:32:05,018 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0120.jpg
+2025-04-01 10:32:05,028 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0122.jpg
+2025-04-01 10:32:05,035 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0123.jpg
+2025-04-01 10:32:05,044 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0125.jpg
+2025-04-01 10:32:05,050 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0126.jpg
+2025-04-01 10:32:05,056 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0127.jpg
+2025-04-01 10:32:05,063 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0128.jpg
+2025-04-01 10:32:05,069 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0129.jpg
+2025-04-01 10:32:05,075 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0130.jpg
+2025-04-01 10:32:05,080 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0131.jpg
+2025-04-01 10:32:05,087 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0132.jpg
+2025-04-01 10:32:05,092 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0133.jpg
+2025-04-01 10:32:05,098 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0134.jpg
+2025-04-01 10:32:05,108 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0135.jpg
+2025-04-01 10:32:05,113 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0136.jpg
+2025-04-01 10:32:08,226 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0074.jpg
+2025-04-01 10:32:08,375 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0076.jpg
+2025-04-01 10:32:09,013 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0078.jpg
+2025-04-01 10:32:09,308 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0080.jpg
+2025-04-01 10:32:09,619 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0081.jpg
+2025-04-01 10:32:10,186 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0082.jpg
+2025-04-01 10:32:10,873 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0083.jpg
+2025-04-01 10:32:11,544 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0085.jpg
+2025-04-01 10:32:11,722 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0087.jpg
+2025-04-01 10:32:11,843 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0089.jpg
+2025-04-01 10:32:11,996 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0091.jpg
+2025-04-01 10:32:13,418 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0092.jpg
+2025-04-01 10:32:14,575 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0093.jpg
+2025-04-01 10:32:15,085 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0095.jpg
+2025-04-01 10:32:15,376 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0097.jpg
+2025-04-01 10:32:16,592 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0100.jpg
+2025-04-01 10:32:16,812 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0102.jpg
+2025-04-01 10:32:17,141 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0103.jpg
+2025-04-01 10:32:17,215 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0105.jpg
+2025-04-01 10:32:17,305 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0107.jpg
+2025-04-01 10:32:17,474 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0109.jpg
+2025-04-01 10:32:17,560 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0111.jpg
+2025-04-01 10:32:17,776 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0113.jpg
+2025-04-01 10:32:18,065 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0114.jpg
+2025-04-01 10:32:18,474 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0116.jpg
+2025-04-01 10:32:18,709 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0117.jpg
+2025-04-01 10:32:19,008 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0118.jpg
+2025-04-01 10:32:19,235 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0120.jpg
+2025-04-01 10:32:19,403 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0122.jpg
+2025-04-01 10:32:19,496 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0123.jpg
+2025-04-01 10:32:19,587 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0125.jpg
+2025-04-01 10:32:19,688 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0126.jpg
+2025-04-01 10:32:19,704 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0127.jpg
+2025-04-01 10:32:19,738 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0128.jpg
+2025-04-01 10:32:19,754 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0129.jpg
+2025-04-01 10:32:19,765 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0130.jpg
+2025-04-01 10:32:19,790 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0131.jpg
+2025-04-01 10:32:19,804 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0132.jpg
+2025-04-01 10:32:19,816 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0133.jpg
+2025-04-01 10:32:20,055 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0134.jpg
+2025-04-01 10:32:20,312 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0135.jpg
+2025-04-01 10:32:20,320 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0136.jpg
+2025-04-01 11:09:34,492 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0074.jpg
+2025-04-01 11:09:34,501 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0076.jpg
+2025-04-01 11:09:34,514 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0078.jpg
+2025-04-01 11:09:34,523 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0080.jpg
+2025-04-01 11:09:34,532 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0081.jpg
+2025-04-01 11:09:34,541 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0082.jpg
+2025-04-01 11:09:34,551 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0083.jpg
+2025-04-01 11:09:34,566 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0085.jpg
+2025-04-01 11:09:34,580 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0087.jpg
+2025-04-01 11:09:34,590 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0089.jpg
+2025-04-01 11:09:34,602 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0091.jpg
+2025-04-01 11:09:34,614 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0092.jpg
+2025-04-01 11:09:34,626 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0093.jpg
+2025-04-01 11:09:34,638 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0095.jpg
+2025-04-01 11:09:34,649 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0097.jpg
+2025-04-01 11:09:34,661 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0100.jpg
+2025-04-01 11:09:34,676 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0102.jpg
+2025-04-01 11:09:34,694 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0103.jpg
+2025-04-01 11:09:34,711 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0105.jpg
+2025-04-01 11:09:34,732 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0107.jpg
+2025-04-01 11:09:34,747 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0109.jpg
+2025-04-01 11:09:34,760 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0111.jpg
+2025-04-01 11:09:34,776 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0113.jpg
+2025-04-01 11:09:34,788 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0114.jpg
+2025-04-01 11:09:34,800 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0116.jpg
+2025-04-01 11:09:34,812 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0117.jpg
+2025-04-01 11:09:34,822 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0118.jpg
+2025-04-01 11:09:34,833 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0120.jpg
+2025-04-01 11:09:34,844 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0122.jpg
+2025-04-01 11:09:34,854 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0123.jpg
+2025-04-01 11:09:34,868 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0125.jpg
+2025-04-01 11:09:34,887 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0126.jpg
+2025-04-01 11:09:34,907 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0127.jpg
+2025-04-01 11:09:34,917 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0128.jpg
+2025-04-01 11:09:34,929 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0129.jpg
+2025-04-01 11:09:34,940 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0130.jpg
+2025-04-01 11:09:34,951 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0131.jpg
+2025-04-01 11:09:34,963 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0132.jpg
+2025-04-01 11:09:34,974 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0133.jpg
+2025-04-01 11:09:34,989 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0134.jpg
+2025-04-01 11:09:35,008 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0135.jpg
+2025-04-01 11:09:35,021 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0136.jpg
+2025-04-01 11:09:39,595 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0074.jpg
+2025-04-01 11:09:39,758 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0076.jpg
+2025-04-01 11:09:40,306 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0078.jpg
+2025-04-01 11:09:40,560 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0080.jpg
+2025-04-01 11:09:40,794 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0081.jpg
+2025-04-01 11:09:41,273 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0082.jpg
+2025-04-01 11:09:41,824 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0083.jpg
+2025-04-01 11:09:42,268 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0085.jpg
+2025-04-01 11:09:42,392 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0087.jpg
+2025-04-01 11:09:42,477 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0089.jpg
+2025-04-01 11:09:42,597 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0091.jpg
+2025-04-01 11:09:43,817 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0092.jpg
+2025-04-01 11:09:44,876 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0093.jpg
+2025-04-01 11:09:45,259 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0095.jpg
+2025-04-01 11:09:45,498 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0097.jpg
+2025-04-01 11:09:46,399 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0100.jpg
+2025-04-01 11:09:46,561 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0102.jpg
+2025-04-01 11:09:46,844 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0103.jpg
+2025-04-01 11:09:46,905 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0105.jpg
+2025-04-01 11:09:46,959 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0107.jpg
+2025-04-01 11:09:47,075 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0109.jpg
+2025-04-01 11:09:47,158 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0111.jpg
+2025-04-01 11:09:47,335 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0113.jpg
+2025-04-01 11:09:47,579 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0114.jpg
+2025-04-01 11:09:47,907 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0116.jpg
+2025-04-01 11:09:48,084 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0117.jpg
+2025-04-01 11:09:48,338 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0118.jpg
+2025-04-01 11:09:48,514 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0120.jpg
+2025-04-01 11:09:48,647 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0122.jpg
+2025-04-01 11:09:48,713 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0123.jpg
+2025-04-01 11:09:48,799 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0125.jpg
+2025-04-01 11:09:48,890 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0126.jpg
+2025-04-01 11:09:48,905 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0127.jpg
+2025-04-01 11:09:48,918 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0128.jpg
+2025-04-01 11:09:48,934 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0129.jpg
+2025-04-01 11:09:48,951 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0130.jpg
+2025-04-01 11:09:48,983 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0131.jpg
+2025-04-01 11:09:48,998 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0132.jpg
+2025-04-01 11:09:49,010 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0133.jpg
+2025-04-01 11:09:49,189 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0134.jpg
+2025-04-01 11:09:49,375 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0135.jpg
+2025-04-01 11:09:49,393 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0136.jpg
+2025-04-01 11:11:36,163 > Reading YOLO files from: [/mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox_new]
+2025-04-01 11:11:36,166 Found 1 categories
+2025-04-01 11:11:36,168 Label configuration file saved to: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox_new/template.label_config.xml
+2025-04-01 11:11:36,168 Converting labels from /mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox_new/labels
+2025-04-01 11:11:36,169 image extensions->, ['.jpg', '.png']
+2025-04-01 11:11:36,480 The image '/mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox_new/images/Thumbs.db' has an unsupported extension. Skipping.
+2025-04-01 11:11:36,480 Saving Label Studio JSON to /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox_new/task.json
+2025-04-01 11:18:10,668 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0074.jpg
+2025-04-01 11:18:10,673 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0076.jpg
+2025-04-01 11:18:10,714 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0078.jpg
+2025-04-01 11:18:10,725 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0080.jpg
+2025-04-01 11:18:10,755 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0081.jpg
+2025-04-01 11:18:10,761 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0082.jpg
+2025-04-01 11:18:10,782 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0083.jpg
+2025-04-01 11:18:10,797 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0085.jpg
+2025-04-01 11:18:10,808 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0087.jpg
+2025-04-01 11:18:10,813 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0089.jpg
+2025-04-01 11:18:10,818 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0091.jpg
+2025-04-01 11:18:10,850 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0092.jpg
+2025-04-01 11:18:10,857 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0093.jpg
+2025-04-01 11:18:10,862 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0095.jpg
+2025-04-01 11:18:10,892 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0097.jpg
+2025-04-01 11:18:10,916 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0100.jpg
+2025-04-01 11:18:10,945 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0102.jpg
+2025-04-01 11:18:10,977 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0103.jpg
+2025-04-01 11:18:10,993 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0105.jpg
+2025-04-01 11:18:11,006 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0107.jpg
+2025-04-01 11:18:11,019 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0109.jpg
+2025-04-01 11:18:11,031 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0111.jpg
+2025-04-01 11:18:11,043 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0113.jpg
+2025-04-01 11:18:11,056 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0114.jpg
+2025-04-01 11:18:11,067 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0116.jpg
+2025-04-01 11:18:11,088 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0117.jpg
+2025-04-01 11:18:11,096 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0118.jpg
+2025-04-01 11:18:11,120 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0120.jpg
+2025-04-01 11:18:11,139 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0122.jpg
+2025-04-01 11:18:11,170 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0123.jpg
+2025-04-01 11:18:11,191 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0125.jpg
+2025-04-01 11:18:11,211 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0126.jpg
+2025-04-01 11:18:11,224 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0127.jpg
+2025-04-01 11:18:11,235 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0128.jpg
+2025-04-01 11:18:11,245 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0129.jpg
+2025-04-01 11:18:11,256 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0130.jpg
+2025-04-01 11:18:11,268 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0131.jpg
+2025-04-01 11:18:11,284 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0132.jpg
+2025-04-01 11:18:11,293 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0133.jpg
+2025-04-01 11:18:11,299 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0134.jpg
+2025-04-01 11:18:11,323 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0135.jpg
+2025-04-01 11:18:11,336 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox/images/IMG_0136.jpg
+2025-04-01 11:19:10,671 > Reading YOLO files from: [/mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox_new]
+2025-04-01 11:19:10,679 Found 1 categories
+2025-04-01 11:19:10,686 Label configuration file saved to: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox_new/template.label_config.xml
+2025-04-01 11:19:10,686 Converting labels from /mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox_new/labels
+2025-04-01 11:19:10,686 image extensions->, ['.jpg', '.png']
+2025-04-01 11:19:11,018 The image '/mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox_new/images/Thumbs.db' has an unsupported extension. Skipping.
+2025-04-01 11:19:11,018 Saving Label Studio JSON to /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox_new/task.json
+2025-04-01 11:38:07,027 > Reading YOLO files from: [/mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox_new]
+2025-04-01 11:38:07,031 Found 1 categories
+2025-04-01 11:38:07,034 Label configuration file saved to: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox_new/template.label_config.xml
+2025-04-01 11:38:07,034 Converting labels from /mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox_new/labels
+2025-04-01 11:38:07,034 image extensions->, ['.jpg', '.png']
+2025-04-01 11:38:08,376 The image '/mnt/c/Users/gvero/documents/datasets/canon_yolo_temp/canon_bbox_new/images/Thumbs.db' has an unsupported extension. Skipping.
+2025-04-01 11:38:08,376 Saving Label Studio JSON to /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_bbox_new/task.json
+2025-04-01 11:38:11,191 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0074.jpg
+2025-04-01 11:39:21,136 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0074.jpg
+2025-04-01 11:39:21,229 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0076.jpg
+2025-04-01 11:39:25,314 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0078.jpg
+2025-04-01 11:39:25,456 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0080.jpg
+2025-04-01 11:39:27,372 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0081.jpg
+2025-04-01 11:39:29,269 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0082.jpg
+2025-04-01 11:39:31,376 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0083.jpg
+2025-04-01 11:39:31,716 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0085.jpg
+2025-04-01 11:39:31,793 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0087.jpg
+2025-04-01 11:39:33,249 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0089.jpg
+2025-04-01 11:39:33,351 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0091.jpg
+2025-04-01 11:39:37,654 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0092.jpg
+2025-04-01 11:39:41,219 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0093.jpg
+2025-04-01 11:39:43,358 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0095.jpg
+2025-04-01 11:39:43,489 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0097.jpg
+2025-04-01 11:39:49,621 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0100.jpg
+2025-04-01 11:39:49,710 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0102.jpg
+2025-04-01 11:39:49,854 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0103.jpg
+2025-04-01 11:39:51,220 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0105.jpg
+2025-04-01 11:39:51,250 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0107.jpg
+2025-04-01 11:39:51,303 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0109.jpg
+2025-04-01 11:39:51,335 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0111.jpg
+2025-04-01 11:39:51,419 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0113.jpg
+2025-04-01 11:39:53,377 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0114.jpg
+2025-04-01 11:39:55,388 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0116.jpg
+2025-04-01 11:39:55,467 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0117.jpg
+2025-04-01 11:39:55,615 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0118.jpg
+2025-04-01 11:39:57,348 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0120.jpg
+2025-04-01 11:39:57,410 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0122.jpg
+2025-04-01 11:39:57,448 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0123.jpg
+2025-04-01 11:39:57,485 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0125.jpg
+2025-04-01 11:39:57,537 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0126.jpg
+2025-04-01 11:39:57,548 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0127.jpg
+2025-04-01 11:39:57,555 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0128.jpg
+2025-04-01 11:39:57,563 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0129.jpg
+2025-04-01 11:39:57,572 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0130.jpg
+2025-04-01 11:39:57,584 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0131.jpg
+2025-04-01 11:39:57,594 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0132.jpg
+2025-04-01 11:39:57,602 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0133.jpg
+2025-04-01 11:39:57,694 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0134.jpg
+2025-04-01 11:39:57,821 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0135.jpg
+2025-04-01 11:39:57,828 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0136.jpg
+2025-04-01 11:43:23,189 The selected Label Studio dataset does not exist
+2025-04-01 11:43:33,922 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0074.jpg
+2025-04-01 11:43:35,369 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0076.jpg
+2025-04-01 11:43:43,390 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0078.jpg
+2025-04-01 11:43:43,547 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0080.jpg
+2025-04-01 11:43:45,414 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0081.jpg
+2025-04-01 11:43:45,700 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0082.jpg
+2025-04-01 11:43:55,480 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0083.jpg
+2025-04-01 11:43:59,513 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0085.jpg
+2025-04-01 11:43:59,590 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0087.jpg
+2025-04-01 11:43:59,646 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0089.jpg
+2025-04-01 11:43:59,749 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0091.jpg
+2025-04-01 11:44:06,163 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0092.jpg
+2025-04-01 11:44:06,832 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0093.jpg
+2025-04-01 11:44:09,144 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0095.jpg
+2025-04-01 11:44:09,308 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0097.jpg
+2025-04-01 11:44:15,099 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0100.jpg
+2025-04-01 11:44:15,199 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0102.jpg
+2025-04-01 11:44:17,082 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0103.jpg
+2025-04-01 11:44:17,110 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0105.jpg
+2025-04-01 11:44:17,139 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0107.jpg
+2025-04-01 11:44:18,992 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0109.jpg
+2025-04-01 11:44:19,030 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0111.jpg
+2025-04-01 11:44:19,115 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0113.jpg
+2025-04-01 11:44:19,230 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0114.jpg
+2025-04-01 11:44:19,390 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0116.jpg
+2025-04-01 11:44:19,491 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0117.jpg
+2025-04-01 11:53:01,001 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0074.jpg
+2025-04-01 11:53:01,099 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0076.jpg
+2025-04-01 11:53:03,111 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0078.jpg
+2025-04-01 11:53:03,331 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0080.jpg
+2025-04-01 11:53:03,525 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0081.jpg
+2025-04-01 11:53:06,966 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0082.jpg
+2025-04-01 11:53:11,100 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0083.jpg
+2025-04-01 11:53:15,030 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0085.jpg
+2025-04-01 11:53:16,943 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0087.jpg
+2025-04-01 11:53:18,874 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0089.jpg
+2025-04-01 11:53:18,965 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0091.jpg
+2025-04-01 11:53:25,045 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0092.jpg
+2025-04-01 11:53:29,262 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0093.jpg
+2025-04-01 11:53:31,052 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0095.jpg
+2025-04-01 11:53:31,241 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0097.jpg
+2025-04-01 11:53:33,950 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0100.jpg
+2025-04-01 11:53:34,052 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0102.jpg
+2025-04-01 11:53:34,218 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0103.jpg
+2025-04-01 11:53:34,260 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0105.jpg
+2025-04-01 11:53:34,300 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0107.jpg
+2025-04-01 11:53:34,388 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0109.jpg
+2025-04-01 11:53:35,939 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0111.jpg
+2025-04-01 11:53:36,029 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0113.jpg
+2025-04-01 11:53:37,938 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0114.jpg
+2025-04-01 11:53:40,010 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0116.jpg
+2025-04-01 11:53:40,105 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0117.jpg
+2025-04-01 11:53:40,245 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0118.jpg
+2025-04-01 11:53:40,337 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0120.jpg
+2025-04-01 11:53:40,414 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0122.jpg
+2025-04-01 11:53:40,472 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0123.jpg
+2025-04-01 11:53:40,524 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0125.jpg
+2025-04-01 11:53:40,582 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0126.jpg
+2025-04-01 11:53:40,594 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0127.jpg
+2025-04-01 11:53:40,605 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0128.jpg
+2025-04-01 11:53:40,616 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0129.jpg
+2025-04-01 11:53:40,628 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0130.jpg
+2025-04-01 11:53:40,639 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0131.jpg
+2025-04-01 11:53:40,649 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0132.jpg
+2025-04-01 11:53:40,659 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0133.jpg
+2025-04-01 11:53:40,765 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0134.jpg
+2025-04-01 11:53:40,862 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0135.jpg
+2025-04-01 11:53:40,876 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0136.jpg
+2025-04-01 11:56:17,918 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0074.jpg
+2025-04-01 11:56:18,025 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0076.jpg
+2025-04-01 11:56:18,456 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0078.jpg
+2025-04-01 11:56:18,662 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0080.jpg
+2025-04-01 11:56:18,920 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0081.jpg
+2025-04-01 11:56:19,284 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0082.jpg
+2025-04-01 11:56:19,670 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0083.jpg
+2025-04-01 11:56:20,033 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0085.jpg
+2025-04-01 11:56:20,140 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0087.jpg
+2025-04-01 11:56:20,207 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0089.jpg
+2025-04-01 11:56:20,331 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0091.jpg
+2025-04-01 11:56:21,120 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0092.jpg
+2025-04-01 11:56:21,761 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0093.jpg
+2025-04-01 11:56:22,048 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0095.jpg
+2025-04-01 11:56:22,244 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0097.jpg
+2025-04-01 11:56:22,898 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0100.jpg
+2025-04-01 11:56:23,048 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0102.jpg
+2025-04-01 11:56:23,234 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0103.jpg
+2025-04-01 11:56:23,301 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0105.jpg
+2025-04-01 11:56:23,379 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0107.jpg
+2025-04-01 11:56:23,465 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0109.jpg
+2025-04-01 11:56:23,516 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0111.jpg
+2025-04-01 11:56:23,636 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0113.jpg
+2025-04-01 11:56:23,784 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0114.jpg
+2025-04-01 11:56:24,002 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0116.jpg
+2025-04-01 11:56:24,132 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0117.jpg
+2025-04-01 11:56:24,286 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0118.jpg
+2025-04-01 11:56:24,424 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0120.jpg
+2025-04-01 11:56:24,524 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0122.jpg
+2025-04-01 11:56:24,581 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0123.jpg
+2025-04-01 11:56:24,647 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0125.jpg
+2025-04-01 11:56:24,713 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0126.jpg
+2025-04-01 11:56:24,764 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0127.jpg
+2025-04-01 11:56:24,810 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0128.jpg
+2025-04-01 11:56:24,825 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0129.jpg
+2025-04-01 11:56:24,850 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0130.jpg
+2025-04-01 11:56:24,874 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0131.jpg
+2025-04-01 11:56:24,895 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0132.jpg
+2025-04-01 11:56:24,917 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0133.jpg
+2025-04-01 11:56:25,032 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0134.jpg
+2025-04-01 11:56:25,162 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0135.jpg
+2025-04-01 11:56:25,181 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0136.jpg
+2025-04-01 11:58:07,754 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0074.jpg
+2025-04-01 11:58:07,842 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0076.jpg
+2025-04-01 11:58:08,225 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0078.jpg
+2025-04-01 11:58:08,406 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0080.jpg
+2025-04-01 11:58:08,576 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0081.jpg
+2025-04-01 11:58:08,884 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0082.jpg
+2025-04-01 11:58:09,246 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0083.jpg
+2025-04-01 11:58:09,615 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0085.jpg
+2025-04-01 11:58:09,719 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0087.jpg
+2025-04-01 11:58:09,795 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0089.jpg
+2025-04-01 11:58:09,890 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0091.jpg
+2025-04-01 11:58:10,589 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0092.jpg
+2025-04-01 11:58:11,133 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0093.jpg
+2025-04-01 11:58:11,378 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0095.jpg
+2025-04-01 11:58:11,531 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0097.jpg
+2025-04-01 11:58:12,100 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0100.jpg
+2025-04-01 11:58:12,184 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0102.jpg
+2025-04-01 11:58:12,330 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0103.jpg
+2025-04-01 11:58:12,371 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0105.jpg
+2025-04-01 11:58:12,405 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0107.jpg
+2025-04-01 11:58:12,539 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0109.jpg
+2025-04-01 11:58:12,593 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0111.jpg
+2025-04-01 11:58:12,673 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0113.jpg
+2025-04-01 11:58:12,790 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0114.jpg
+2025-04-01 11:58:12,948 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0116.jpg
+2025-04-01 11:58:13,059 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0117.jpg
+2025-04-01 11:58:13,198 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0118.jpg
+2025-04-01 11:58:13,291 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0120.jpg
+2025-04-01 11:58:13,356 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0122.jpg
+2025-04-01 11:58:13,386 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0123.jpg
+2025-04-01 11:58:13,418 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0125.jpg
+2025-04-01 11:58:13,451 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0126.jpg
+2025-04-01 11:58:13,460 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0127.jpg
+2025-04-01 11:58:13,465 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0128.jpg
+2025-04-01 11:58:13,470 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0129.jpg
+2025-04-01 11:58:13,475 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0130.jpg
+2025-04-01 11:58:13,480 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0131.jpg
+2025-04-01 11:58:13,485 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0132.jpg
+2025-04-01 11:58:13,491 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0133.jpg
+2025-04-01 11:58:13,596 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0134.jpg
+2025-04-01 11:58:13,683 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0135.jpg
+2025-04-01 11:58:13,690 Processing annotations for image: /mnt/c/Users/gvero/Documents/Datasets/label-studio/ls_canon_temp_seg/images/IMG_0136.jpg
