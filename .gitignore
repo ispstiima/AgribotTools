@@ -1,9 +1,11 @@
-converter/__pycache__
 .idea
-yolo_temp
+.qodo
+
 venv
+
+converter/__pycache__
+
+yolo_temp
 datasets
 out
-*/*.log
-
-.qodo
+logs
