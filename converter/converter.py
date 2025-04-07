@@ -4,14 +4,13 @@ import cv2
 import logging
 import numpy as np
 import shutil
-import random
-from matplotlib import pyplot as plt
 from .colors import COLORS
 from pathlib import Path
 from PIL import Image
 from typing import Optional, Tuple
-from converter import LS_ROOT_PATH
 from urllib.request import pathname2url
+import os
+
 
 log = logging.getLogger("Converter")
 logging.basicConfig(filename="converter.log", level=logging.INFO, format="%(asctime)s %(message)s",)
@@ -28,6 +27,8 @@ LABELING_CONFIG = """<View>
 {# BODY #}</View>
 """
 
+LS_ROOT = Path(os.environ["LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT"])
+OUT_DIR = "./out"
 
 class InputStream:
     def __init__(self, data):
@@ -439,19 +440,33 @@ def parse_seg_value(value, img_w, img_h):
     seg_yolo, _ = mask_to_yolo(binmask)
     return seg_yolo[0]  # Extracting segmentation masks from the LS task should return just one mask
 
+def validate_dataset(images_dir_path, labels_dir_path):
+    assert os.path.exists(images_dir_path), f"Path {images_dir_path} does not exist"
+    assert os.path.exists(labels_dir_path), f"Path {labels_dir_path} does not exist"
+    
+    image_files = {os.path.splitext(file)[0] for file in os.listdir(images_dir_path) if os.path.isfile(os.path.join(images_dir_path, file))}
+    binmask_files = {os.path.splitext(file)[0] for file in os.listdir(labels_dir_path) if os.path.isfile(os.path.join(labels_dir_path, file))}
+    
+    missing_in_labels = image_files - binmask_files
+    missing_in_images = binmask_files - image_files
+    
+    if missing_in_labels:
+        raise ValueError(f"The following files are missing in labels_dir_path: {missing_in_labels}")
+    if missing_in_images:
+        raise ValueError(f"The following files are missing in images_dir_path: {missing_in_images}")
+    
+    return True
 
-def save_yolo_file(file_name, output_dir, data):
-    if output_dir is not None:
-        Path(output_dir).mkdir(parents=True, exist_ok=True)
-
-        output_path = Path(output_dir) / f"{file_name}.txt"
-        with open(output_path, "w", encoding="utf-8") as file:
-            for item in data:
-                line = " ".join(map(str, item))
-                file.write(line + "\n")
-
-        return output_path
-    return None
+def save_yolo_txt_file(file_name, output_dir, data):
+    assert data, "Data is empty"
+    assert file_name, "File name is empty"
+    assert isinstance(data, list), "Data should be a list"
+    os.makedirs(output_dir, exist_ok=True)
+    output_path = Path(output_dir) / f"{file_name}.txt"
+    with open(output_path, "w", encoding="utf-8") as file:
+        for item in data:
+            line = " ".join(map(str, item))
+            file.write(line + "\n")
 
 
 def seg_to_bbox(seg_info: list):
@@ -495,85 +510,106 @@ def seg_to_bbox(seg_info: list):
     return bbox_info
 
 
-def binmask_to_yolo(binmask_path, output_seg_path=None, output_box_path=None):
+def binmask_to_yolo(dataset_path, should_make_seg, should_make_bbox):
     """
-    Converts a dataset of binary segmentation mask images to the YOLO format.
+    Converts binary segmentation mask images to YOLO format for segmentation and bounding boxes annotations types.
 
-    This function takes the directory containing the binary format mask images and converts them into YOLO format.
-    The converted files are saved in the specified output directories.
+    This function processes binary mask images and generates YOLO-compatible labels for segmentation 
+    and/or bounding boxes annotations types.
+        
+        Args:
+            dataset_path (str): The path to the directory containing the dataset with subdirectory containing images (png or jpg format) and labels containing binary masks.
+            should_make_seg (bool): Flag to indicate whether YOLO segmentation labels should be generated.
+            should_make_bbox (bool): Flag to indicate whether YOLO bounding box labels should be generated.
+            
+        Notes:
+            - At least one of the flags should be set to True.
+            - The binary mask images should have pixel values of 255 for the object and 0 for the background.
+            - The function normalizes coordinates to the range [0, 1] for YOLO format.
 
-    Args:
-        binmask_path (str): The path to the directory where all mask images (png, jpg) are stored.
-        output_seg_path (str): The path to the directory where the converted YOLO segmentation masks will be stored.
-        output_box_path (str): The path to the directory where the converted YOLO bounding boxes will be stored.
+    Directory Structures:
+        Input:
+            dataset_path/
+                |
+                ├─ images/
+                |   ├─ image_01.png
+                |   ├─ image_02.png
+                |   ├─ image_03.png
+                |   └─ image_04.png
+                |    
+                ├─ labels/
+                |   ├─ image_01.png
+                |   ├─ image_02.png
+                |   ├─ image_03.png
+                |   └─ image_04.png
+                |
+                └─ classes.txt
+                
 
-    Notes:
-        The expected directory structure for the masks is:
+        Output:
+            out/
+                │ 
+                └─ <dataset_path>_yolo_<annotation_type>/
+                    |
+                    ├─ images/
+                    │   ├─ image_01.png
+                    │   ├─ image_02.png
+                    │   ├─ image_03.png
+                    │   └─ image_04.png
+                    |
+                    ├─ labels/
+                    |   ├─ image_01.txt
+                    |   ├─ image_02.txt
+                    |   ├─ image_03.txt
+                    |   └─ image_04.txt
+                    |
+                    └─ classes.txt 
+    Returns:
+        None
 
-            - masks
-                ├─ mask_image_01.png or mask_image_01.jpg
-                ├─ mask_image_02.png or mask_image_02.jpg
-                ├─ mask_image_03.png or mask_image_03.jpg
-                └─ mask_image_04.png or mask_image_04.jpg
-
-        After execution, the labels will be organized in the following structure:
-
-            - output_seg_dir
-                ├─ mask_image_01_seg.txt
-                ├─ mask_image_02_seg.txt
-                ├─ mask_image_03_seg.txt
-                └─ mask_image_04_seg.txt
-
-            - output_box_dir
-                ├─ mask_image_01_box.txt
-                ├─ mask_image_02_box.txt
-                ├─ mask_image_03_box.txt
-                └─ mask_image_04_box.txt
+    Example:
+        binmask_to_yolo(
+            dataset_path="/path/to/dataset",
+            should_make_seg=True,
+            should_make_bbox=True
+        )
     """
+    
+    normalized_dataset_path = os.path.normpath(dataset_path)
+    
+    images_dir_path = f"{normalized_dataset_path}/images"
+    binmasks_dir_path = f"{normalized_dataset_path}/labels"
+    validate_dataset(images_dir_path, binmasks_dir_path)
+    
+    assert should_make_seg or should_make_bbox, "At least one of the flags --seg --bbox should be set to True"
+    assert not(should_make_bbox and should_make_seg), "Both flags --seg and --bbox cannot be set to True at the same time"
+    
+    dataset_name = os.path.basename(normalized_dataset_path)
+    yolo_dataset_path = f"{OUT_DIR}/{dataset_name}"
+    
+    if should_make_seg:
+        yolo_dataset_path = f"{yolo_dataset_path}_yolo_seg"
+    elif should_make_bbox:
+        yolo_dataset_path = f"{yolo_dataset_path}_yolo_bbox"
+    yolo_images_path_dir = f"{yolo_dataset_path}/images"
+    yolo_labels_path_dir = f"{yolo_dataset_path}/labels"
+    os.makedirs(yolo_images_path_dir, exist_ok=True)
+    os.makedirs(yolo_labels_path_dir, exist_ok=True)
 
-    for file_path in Path(binmask_path).iterdir():
-        if file_path.suffix in {".png", ".jpg"}:
-            mask = cv2.imread(str(file_path), cv2.IMREAD_GRAYSCALE)  # Read the mask image in grayscale
-            img_height, img_width = mask.shape  # Get image dimensions
-            print(f"Processing {file_path} imgsz = {img_height} x {img_width}")
+    shutil.copytree(images_dir_path, yolo_images_path_dir, dirs_exist_ok=True)
+    shutil.copy(f"{normalized_dataset_path}/classes.txt", f"{yolo_dataset_path}/classes.txt")
 
-            # Create a binary mask for the current class and find contours
-            contours, _ = cv2.findContours(
-                (mask == 255).astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
-            )  # Find contours
-
-            seg_info_list = []
-            bbox_info_list = []
-
-            for contour in contours:
-                if len(contour) >= 3:  # YOLO requires at least 3 points for a valid segmentation
-                    contour = contour.squeeze()  # Remove single-dimensional entries
-
-                    seg_info = [1]
-                    for point in contour:
-                        # Normalize the coordinates
-                        seg_info.append(round(point[0] / img_width, 6))  # Rounding to 6 decimal places
-                        seg_info.append(round(point[1] / img_height, 6))
-
-                    bbox_info = seg_to_bbox(seg_info)
-
-                    seg_info_list.append(seg_info)
-                    bbox_info_list.append(bbox_info)
-
-            out_name = file_path.stem.replace("_mask", "")
-
-            res_path = save_yolo_file(out_name, output_seg_path, seg_info_list)
-            if res_path is not None:
-                print(f"Processed and stored binary segmentation map at {res_path} imgsz = {img_height} x {img_width}")
-            else:
-                print(f"There was an error trying to save the segmentation map from {file_path.stem}.")
-
-            res_path = save_yolo_file(out_name, output_box_path, bbox_info_list)
-            if res_path is not None:
-                print(f"Processed and stored bounding boxes at {res_path} imgsz = {img_height} x {img_width}")
-            else:
-                print(f"There was an error trying to save the bounding boxes from {file_path.stem}.")
-
+    for binmask_file_path in Path(binmasks_dir_path).iterdir():
+        assert binmask_file_path.suffix in [".png", ".jpg"], f"Unsupported file format: {binmask_file_path.suffix}"
+        print(f"Converting labels from {binmask_file_path} \n")
+        mask = cv2.imread(str(binmask_file_path), cv2.IMREAD_GRAYSCALE)  # binmask_Read the mask image in grayscale
+        seg_list, bbox_list = mask_to_yolo(mask, should_make_seg, should_make_bbox)            
+        if should_make_seg:
+            label_list = seg_list
+        if should_make_bbox:
+            label_list = bbox_list
+        save_yolo_txt_file(binmask_file_path.stem, yolo_labels_path_dir, label_list)
+        
 
 def convert_yolo_to_ls(
         yolo_path,

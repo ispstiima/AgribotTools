@@ -1,11 +1,9 @@
 .idea
 .qodo
-
-venv
-
 converter/__pycache__
-
+converter.log
 yolo_temp
 datasets
+venv
 out
 logs
