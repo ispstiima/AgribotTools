@@ -4,14 +4,15 @@ import cv2
 import logging
 import numpy as np
 import shutil
-from converter import LS_ROOT_PATH
-from .colors import COLORS
+import os
 from pathlib import Path
 from PIL import Image
 from typing import Optional, Tuple
 from urllib.request import pathname2url
-import os
-
+from tqdm import tqdm
+from converter import LS_ROOT_PATH
+from converter.colors import COLORS
+from converter.utils import copy_files_monitored
 
 log = logging.getLogger("Converter")
 logging.basicConfig(filename="converter.log", level=logging.INFO, format="%(asctime)s %(message)s",)
@@ -325,7 +326,6 @@ def mask_to_yolo(mask: np.ndarray, seg: bool = True, bbox: bool = False):
             if bbox:
                 bbox_yolo.append(seg_to_bbox(seg_line))
 
-    print(f'seg_yolo: {seg_yolo}')
     return seg_yolo, bbox_yolo
 
 
@@ -633,14 +633,12 @@ def convert_yolo_to_ls(
     """
 
     tasks = []
-    log.info(f"> Reading YOLO files from: [{yolo_path}]")
 
     # build categories=>labels dict
     classes_path = yolo_path / "classes.txt"
     with classes_path.open() as classes_file:
         lines = [line.strip() for line in classes_file.readlines()]
     categories = {i: line for i, line in enumerate(lines)}
-    log.info(f"Found {len(categories)} categories")
 
     # generate and save labeling config
     config_path = json_path.parent / "template.label_config.xml"
@@ -660,7 +658,6 @@ def convert_yolo_to_ls(
 
     # build array out of provided comma separated image_extns (str -> array)
     image_ext = [x.strip() for x in image_ext.split(",")]
-    log.info(f"image extensions->, {image_ext}")
 
     if label_type == "bbox":
         build_value = build_bbox_value
@@ -670,10 +667,11 @@ def convert_yolo_to_ls(
         log.error(f"The specified label type '{label_type}' is not supported. Please use 'bbox' or 'seg'.")
         return
 
+    num_yolo = sum(1 for image_path in images_path.iterdir() if image_path.suffix in image_ext)
+
     # loop through images
-    for image_path in images_path.iterdir():
+    for image_path in tqdm(images_path.iterdir(), total=num_yolo, ascii="░▒█", desc="Convert YOLO annotations to LS"):
         if not image_path.suffix in image_ext:
-            log.warning(f"The image '{image_path}' has an unsupported extension. Skipping.")
             continue
 
         image_root_url += "" if image_root_url.endswith("/") else "/"
@@ -785,6 +783,8 @@ def convert_ls_to_yolo(ls_path: Path, yolo_path: Path, label_type: str, image_ex
     labels_path = yolo_path / "labels"
     labels_path.mkdir(exist_ok=True)
 
+    log.info(f"Reading LS JSON from: {json_path}")
+
     with json_path.open("r", encoding="utf-8") as task_file:
         tasks = json.load(task_file)
 
@@ -792,27 +792,27 @@ def convert_ls_to_yolo(ls_path: Path, yolo_path: Path, label_type: str, image_ex
         log.error("No tasks found in the task file.")
         return False
 
-    for task in tasks:
+    image_ext = [x.strip() for x in image_ext.split(",")]
+
+    for task in tqdm(tasks, total=len(tasks), ascii="░▒█", desc="Converting LS annotations to YOLO: "):
         image_filename: str = task["data"]["image"].split("/")[-1]
         image_path = images_path / image_filename
 
         if not image_path.exists():
-            log.warning(f"Image file not found: {image_path}")
             continue
 
-        log.info(f"Processing annotations for image: {image_path}")
+        if image_path.suffix not in image_ext:
+            continue
 
         label_filename = image_filename.replace('.jpg', '.txt').replace('.png', '.txt')
         label_path = labels_path / label_filename
 
         parse_value = parse_bbox_value if label_type == "bbox" else parse_seg_value
 
-        print(f">> Processing task of image {image_filename}")
-
         yolo_lines = []
 
         for annotation in task["annotations"]:
-            print(f"> Result")
+
             for result in annotation["result"]:
                 img_w, img_h = result["original_width"], result["original_height"]
                 value = result["value"]
@@ -820,17 +820,15 @@ def convert_ls_to_yolo(ls_path: Path, yolo_path: Path, label_type: str, image_ex
 
                 yolo_line = [yolo_class, *parse_value(value, img_w, img_h)]
 
-                print("Line: " + str(yolo_line[:10]))
                 yolo_lines.append(' '.join([str(x) for x in yolo_line]))
-
-        print(f"YOLO File: {yolo_lines}")
 
         label_file = label_path.open("w", encoding="utf-8")
         for line in yolo_lines:
             label_file.write(line)
             label_file.write("\n")
-        # label_file.writelines(yolo_lines)
         label_file.close()
+
+    log.info(f"Saving YOLO annotations to: {labels_path}")
 
     classes_path = yolo_path / "classes.txt"
     classes_file = classes_path.open(mode="w", encoding="utf-8")
@@ -866,19 +864,19 @@ def yolo_to_ls(yolo_dir: str, ls_base_name: str, label_type: str, reverse=False)
     if reverse:
         yolo_path.mkdir(parents=True, exist_ok=True)
 
-        convert_ls_to_yolo(ls_path, yolo_path, label_type)
-
-        shutil.copytree(ls_images, yolo_images, dirs_exist_ok=True)
         shutil.copy(ls_classes, yolo_classes)
+        copy_files_monitored(ls_images, yolo_images, desc="Copying images from LS dataset")
+
+        convert_ls_to_yolo(ls_path, yolo_path, label_type)
     else:
         image_root = f"/data/local-files/?d={ls_base_name}/images"
         json_path = ls_path / "task.json"
         ls_path.mkdir(parents=True, exist_ok=True)
 
-        convert_yolo_to_ls(yolo_path, json_path, label_type, image_root_url=image_root)
-
-        shutil.copytree(yolo_images, ls_images, dirs_exist_ok=True)
         shutil.copy(yolo_classes, ls_classes)
+        copy_files_monitored(yolo_images, ls_images, desc="Copying images from YOLO dataset")
+
+        convert_yolo_to_ls(yolo_path, json_path, label_type, image_root_url=image_root)
 
 
 def seg_yolo_to_bbox_yolo():
