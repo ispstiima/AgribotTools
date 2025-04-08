@@ -1,16 +1,34 @@
 # AgribotTools
 
+## Setup
+
+### Label Studio
+If Label Studio is not installed, you can do so by following the [official guide](https://labelstud.io/guide/install.html).
+
+> #### ⚠️ Setting up the environment variables
+> Make sure to correctly configure the following environment variables on the system that executes AgribotTools:
+> - `LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED` (this should be set to `true`)
+> - `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT` (this should be set to the path of the __Label Studio Document Root__)  
+>
+> The __Label Studio Document Root__ is the folder where all the datasets in Label Studio format are stored
+> (see [below](#ls-format)).  
+> These environment variables allow to access and locate the local files that we need to import in Label Studio.
+> > For example, when importing the binary masks, we need to place the corresponding images in a local storage
+> > located under the __Label Studio Document Root__.
+> 
+> If needed, using a `.env` file placed in the root directory of AgribotTools is also supported.
+
 ## Converter
 
 ### Acronyms and Definitions
 
-| Acronym | Explaination |
-| ------- | ------------ |
-| LS | **Label Studio**: the software used for labeling. |
-| UL | **Ultralytics**: target library for object detection and segmentation. |
+| Acronym | Explaination                                                                                                        |
+|---------|---------------------------------------------------------------------------------------------------------------------|
+| LS      | **Label Studio**: the software used for labeling.                                                                   |
+| UL      | **Ultralytics**: target library for object detection and segmentation.                                              |
 | Binmask | **Binary mask**: binary image where a $1$ represents a foreground pixel, while a $0$ represents a background pixel. |
-| Segmask | **Segmentation mask**: mask used to highlight an object of interest. |
-| Bbox | **Bounding box**: box used to highlight an object of interest. |
+| Segmask | **Segmentation mask**: mask used to highlight an object of interest.                                                |
+| Bbox    | **Bounding box**: box used to highlight an object of interest.                                                      |
 
 ### Format Definition
 
@@ -60,12 +78,14 @@ It is a folder containing:
 
 It is a folder named as the dataset, e.g., `xylella`, containing:
 
-* A subfolder `train` containing the portion of the dataset where training data will be stored, containing:
-   * A subfolder `images` containing the images in `jpg` or `png` format.
-   * A subfolder `labels` containing, for each image in `images`, the corresponding labels in YOLO format.
-* A subfolder `val` containing the portion of the dataset where training data will be stored, containing:
-   * A subfolder `images` containing the images in `jpg` or `png` format.
-   * A subfolder `labels` containing, for each image in `images`, the corresponding labels in YOLO format.
+* A subfolder `images` containing the images in `jpg` or `png` format, split in three subfolders:
+  * A subfolder `train` containing the training images.
+  * A subfolder `val` containing the validation images.
+  * An optional subfolder `test` containing the test images.
+* A subfolder `labels` containing, for each image in `images`, the corresponding labels in YOLO format, split in three subfolders:
+  * A subfolder `train` containing the training labels.
+  * A subfolder `val` containing the validation labels.
+  * An optional subfolder `test` containing the test labels.
 * A configuration file in `yaml` format with the same name of the dataset formatted as follows:
    ```yaml
    # Dataset name
@@ -78,10 +98,9 @@ It is a folder named as the dataset, e.g., `xylella`, containing:
    names:
       0: first class
       1: second class
-      ...
+      2: ...
    ```
 
-> **Note**: the `train` and `val` subfolders share the same structure.
 
 ### Use cases
 
