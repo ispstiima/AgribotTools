@@ -4,6 +4,7 @@ import cv2
 import logging
 import numpy as np
 import shutil
+from converter import LS_ROOT_PATH
 from .colors import COLORS
 from pathlib import Path
 from PIL import Image
@@ -27,7 +28,6 @@ LABELING_CONFIG = """<View>
 {# BODY #}</View>
 """
 
-LS_ROOT = Path(os.environ["LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT"])
 OUT_DIR = "./out"
 
 class InputStream:
@@ -237,8 +237,6 @@ def decode_rle(rle):
     """
     Decode an RLE-Encoded list of integers to a flattened numpy uint8 image.
     [width, height, channel]
-
-
     """
     input = InputStream(bytes2bit(rle))
     num = input.read(32)

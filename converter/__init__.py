@@ -1,7 +1,9 @@
 import os
 import logging
+from dotenv import load_dotenv
 from pathlib import Path
 
+load_dotenv("../.env")
 
 log = logging.getLogger("converter")
 LS_ROOT_DIR = os.getenv("LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT", default=None)
