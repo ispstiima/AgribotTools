@@ -1,2 +1,10 @@
 .idea
+.qodo
+.env
+converter/__pycache__
+converter.log
+yolo_temp
+datasets
+venv
 out
+logs

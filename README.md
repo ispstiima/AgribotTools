@@ -18,9 +18,9 @@ If Label Studio is not installed, you can do so by following the [official guide
 > 
 > If needed, using a `.env` file placed in the root directory of AgribotTools is also supported.
 
-## Converter
+## Acronyms and Definitions
 
-### Acronyms and Definitions
+### Tasks
 
 | Acronym | Explaination                                                                                                        |
 |---------|---------------------------------------------------------------------------------------------------------------------|
@@ -30,53 +30,29 @@ If Label Studio is not installed, you can do so by following the [official guide
 | Segmask | **Segmentation mask**: mask used to highlight an object of interest.                                                |
 | Bbox    | **Bounding box**: box used to highlight an object of interest.                                                      |
 
-### Format Definition
+| Acronym | Definition | Brief description |
+| ------- | ---------- | ----------------- |
+| S | **Segmentation** | A segmentation task. |
+| OD | **Object detection** | An object detection task. |
 
-##### BinMask format
+### Formats
 
-It is a folder containing:
+| Acronym | Definition | Brief description |
+| ------- | ---------- | ----------------- |
+| BinMask | **Binary mask** | Segmentation mask for several classes in a grayscale format. |
+| YOLO | **YOLO format** | Standard YOLOv1-v3 format. |
+| LS | **Label Studio** | Format used by Label Studio. |
+| UL | **Ultralytics** | Format used by Ultralytics. |
 
-* A subfolder `images` containing the labeled images in `jpg` or `png` format.
-* A subfolder `labels` containing, for each image in the `images` subfolder, a `png` image, a file with the same name of the corresponding image, which describes the segmask associated to the corresponding image.
+## Formats Definition
 
-##### YOLO format
+### BinMask format
 
-It is a folder containing:
+It is a folder structured as follows.
 
-* A subfolder `images` containing the labeled images in `jpg` or `png` format.
-* A subfolder `labels` containing, for each image in the `images` subfolder, a text file with the same name of the corresponding image, in which each row describes a segmmask or a bbox in the following format:
-   ```
-   <class_id><x1><y1><x2><y2>...<xn><yn>
-   <class_id><x_center><y_canter><width><height>
-   ```
-* A text file `classes.txt` highlighting the labelled classes, in which each row contains a single string with the name of the corresponding class. The index of each row represents the identifier of the class contained in the `class_id` field of the text file contained in `labels`.
-
-##### LS format
-
-It is a folder containing:
-
-* A subfolder `images` containing the labeled images in `jpg` or `png` format.
-* A file in `json` format, containing information relative to images and their respective labels.
-* A file in `xml` format for the configuration of the labeling interface:
-   ```xml
-   <View>
-      <!-- View the image to be labeled -->
-      <Image name="image" value="$image" />
-      <!-- Define the bbox's label -->
-      <Labels name="label" toName="image">
-         <Label value="Object" />
-      </Labels>
-      
-      <!-- Tool for drawing bboxes -->
-      <RectangleLabels name="bbox" toName="image">
-         <Label value="Object" />
-      </RectangleLabels>
-   </View>
-   ```
-
-##### UL format
-
-It is a folder named as the dataset, e.g., `xylella`, containing:
+* A subfolder `images` containing the labelled images in `jpg` or `png` format.
+* A subfolder `labels` containing, for each image in the `images` subfolder, a `png` image describing the segmask associated with the corresponding image.
+* A `classes.txt` file describing the classes contained in the binary mask.
 
 * A subfolder `images` containing the images in `jpg` or `png` format, split in three subfolders:
   * A subfolder `train` containing the training images.
@@ -100,27 +76,195 @@ It is a folder named as the dataset, e.g., `xylella`, containing:
       1: second class
       2: ...
    ```
+   
+The structure can be summarised as follows.
 
+```
+binmask_dset
+|---images
+|-------img_01.png
+        ...
+        img_n.png
+|---labels
+|-------img_01.png
+        ...
+        img_n.png
+|---classes.txt
+```
 
-### Use cases
+### YOLO format
 
-##### Edit segmentations masks on Label Studio
+It is a folder containing:
 
-1. Import the dataset on Label Studio using the module `binmask_to_ls`.
-2. Edit the segmentation masks.
+* A subfolder `images` containing the labelled images in `jpg` or `png` format.
+* A subfolder `labels` containing, for each image in the `images` subfolder, a text file with the same name as the corresponding image, in which each row describes a segmask or a bbox in the following format:
+ ```
+ <class_id><x1><y1><x2><y2>...<xn><yn>
+ <class_id><x_center><y_canter><width><height>
+ ```
+* A text file `classes.txt` highlighting the labelled classes, in which each row contains a single string with the name of the corresponding class. Each row's index represents the class's identifier in the `class_id` field of the text file contained in `labels`.
 
-##### Edit bounding boxes on Label Studio
+The structure can be summarised as follows.
 
-1. Import the dataset on Label Studio:
-   a. Using the `binmask_to_ls` module, if the labels are in the binmask format.
-   b. Using the moduel `seg_ls_to_bbox_ls`, if the labels are segmasks in LS format.
-   c. Directly from the dataset saved in the root folder.
-2. Edit bboxes.
+```
+yolo_dset
+|---images
+|-------img_01.png
+        ...
+        img_n.png
+|---labels
+|-------img_01.txt
+        ...
+        img_n.txt
+|---classes.txt
+```
 
-##### Convert LS labels in an UL dataset
+> **Note**: the YOLO format can be used for segmentation and object detection according to the labels' structure.
 
-1. Select JSON as export type.
-2. Convert from the LS format to the UL format using the `ls_to_ul` module.
+### LS format
+
+It is a folder containing:
+
+* A subfolder `images` containing the labelled images in `jpg` or `png` format.
+* A file in `JSON` format containing information about images and their labels.
+* A file in `XML` format for the configuration of the labelling interface:
+ ```xml
+   <View>
+      <!-- View the image to be labelled -->
+      <Image name="image" value="$image" />
+      <!-- Define the bbox's label -->
+      <Labels name="label" toName="image">
+         <Label value="Object" />
+      </Labels>
+      
+      <!-- Tool for drawing bboxes -->
+      <RectangleLabels name="bbox" toName="image">
+         <Label value="Object" />
+      </RectangleLabels>
+   </View>
+ ```
+
+The structure can be summarised as follows.
+
+```
+ls_dset
+|---images
+|-------img_01.png
+        ...
+        img_n.png
+|---info.json
+|---info.xml
+```
+
+> **Note**: the LS format can be used for segmentation and object detection according to the labels' structure.
+
+### UL format
+
+It is a folder named as the dataset, e.g., `xylella`, containing:
+
+* A `train` subfolder containing the portion of the dataset where training data will be stored, including:
+   * A subfolder `images` containing the images in `jpg` or `png` format.
+   * A subfolder `labels` containing the corresponding labels in YOLO format for each image in `images`.
+* A `val` subfolder containing the portion of the dataset where validation data will be stored, including:
+   * A subfolder `images` containing the images in `jpg` or `png` format.
+   * A subfolder `labels` containing the corresponding labels in YOLO format for each image in `images`.
+* An optional `test` subfolder containing the portion of the dataset where testing data will be stored, including:
+   * A subfolder `images` containing the images in `jpg` or `png` format.
+   * A subfolder `labels` containing the corresponding labels in YOLO format for each image in `images`.
+* A configuration file in `yaml` format with the same name of the dataset formatted as follows:
+
+```yaml
+# Dataset name
+path: /path/to/dataset        # Path of the dataset
+train: /train/images          # Path of training images (relative to path)
+val: /val/images              # Path of validation images  (relative to path)
+test: /test/images            # Path of test images (relative to path, optional)
+
+# Classes names
+names:
+    0: first class
+    1: second class
+    ...
+```
+
+```
+ul_dset
+|---train
+|-------images
+|-----------img_01.png
+            ...
+            img_n.png
+|-------labels
+|-----------img_01.txt
+            ...
+            img_n.txt
+|---val
+|-------images
+|-----------img_01.png
+            ...
+            img_n.png
+|-------labels
+|-----------img_01.txt
+            ...
+            img_n.txt
+|---test
+|-------images
+|-----------img_01.png
+            ...
+            img_n.png
+|-------labels
+|-----------img_01.txt
+            ...
+            img_n.txt
+|---ul_dset.yaml
+```
+
+> **Note**: the `train`, `val`, and `test` subfolders share the same structure.
+
+> **Note**: the UL format can be used for segmentation and object detection according to the labels' structure.
+
+## Converters
+
+| Input format | Output format | Description | Implemented by | Tasks |
+| ------------ | ------------- | ----------- | -------------- | ----- |
+| BinMask | YOLO | Converts from binary masks to the YOLO format. | `binmask_to_yolo()` | S/OD |
+| YOLO | BinMask | Converts from the YOLO to the binary masks format. | `binmask_to_yolo(reverse)` | S |
+| YOLO | UL | Converts from the YOLO to the UL format. | `yolo_to_ul()` | S/OD |
+| UL | YOLO | Converts from the UL to the YOLO format. | `yolo_to_ul(reverse)` | S/OD |
+| YOLO | LS | Converts from the YOLO to the LS format. | `yolo_to_ls()` | S/OD |
+| LS | YOLO | Converts from the LS to the YOLO format. | `yolo_to_ls(reverse)` | S/OD |
+| LS | UL | Converts from the LS to the UL format. | `ls_to_ul()` | S/OD |
+| UL | LS | Converts from the UL to the LS format. | `ls_to_ul(reverse)` | S/OD |
+
+## Workflow
+
+```mermaid
+flowchart TB
+    subgraph S
+        direction LR
+        YOLOS(YOLO-S) -- yolo_to_ls(s) --> LSS(LS-S)
+        LSS -- yolo_to_ls(s, reverse) --> YOLOS
+        YOLOS -- yolo_to_ul(s) --> ULS(UL-S)
+        ULS -- yolo_to_ul(s, reverse) --> YOLOS
+        LSS -- ls_to_ul(s) --> ULS
+        ULS -- ls_to_ul(s, reverse) --> LSS
+    end
+    subgraph OD
+        direction LR
+        YOLOD(YOLO-OD) -- yolo_to_ls(d) --> LSD(LS-OD)
+        LSD -- yolo_to_ls(d, reverse) --> YOLOD
+        YOLOD -- yolo_to_ul(d) --> ULD(UL-OD)
+        ULD -- yolo_to_ul(d, reverse) --> YOLOD
+        LSD -- ls_to_ul(d) --> ULD
+        ULD -- ls_to_ul(d, reverse) --> LSD
+    end
+    BM(BinMask) -- binmask_to_yolo(s) --> YOLOS
+    BM -- binmask_to_yolo(d) --> YOLOD
+    YOLOS -- binmask_to_yolo(s, reverse) --> BM
+    style BM fill:#03ab
+    style S fill:#b03a
+    style OD fill:#ab03
+```
 
 ## References
 
