@@ -1,3 +1,6 @@
 opencv-python
 numpy
 python-dotenv
+tqdm
+yaml
+pillow

@@ -5,6 +5,8 @@ import logging
 import numpy as np
 import shutil
 import os
+import random
+import yaml
 from pathlib import Path
 from PIL import Image
 from typing import Optional, Tuple
@@ -12,7 +14,7 @@ from urllib.request import pathname2url
 from tqdm import tqdm
 from converter import LS_ROOT_PATH
 from converter.colors import COLORS
-from converter.utils import copy_files_monitored
+from converter.utils import copy_files_monitored, sq_cp_dir_monitored
 
 log = logging.getLogger("Converter")
 logging.basicConfig(filename="converter.log", level=logging.INFO, format="%(asctime)s %(message)s",)
@@ -764,6 +766,7 @@ def convert_ls_to_yolo(ls_path: Path, yolo_path: Path, label_type: str, image_ex
         ls_path (path): Path to Label Studio dataset.
         yolo_path (path): Path to the directory where the converted YOLO labels will be stored.
         label_type (str): Type of labels. Must be either "bbox" or "seg".
+        image_ext (str): comma-separated list of the supported image file extensions.
     """
 
     if label_type not in ("bbox", "seg"):
@@ -877,6 +880,382 @@ def yolo_to_ls(yolo_dir: str, ls_base_name: str, label_type: str, reverse=False)
         copy_files_monitored(yolo_images, ls_images, desc="Copying images from YOLO dataset")
 
         convert_yolo_to_ls(yolo_path, json_path, label_type, image_root_url=image_root)
+
+
+def parse_classes(classes_path) -> dict[int, str] | None:
+    """
+
+    Args:
+        classes_path:
+
+    Returns:
+
+    """
+    names_dict = {}
+
+    try:
+        with open(classes_path, 'r') as f:
+            class_names = [line.strip() for line in f.readlines() if line.strip()]
+        if not class_names:
+            log.error(f"Classes file is empty: {classes_path}")
+            return None
+
+        log.info(f"Read {len(class_names)} classes from {classes_path}")
+
+        names_dict = {i: name for i, name in enumerate(class_names)}
+    except Exception as e:
+        log.error(f"Error reading classes file {classes_path}: {e}")
+
+    return names_dict
+
+
+def build_filenames_list(yolo_images_path, yolo_labels_path, image_ext) -> list[str]:
+    """
+
+    Args:
+        yolo_images_path:
+        yolo_labels_path:
+        image_ext:
+
+    Returns:
+
+    """
+    all_files = []
+    valid_image_exts_lower = [ext.lower() for ext in image_ext]
+    log.info(f"Scanning for images in {yolo_images_path} with extensions: {image_ext}")
+
+    for img_path in yolo_images_path.iterdir():
+        if img_path.is_file() and img_path.suffix.lower() in valid_image_exts_lower:
+            base_name = img_path.stem
+            label_path = yolo_labels_path / f"{base_name}.txt"
+            if label_path.is_file():
+                all_files.append(base_name)
+            else:
+                log.warning(f"Label file missing for image: {img_path.name}. Skipping this file.")
+
+    if not all_files:
+        log.error(f"No valid image/label pairs found")
+        return []
+
+    log.info(f"Found {len(all_files)} matching image/label pairs.")
+    return all_files
+
+
+def shuffle_and_split(input_list, split_ratios: Tuple[float, float, Optional[float]], include_test_split: bool =False) -> dict[str, list[str]] | None:
+    """
+
+    Args:
+        input_list:
+        split_ratios:
+        include_test_split:
+
+    Returns:
+
+    """
+    random.shuffle(input_list)
+    total_files = len(input_list)
+    train_ratio, val_ratio = split_ratios[:2]
+    test_ratio = split_ratios[2] if include_test_split else 0.0
+
+    if train_ratio <= 0 or val_ratio <= 0 or test_ratio < 0:
+        log.error(f"Invalid split ratios: {split_ratios}")
+        return None
+
+    total_ratio = train_ratio + val_ratio + test_ratio
+
+    if abs(total_ratio - 1.0) > 1e-6:
+        log.warning(f"Split ratios ({split_ratios}) do not sum to 1. Normalizing.")
+        train_ratio /= total_ratio
+        val_ratio /= total_ratio
+        test_ratio /= total_ratio
+
+    n_train = int(total_files * train_ratio)
+
+    if include_test_split:
+        n_val = int(total_files * val_ratio)
+        n_test = total_files - n_train - n_val
+    else:
+        n_val = total_files - n_train
+        n_test = 0
+
+    split_data: dict[str, list[str]] = {
+        "train": input_list[:n_train],
+        "val": input_list[n_train : n_train + n_val],
+    }
+
+    if include_test_split and n_test > 0:
+        test_start = n_train + n_val
+        split_data["test"] = input_list[test_start:]
+        log.info(f"Splitting data: {n_train} train, {n_val} val, {n_test} test")
+    else:
+         log.info(f"Splitting data: {n_train} train, {n_val} val (No test split)")
+
+    return split_data
+
+
+def save_yaml(yaml_path, yaml_data):
+    try:
+        with open(yaml_path, 'w') as f:
+            yaml.dump(yaml_data, f, sort_keys=False, default_flow_style=False)  # sort_keys=False preserves order
+        log.info(f"Successfully created Ultralytics YAML file: {yaml_path}")
+    except Exception as e:
+        log.error(f"Error writing YAML file {yaml_path}: {e}")
+
+
+def convert_yolo_to_ul(
+    yolo_path: str | Path,
+    output_path: str | Path,
+    split_ratios: Tuple[float, float, Optional[float]],
+    include_test_split: bool,
+    image_ext: str,
+    yaml_filename: Optional[str],
+    random_seed: Optional[int]
+):
+    """
+    Converts a dataset from standard YOLO format to Ultralytics YOLO format.
+
+    This involves splitting the data into train/val/(test) sets and creating
+    a corresponding .yaml configuration file.
+
+    Args:
+        yolo_path: Path to the root directory of the source YOLO dataset.
+                   Expected structure:
+                   yolo_path/
+                   ├── images/
+                   │   ├── img_01.png
+                   │   └── ...
+                   ├── labels/
+                   │   ├── img_01.txt
+                   │   └── ...
+                   └── classes.txt
+        output_path: Path to the desired root directory for the Ultralytics dataset.
+                     The function will create the necessary subdirectories here.
+        split_ratios: Tuple defining the proportions for train, validation, and
+                      optionally test splits (e.g., (0.7, 0.2, 0.1)).
+                      If include_test_split is False, the third element is ignored.
+                      The ratios should ideally sum to 1.0.
+        include_test_split: If True, creates a 'test' split using the third ratio.
+                            If False, data is split only into 'train' and 'val'.
+        image_ext: A list of valid image file extensions to look for (case-insensitive).
+        yaml_filename: Optional name for the output YAML file (e.g., 'data.yaml').
+                       If None, it defaults to '<output_dir_name>.yaml'.
+        random_seed: Optional integer seed for the random number generator to ensure
+                     reproducible train/val/test splits.
+    """
+    image_ext = [ext.strip() for ext in image_ext.split(",")]
+
+    yolo_images_path = yolo_path / "images"
+    yolo_labels_path = yolo_path / "labels"
+    classes_file = yolo_path / "classes.txt"
+
+    if not yolo_images_path.is_dir():
+        log.error(f"Source images directory not found: {yolo_images_path}")
+        return
+    if not yolo_labels_path.is_dir():
+        log.error(f"Source labels directory not found: {yolo_labels_path}")
+        return
+    if not classes_file.is_file():
+        log.error(f"Classes file not found: {classes_file}")
+        return
+
+    if random_seed is not None:
+        random.seed(random_seed)
+
+    classes_dict = parse_classes(classes_file)
+    all_files = build_filenames_list(yolo_images_path, yolo_labels_path, image_ext)
+    split_data = shuffle_and_split(all_files, split_ratios, include_test_split)
+
+    yaml_data: dict[str, any] = {
+        'path': str(output_path.resolve()),
+    }
+
+    for split_name, file_list in split_data.items():
+        img_dest_dir = output_path / "images" / split_name
+        lbl_dest_dir = output_path / "labels" / split_name
+        img_dest_dir.mkdir(parents=True, exist_ok=True)
+        lbl_dest_dir.mkdir(parents=True, exist_ok=True)
+
+        yaml_data[split_name] = str(Path("images") / split_name)
+
+        log.info(f"Copying {len(file_list)} files to {split_name}...")
+        for base_name in tqdm(file_list, total=len(file_list), ascii="░▒█", desc=f"Generating {split_name} directory"):
+            # original_img_path = None
+            # for ext in image_ext:
+            #      potential_path = yolo_images_path / f"{base_name}{ext}"
+            #      if potential_path.exists():
+            #          original_img_path = potential_path
+            #          break
+            #      potential_path_lower = yolo_images_path / f"{base_name}{ext.lower()}"
+            #      if potential_path_lower.exists():
+            #          original_img_path = potential_path_lower
+            #          break
+            #      potential_path_upper = yolo_images_path / f"{base_name}{ext.upper()}"
+            #      if potential_path_upper.exists():
+            #           original_img_path = potential_path_upper
+            #           break
+            original_img_path = None
+            for image_path in yolo_images_path.glob(f"{base_name}.*"):
+                if image_path.suffix in image_ext:
+                    original_img_path = image_path
+                    break
+
+            if original_img_path:
+                original_lbl_path = yolo_labels_path / f"{base_name}.txt"
+                dest_img_path = img_dest_dir / original_img_path.name
+                dest_lbl_path = lbl_dest_dir / f"{base_name}.txt"
+
+                try:
+                    shutil.copy2(original_img_path, dest_img_path)
+                    shutil.copy2(original_lbl_path, dest_lbl_path)
+                except Exception as e:
+                    log.error(f"Error copying file {base_name}: {e}")
+            else:
+                log.warning(f"Could not find original image file for base name: {base_name} during copy phase.")
+
+    yaml_data['names'] = classes_dict
+
+    if yaml_filename is None:
+        yaml_filename = f"{output_path.name}.yaml"
+
+    yaml_path = output_path / yaml_filename
+    save_yaml(yaml_path, yaml_data)
+
+    log.info(f"Conversion complete. Ultralytics dataset created at: {output_path}")
+
+
+def find_yaml_file(directory: Path) -> Optional[Path]:
+    """Tries to find the dataset YAML file in a directory."""
+    yaml_files = list(directory.glob('*.yaml'))
+    log.info(f"Found YAML file: {yaml_files[0]}")
+    return yaml_files[0]
+
+
+def read_yaml_data(yaml_file_path) -> [dict[str, any]|None]:
+    try:
+        with open(yaml_file_path, 'r') as f:
+            yaml_data = yaml.safe_load(f)
+        if not yaml_data:
+            log.error(f"YAML file is empty or invalid: {yaml_file_path}")
+            return
+    except Exception as e:
+        log.error(f"Error reading or parsing YAML file {yaml_file_path}: {e}")
+        return
+    return yaml_data
+
+
+def extract_class_names_from_yaml(yaml_data) -> [list[str] | None]:
+    if 'names' in yaml_data:
+        names_data = yaml_data['names']
+        try:
+            class_names = [name for idx, name in names_data.items()]
+            log.info(f"Extracted {len(class_names)} classes from YAML dictionary.")
+        except Exception as e:
+             log.error(f"Error processing 'names' dictionary in YAML: {e}")
+             return
+    else:
+        log.error(f"'names' key not found in YAML file")
+        return
+    return class_names
+
+
+
+def convert_ul_to_yolo(ul_path: str | Path, yolo_path: str | Path):
+    """
+    Converts a dataset from Ultralytics YOLO format back to standard YOLO format.
+
+    Reads the split directories (train/val/test) and the dataset YAML file
+    from the Ultralytics path and creates a consolidated YOLO structure.
+
+    Args:
+        ul_path: Path to the root directory of the source Ultralytics dataset.
+                 Expected structure:
+                 ul_path/
+                 ├── images/
+                 │   ├── train/
+                 │   ├── val/
+                 │   └── [test]/
+                 ├── labels/
+                 │   ├── train/
+                 │   ├── val/
+                 │   └── [test]/
+                 └── <dataset_name>.yaml (or similar)
+        yolo_path: Path to the desired root directory for the output YOLO dataset.
+                   The function will create 'images', 'labels', and 'classes.txt'.
+    """
+    log.info(f"Starting conversion from Ultralytics format ({ul_path}) to YOLO format ({yolo_path})")
+
+    if not ul_path.is_dir():
+        log.error(f"Source Ultralytics directory not found: {ul_path}")
+        return
+
+    yaml_file_path = find_yaml_file(ul_path)
+    if not yaml_file_path:
+        log.error(f"Could not automatically find a YAML dataset file in {ul_path}. Please specify yaml_filename.")
+        return
+
+    yaml_data = read_yaml_data(yaml_file_path)
+    class_names = extract_class_names_from_yaml(yaml_data)
+
+    yolo_images_path = yolo_path / "images"
+    yolo_labels_path = yolo_path / "labels"
+
+    ul_images_root = ul_path / "images"
+    ul_labels_root = ul_path / "labels"
+
+    if not ul_images_root.is_dir():
+        log.warning(f"Standard 'images' directory not found in {ul_path}. Attempting to find splits based on YAML.")
+    if not ul_labels_root.is_dir():
+         log.warning(f"Standard 'labels' directory not found in {ul_path}. Copying labels might fail if paths are non-standard.")
+
+    try:
+        yolo_path.mkdir(parents=True, exist_ok=True)
+        yolo_images_path.mkdir(exist_ok=True)
+        yolo_labels_path.mkdir(exist_ok=True)
+        log.info(f"Created destination directories in {yolo_path}")
+    except OSError as e:
+        log.error(f"Failed to create output directories in {yolo_path}: {e}")
+        return
+
+    class_names = [[name] for name in class_names]
+    save_yolo_txt_file("classes", yolo_path, class_names)
+
+    log.info("Starting file copy process...")
+    sq_cp_dir_monitored(ul_images_root, yolo_images_path, ".jpg, .png", description="Copying images: ")
+    sq_cp_dir_monitored(ul_labels_root, yolo_labels_path, ".txt", description="Copying labels: ")
+
+    log.info(f"Conversion complete. Standard YOLO dataset created at: {yolo_path}")
+
+
+def yolo_to_ul(
+    yolo_dir: str,
+    ul_dir: str,
+    split_ratios: Tuple[float, float, Optional[float]] = (0.8, 0.2),
+    include_test_split: bool = False,
+    image_ext: str = '.jpg, .png',
+    yaml_filename: Optional[str] = None,
+    random_seed: Optional[int] = None,
+    reverse=False
+):
+    """
+    Convert a YOLO-formatted dataset to an Ultralytics (UL) format.
+
+    Parameters:
+      yolo_dir (str): Path to the YOLO dataset.
+      ul_dir (str): Path to the UL dataset.
+      reverse (bool): If True, the function will reverse the conversion.
+    """
+
+    yolo_path = Path(yolo_dir)
+    ul_path = Path(ul_dir)
+
+    if reverse:
+        yolo_path.mkdir(parents=True, exist_ok=True)
+
+        convert_ul_to_yolo(ul_path, yolo_path)
+    else:
+        ul_path.mkdir(parents=True, exist_ok=True)
+
+        convert_yolo_to_ul(yolo_path, ul_path, split_ratios, include_test_split, image_ext, yaml_filename, random_seed)
 
 
 def seg_yolo_to_bbox_yolo():
