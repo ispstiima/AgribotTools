@@ -850,6 +850,8 @@ def yolo_to_ls(yolo_dir: str, ls_base_name: str, label_type: str, reverse=False)
       reverse (bool): If True, the function will reverse the conversion.
     """
 
+    # TODO: input logic, output logic, move images copyng to convert functions
+
     yolo_path = Path(yolo_dir)
     ls_path = LS_ROOT_PATH / ls_base_name
 
