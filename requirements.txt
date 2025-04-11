@@ -2,5 +2,5 @@ opencv-python
 numpy
 python-dotenv
 tqdm
-yaml
+PyYAML
 pillow
