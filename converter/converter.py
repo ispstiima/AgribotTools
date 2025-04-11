@@ -611,7 +611,7 @@ def binmask_to_yolo(dataset_path, should_make_seg, should_make_bbox):
 
 def convert_yolo_to_ls(
         yolo_path,
-        json_path,
+        ls_path,
         label_type,
         to_name="image",
         from_name="label",
@@ -619,10 +619,10 @@ def convert_yolo_to_ls(
         image_root_url=default_image_root_url,
         image_ext=".jpg,.png",
         image_dims: Optional[Tuple[int, int]] = None,
-):
+) -> bool:
     """Convert YOLO labeling to Label Studio JSON
     :param yolo_path: path where images, labels, notes.json are located
-    :param json_path: output file with Label Studio JSON tasks
+    :param ls_path: path to Label Studio dataset
     :param label_type: string containing the type of the label. Must be either "bbox" or "seg"
     :param to_name: object name from Label Studio labeling config
     :param from_name: control tag name from Label Studio labeling config
@@ -641,7 +641,8 @@ def convert_yolo_to_ls(
     categories = {i: line for i, line in enumerate(lines)}
 
     # generate and save labeling config
-    config_path = json_path.parent / "template.label_config.xml"
+    json_path = ls_path / "task.json"
+    config_path = ls_path / "template.label_config.xml"
     label_tag = "RectangleLabels" if label_type == "bbox" else "BrushLabels"
 
     generate_label_config(
@@ -652,9 +653,9 @@ def convert_yolo_to_ls(
     )
 
     # define directories
-    labels_path = yolo_path / "labels"
-    images_path = yolo_path / "images"
-    log.info(f"Converting labels from {labels_path}")
+    yolo_labels = yolo_path / "labels"
+    yolo_images = yolo_path / "images"
+    log.info(f"Converting labels from {yolo_labels}")
 
     # build array out of provided comma separated image_extns (str -> array)
     image_ext = [x.strip() for x in image_ext.split(",")]
@@ -665,12 +666,12 @@ def convert_yolo_to_ls(
         build_value = build_seg_value
     else:
         log.error(f"The specified label type '{label_type}' is not supported. Please use 'bbox' or 'seg'.")
-        return
+        return False
 
-    num_yolo = sum(1 for image_path in images_path.iterdir() if image_path.suffix in image_ext)
+    num_yolo = sum(1 for image_path in yolo_images.iterdir() if image_path.suffix in image_ext)
 
     # loop through images
-    for image_path in tqdm(images_path.iterdir(), total=num_yolo, ascii="░▒█", desc="Convert YOLO annotations to LS"):
+    for image_path in tqdm(yolo_images.iterdir(), total=num_yolo, ascii="░▒█", desc="Convert YOLO annotations to LS"):
         if not image_path.suffix in image_ext:
             continue
 
@@ -682,7 +683,7 @@ def convert_yolo_to_ls(
             }
         }
 
-        label_path = labels_path / f"{image_path.stem}.txt"
+        label_path = yolo_labels / f"{image_path.stem}.txt"
 
         if label_path.exists():
             task[out_type] = [
@@ -749,6 +750,11 @@ def convert_yolo_to_ls(
     else:
         log.error("No labels converted")
 
+    ls_images = ls_path / "images"
+    log.info(f"Moving images to: {ls_images}")
+    copy_files_monitored(yolo_images, ls_images, desc="Copying images from YOLO dataset")
+
+    return True
 
 def convert_ls_to_yolo(ls_path: Path, yolo_path: Path, label_type: str, image_ext=".jpg,.png") -> bool:
     """
@@ -773,10 +779,10 @@ def convert_ls_to_yolo(ls_path: Path, yolo_path: Path, label_type: str, image_ex
         log.error("The selected Label Studio dataset does not exist")
         return False
 
-    images_path = ls_path / "images"
+    ls_images = ls_path / "images"
     json_path = next(ls_path.glob("*.json"))
 
-    if not images_path.exists() or not json_path.exists():
+    if not ls_images.exists() or not json_path.exists():
         log.error(f"The selected Label Studio dataset does not contain the required files. ({ls_path})")
         return False
 
@@ -796,7 +802,7 @@ def convert_ls_to_yolo(ls_path: Path, yolo_path: Path, label_type: str, image_ex
 
     for task in tqdm(tasks, total=len(tasks), ascii="░▒█", desc="Converting LS annotations to YOLO: "):
         image_filename: str = task["data"]["image"].split("/")[-1]
-        image_path = images_path / image_filename
+        image_path = ls_images / image_filename
 
         if not image_path.exists():
             continue
@@ -835,10 +841,14 @@ def convert_ls_to_yolo(ls_path: Path, yolo_path: Path, label_type: str, image_ex
     classes_file.write("Foam")
     classes_file.close()
 
+    yolo_images = yolo_path / "images"
+    log.info(f"Moving images to: {yolo_images}")
+    copy_files_monitored(ls_images, yolo_images, desc="Copying images from LS dataset")
+
     return True
 
 
-def yolo_to_ls(yolo_dir: str, ls_base_name: str, label_type: str, reverse=False):
+def yolo_to_ls(label_type: str, yolo_dir: str = None, ls_base_name: str = None, reverse=False):
     """
     Convert a YOLO-formatted dataset to a Label Studio (LS) format.
 
@@ -850,35 +860,47 @@ def yolo_to_ls(yolo_dir: str, ls_base_name: str, label_type: str, reverse=False)
       reverse (bool): If True, the function will reverse the conversion.
     """
 
-    # TODO: input logic, output logic, move images copyng to convert functions
-
-    yolo_path = Path(yolo_dir)
-    ls_path = LS_ROOT_PATH / ls_base_name
-
     if label_type not in ("bbox", "seg"):
         raise ValueError("label_type must be either 'bbox' or 'seg'")
 
-    yolo_images = yolo_path / "images"
-    yolo_classes = yolo_path / "classes.txt"
-    ls_images = ls_path / "images"
-    ls_classes = ls_path / "classes.txt"
+    if reverse:
+        input_dir_name = ls_base_name
+        input_dir =  LS_ROOT_PATH / ls_base_name
+        output_dir = yolo_dir
+        output_suffix = "yolo"
+        default_output_path = Path("..", "out")
+    else:
+        input_dir_name = input_dir = yolo_dir
+        output_dir = LS_ROOT_PATH / ls_base_name if ls_base_name else None
+        output_suffix = "ls"
+        default_output_path = LS_ROOT_PATH
+
+    if input_dir_name is None:
+        log.error("The input dataset path was not specified. Conversion aborted.")
+        return None
+
+    input_path = Path(input_dir)
+
+    if output_dir is None:
+        output_name = f"{input_path.stem}_{output_suffix}"
+        output_path = Path(default_output_path) / output_name
+        log.warning(f"The {output_suffix} dataset dir was not specified. Defaulting to: {output_path}")
+    else:
+        output_path = Path(output_dir)
+
+    output_path.mkdir(parents=True, exist_ok=True)
 
     if reverse:
-        yolo_path.mkdir(parents=True, exist_ok=True)
-
-        shutil.copy(ls_classes, yolo_classes)
-        copy_files_monitored(ls_images, yolo_images, desc="Copying images from LS dataset")
-
-        convert_ls_to_yolo(ls_path, yolo_path, label_type)
+        completed = convert_ls_to_yolo(input_path, output_path, label_type)
     else:
         image_root = f"/data/local-files/?d={ls_base_name}/images"
-        json_path = ls_path / "task.json"
-        ls_path.mkdir(parents=True, exist_ok=True)
+        completed = convert_yolo_to_ls(input_path, output_path, label_type, image_root_url=image_root)
 
-        shutil.copy(yolo_classes, ls_classes)
-        copy_files_monitored(yolo_images, ls_images, desc="Copying images from YOLO dataset")
+    if not completed:
+        log.error("Something during conversion went wrong")
+        return None
 
-        convert_yolo_to_ls(yolo_path, json_path, label_type, image_root_url=image_root)
+    return output_path
 
 
 def seg_yolo_to_bbox_yolo():
