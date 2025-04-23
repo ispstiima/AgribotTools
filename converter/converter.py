@@ -1428,5 +1428,25 @@ def yolo_to_ul(
     return output_path
 
 
+def ls_to_ul(label_type: str, ls_base_name: str = None, ul_dir: str = None, reverse: bool = False, **kwargs):
+    if reverse:
+        yolo_out = yolo_to_ul(ul_dir=ul_dir, reverse=True)
+        output_path = yolo_to_ls(label_type, yolo_dir=str(yolo_out), ls_base_name=ls_base_name)
+    else:
+        yolo_out = yolo_to_ls(label_type, ls_base_name=ls_base_name, reverse=True)
+        output_path = yolo_to_ul(
+            yolo_dir=str(yolo_out),
+            ul_dir=ul_dir,
+            split_ratios=kwargs.get("split_ratios", (0.8, 0.2, None)),
+            include_test_split=kwargs.get("include_test_split", False)
+        )
+
+    log.info("Deleting temporary YOLO folder...")
+    shutil.rmtree(yolo_out)
+    log.info("YOLO folder deleted.")
+
+    return output_path
+
+
 def seg_yolo_to_bbox_yolo():
     pass
