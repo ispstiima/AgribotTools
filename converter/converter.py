@@ -931,7 +931,9 @@ def yolo_to_ls(label_type: str, yolo_dir: str = None, ls_base_name: str = None, 
     input_path = Path(input_dir)
 
     if output_dir is None:
-        output_name = f"{input_path.stem}_{output_suffix}"
+        old_suffix = "_ls" if reverse else "_yolo"
+        output_name = input_path.stem.replace(old_suffix, "")
+        output_name += f"_{output_suffix}"
         output_path = Path(default_output_path) / output_name
         log.warning(f"The {output_suffix} dataset dir was not specified. Defaulting to: {output_path}")
     else:
@@ -1401,7 +1403,10 @@ def yolo_to_ul(
     input_path = Path(input_dir)
 
     if output_dir is None:
-        output_path = Path("..", "out", f"{input_path.stem}_{output_suffix}")
+        old_suffix = "_ul" if reverse else "_yolo"
+        output_name = input_path.stem.replace(old_suffix, "")
+        output_name += f"_{output_suffix}"
+        output_path = Path("..", "out", output_name)
         log.warning(f"The output YOLO dataset dir was not specified. Defaulting to: {output_path}")
     else:
         output_path = Path(output_dir)
@@ -1428,7 +1433,36 @@ def yolo_to_ul(
     return output_path
 
 
-def ls_to_ul(label_type: str, ls_base_name: str = None, ul_dir: str = None, reverse: bool = False, **kwargs):
+def ls_to_ul(label_type: str, ls_base_name: str = None, ul_dir: str = None, reverse: bool = False, **kwargs) -> Path:
+    """Convert between Label Studio (LS) and Ultralytics (UL) dataset formats.
+
+    This function provides bidirectional conversion between Label Studio and
+    Ultralytics formats using YOLO format as an intermediate step. It creates
+    a temporary YOLO directory during the process, which is automatically
+    deleted upon completion.
+
+    Args:
+        label_type: Type of labels, must be either "bbox" for bounding boxes or
+            "seg" for segmentation masks.
+        ls_base_name: Base name for the Label Studio dataset. Required for
+            conversion from LS to UL (when reverse=False). Defaults to None.
+        ul_dir: Path to the Ultralytics dataset. Required for conversion from
+            UL to LS (when reverse=True). Defaults to None.
+        reverse: If True, converts from UL to LS. If False, converts from LS
+            to UL. Defaults to False.
+        **kwargs: Additional arguments passed to the underlying conversion
+            functions. Supported arguments include:
+                split_ratios: Tuple defining the proportions for train, validation,
+                    and optionally test splits.
+                include_test_split: Boolean indicating whether to create a test split.
+
+    Returns:
+        Path to the output directory containing the converted dataset.
+
+    Note:
+        The function creates a temporary YOLO-formatted directory during the
+        conversion process, which is automatically deleted upon completion.
+    """
     if reverse:
         yolo_out = yolo_to_ul(ul_dir=ul_dir, reverse=True)
         output_path = yolo_to_ls(label_type, yolo_dir=str(yolo_out), ls_base_name=ls_base_name)
@@ -1440,6 +1474,8 @@ def ls_to_ul(label_type: str, ls_base_name: str = None, ul_dir: str = None, reve
             split_ratios=kwargs.get("split_ratios", (0.8, 0.2, None)),
             include_test_split=kwargs.get("include_test_split", False)
         )
+
+    output_path = Path(output_path)
 
     log.info("Deleting temporary YOLO folder...")
     shutil.rmtree(yolo_out)
