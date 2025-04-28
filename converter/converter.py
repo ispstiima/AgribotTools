@@ -7,6 +7,7 @@ import shutil
 import os
 import random
 import yaml
+from os import PathLike
 from pathlib import Path
 from PIL import Image
 from typing import Optional, Tuple
@@ -17,7 +18,7 @@ from converter.colors import COLORS
 from converter.utils import copy_files_monitored, sq_cp_dir_monitored
 
 log = logging.getLogger("Converter")
-logging.basicConfig(filename="converter.log", level=logging.INFO, format="%(asctime)s %(message)s",)
+logging.basicConfig(filename="converter.log", level=logging.INFO, format="%(asctime)s %(message)s")
 
 default_image_root_url = "/data/local-files/?d=images"
 
@@ -475,19 +476,22 @@ def parse_seg_value(value: dict, img_w: int, img_h: int) -> list:
 def validate_dataset(images_dir_path, labels_dir_path):
     assert os.path.exists(images_dir_path), f"Path {images_dir_path} does not exist"
     assert os.path.exists(labels_dir_path), f"Path {labels_dir_path} does not exist"
-    
-    image_files = {os.path.splitext(file)[0] for file in os.listdir(images_dir_path) if os.path.isfile(os.path.join(images_dir_path, file))}
-    binmask_files = {os.path.splitext(file)[0] for file in os.listdir(labels_dir_path) if os.path.isfile(os.path.join(labels_dir_path, file))}
-    
+
+    image_files = {os.path.splitext(file)[0] for file in os.listdir(images_dir_path) if
+                   os.path.isfile(os.path.join(images_dir_path, file))}
+    binmask_files = {os.path.splitext(file)[0] for file in os.listdir(labels_dir_path) if
+                     os.path.isfile(os.path.join(labels_dir_path, file))}
+
     missing_in_labels = image_files - binmask_files
     missing_in_images = binmask_files - image_files
-    
+
     if missing_in_labels:
         raise ValueError(f"The following files are missing in labels_dir_path: {missing_in_labels}")
     if missing_in_images:
         raise ValueError(f"The following files are missing in images_dir_path: {missing_in_images}")
-    
+
     return True
+
 
 def save_yolo_txt_file(file_name: str, output_dir: str, data: list) -> None:
     """Saves YOLO-formatted data to text files.
@@ -550,14 +554,14 @@ def binmask_to_yolo(dataset_path, should_make_seg, should_make_bbox):
     """
     Converts binary segmentation mask images to YOLO format for segmentation and bounding boxes annotations types.
 
-    This function processes binary mask images and generates YOLO-compatible labels for segmentation 
+    This function processes binary mask images and generates YOLO-compatible labels for segmentation
     and/or bounding boxes annotations types.
-        
+
         Args:
             dataset_path (str): The path to the directory containing the dataset with subdirectory containing images (png or jpg format) and labels containing binary masks.
             should_make_seg (bool): Flag to indicate whether YOLO segmentation labels should be generated.
             should_make_bbox (bool): Flag to indicate whether YOLO bounding box labels should be generated.
-            
+
         Notes:
             - At least one of the flags should be set to True.
             - The binary mask images should have pixel values of 255 for the object and 0 for the background.
@@ -572,7 +576,7 @@ def binmask_to_yolo(dataset_path, should_make_seg, should_make_bbox):
                 |   ├─ image_02.png
                 |   ├─ image_03.png
                 |   └─ image_04.png
-                |    
+                |
                 ├─ labels/
                 |   ├─ image_01.png
                 |   ├─ image_02.png
@@ -580,11 +584,11 @@ def binmask_to_yolo(dataset_path, should_make_seg, should_make_bbox):
                 |   └─ image_04.png
                 |
                 └─ classes.txt
-                
+
 
         Output:
             out/
-                │ 
+                │
                 └─ <dataset_path>_yolo_<annotation_type>/
                     |
                     ├─ images/
@@ -599,7 +603,7 @@ def binmask_to_yolo(dataset_path, should_make_seg, should_make_bbox):
                     |   ├─ image_03.txt
                     |   └─ image_04.txt
                     |
-                    └─ classes.txt 
+                    └─ classes.txt
     Returns:
         None
 
@@ -610,19 +614,19 @@ def binmask_to_yolo(dataset_path, should_make_seg, should_make_bbox):
             should_make_bbox=True
         )
     """
-    
+
     normalized_dataset_path = os.path.normpath(dataset_path)
-    
+
     images_dir_path = f"{normalized_dataset_path}/images"
     binmasks_dir_path = f"{normalized_dataset_path}/labels"
     validate_dataset(images_dir_path, binmasks_dir_path)
-    
+
     assert should_make_seg or should_make_bbox, "At least one of the flags --seg --bbox should be set to True"
-    assert not(should_make_bbox and should_make_seg), "Both flags --seg and --bbox cannot be set to True at the same time"
-    
+    assert not (should_make_bbox and should_make_seg), "Both flags --seg and --bbox cannot be set to True at the same time"
+
     dataset_name = os.path.basename(normalized_dataset_path)
     yolo_dataset_path = f"{OUT_DIR}/{dataset_name}"
-    
+
     if should_make_seg:
         yolo_dataset_path = f"{yolo_dataset_path}_yolo_seg"
     elif should_make_bbox:
@@ -639,7 +643,7 @@ def binmask_to_yolo(dataset_path, should_make_seg, should_make_bbox):
         assert binmask_file_path.suffix in [".png", ".jpg"], f"Unsupported file format: {binmask_file_path.suffix}"
         print(f"Converting labels from {binmask_file_path} \n")
         mask = cv2.imread(str(binmask_file_path), cv2.IMREAD_GRAYSCALE)  # binmask_Read the mask image in grayscale
-        seg_list, bbox_list = mask_to_yolo(mask, should_make_seg, should_make_bbox)            
+        seg_list, bbox_list = mask_to_yolo(mask, should_make_seg, should_make_bbox)
         if should_make_seg:
             label_list = seg_list
         if should_make_bbox:
@@ -892,8 +896,7 @@ def convert_ls_to_yolo(ls_path: Path, yolo_path: Path, label_type: str, image_ex
     return True
 
 
-def yolo_to_ls(label_type: str, yolo_dir: str = None, ls_base_name: str = None, reverse: bool = False) -> Optional[
-    Path]:
+def yolo_to_ls(label_type: str, yolo_dir: str = None, ls_base_name: str = None, reverse: bool = False) -> PathLike | None:
     """Convert between YOLO-formatted dataset and Label Studio (LS) format.
 
     Args:
@@ -911,7 +914,7 @@ def yolo_to_ls(label_type: str, yolo_dir: str = None, ls_base_name: str = None, 
 
     if reverse:
         input_dir_name = ls_base_name
-        input_dir =  LS_ROOT_PATH / ls_base_name
+        input_dir = LS_ROOT_PATH / ls_base_name
         output_dir = yolo_dir
         output_suffix = "yolo"
         default_output_path = Path("..", "out")
@@ -1067,7 +1070,7 @@ def shuffle_and_split(
 
     split_data: dict[str, list[str]] = {
         "train": input_list[:n_train],
-        "val": input_list[n_train : n_train + n_val],
+        "val": input_list[n_train: n_train + n_val],
     }
 
     if include_test_split and n_test > 0:
@@ -1075,7 +1078,7 @@ def shuffle_and_split(
         split_data["test"] = input_list[test_start:]
         log.info(f"Splitting data: {n_train} train, {n_val} val, {n_test} test")
     else:
-         log.info(f"Splitting data: {n_train} train, {n_val} val (No test split)")
+        log.info(f"Splitting data: {n_train} train, {n_val} val (No test split)")
 
     return split_data
 
@@ -1109,7 +1112,7 @@ def convert_yolo_to_ul(
         image_ext: str,
         yaml_filename: Optional[str],
         random_seed: Optional[int]
-) -> None:
+) -> bool:
     """Converts a dataset from standard YOLO format to Ultralytics YOLO format.
 
     This involves splitting the data into train/val/(test) sets and creating
@@ -1148,13 +1151,13 @@ def convert_yolo_to_ul(
 
     if not yolo_images_path.is_dir():
         log.error(f"Source images directory not found: {yolo_images_path}")
-        return
+        return False
     if not yolo_labels_path.is_dir():
         log.error(f"Source labels directory not found: {yolo_labels_path}")
-        return
+        return False
     if not classes_file.is_file():
         log.error(f"Classes file not found: {classes_file}")
-        return
+        return False
 
     if random_seed is not None:
         random.seed(random_seed)
@@ -1205,6 +1208,8 @@ def convert_yolo_to_ul(
     save_yaml(yaml_path, yaml_data)
 
     log.info(f"Conversion complete. Ultralytics dataset created at: {output_path}")
+
+    return True
 
 
 def find_yaml_file(directory: Path) -> Optional[Path]:
@@ -1267,15 +1272,15 @@ def extract_class_names_from_yaml(yaml_data: dict) -> list[str] | None:
             class_names = [name for idx, name in names_data.items()]
             log.info(f"Extracted {len(class_names)} classes from YAML dictionary.")
         except Exception as e:
-             log.error(f"Error processing 'names' dictionary in YAML: {e}")
-             return None
+            log.error(f"Error processing 'names' dictionary in YAML: {e}")
+            return None
     else:
         log.error(f"'names' key not found in YAML file")
         return None
     return class_names
 
 
-def convert_ul_to_yolo(ul_path: Path, yolo_path: Path) -> None:
+def convert_ul_to_yolo(ul_path: str | Path, yolo_path: str | Path) -> bool:
     """Converts a dataset from Ultralytics YOLO format back to standard YOLO format.
 
     Reads the split directories (train/val/test) and the dataset YAML file
@@ -1301,12 +1306,12 @@ def convert_ul_to_yolo(ul_path: Path, yolo_path: Path) -> None:
 
     if not ul_path.is_dir():
         log.error(f"Source Ultralytics directory not found: {ul_path}")
-        return
+        return False
 
     yaml_file_path = find_yaml_file(ul_path)
     if not yaml_file_path:
         log.error(f"Could not automatically find a YAML dataset file in {ul_path}. Please specify yaml_filename.")
-        return
+        return False
 
     yaml_data = read_yaml_data(yaml_file_path)
     class_names = extract_class_names_from_yaml(yaml_data)
@@ -1320,7 +1325,8 @@ def convert_ul_to_yolo(ul_path: Path, yolo_path: Path) -> None:
     if not ul_images_root.is_dir():
         log.warning(f"Standard 'images' directory not found in {ul_path}. Attempting to find splits based on YAML.")
     if not ul_labels_root.is_dir():
-         log.warning(f"Standard 'labels' directory not found in {ul_path}. Copying labels might fail if paths are non-standard.")
+        log.warning(
+            f"Standard 'labels' directory not found in {ul_path}. Copying labels might fail if paths are non-standard.")
 
     try:
         yolo_path.mkdir(parents=True, exist_ok=True)
@@ -1329,7 +1335,7 @@ def convert_ul_to_yolo(ul_path: Path, yolo_path: Path) -> None:
         log.info(f"Created destination directories in {yolo_path}")
     except OSError as e:
         log.error(f"Failed to create output directories in {yolo_path}: {e}")
-        return
+        return False
 
     class_names = [[name] for name in class_names]
     save_yolo_txt_file("classes", yolo_path, class_names)
@@ -1339,18 +1345,19 @@ def convert_ul_to_yolo(ul_path: Path, yolo_path: Path) -> None:
     sq_cp_dir_monitored(ul_labels_root, yolo_labels_path, ".txt", description="Copying labels: ")
 
     log.info(f"Conversion complete. Standard YOLO dataset created at: {yolo_path}")
+    return True
 
 
 def yolo_to_ul(
-        yolo_dir: str,
-        ul_dir: str,
+        yolo_dir: str = None,
+        ul_dir: str = None,
         split_ratios: Tuple[float, float, Optional[float]] = (0.8, 0.2),
         include_test_split: bool = False,
         image_ext: str = '.jpg, .png',
         yaml_filename: Optional[str] = None,
         random_seed: Optional[int] = None,
         reverse: bool = False
-) -> None:
+) -> PathLike | None:
     """Convert a YOLO-formatted dataset to an Ultralytics (UL) format or vice versa.
 
     This function handles the conversion between standard YOLO format and Ultralytics
@@ -1378,18 +1385,47 @@ def yolo_to_ul(
                  If False, converts from YOLO format to Ultralytics format.
                  Defaults to False.
     """
+    if reverse:
+        input_dir = ul_dir
+        output_dir = yolo_dir
+        output_suffix = "yolo"
+    else:
+        input_dir = yolo_dir
+        output_dir = ul_dir
+        output_suffix = "ul"
 
-    yolo_path = Path(yolo_dir)
-    ul_path = Path(ul_dir)
+    if input_dir is None:
+        log.error("The input dataset path was not specified. Conversion aborted.")
+        return None
+
+    input_path = Path(input_dir)
+
+    if output_dir is None:
+        output_path = Path("..", "out", f"{input_path.stem}_{output_suffix}")
+        log.warning(f"The output YOLO dataset dir was not specified. Defaulting to: {output_path}")
+    else:
+        output_path = Path(output_dir)
+
+    output_path.mkdir(parents=True, exist_ok=True)
 
     if reverse:
-        yolo_path.mkdir(parents=True, exist_ok=True)
-
-        convert_ul_to_yolo(ul_path, yolo_path)
+        completed = convert_ul_to_yolo(input_path, output_path)
     else:
-        ul_path.mkdir(parents=True, exist_ok=True)
+        completed = convert_yolo_to_ul(
+            yolo_path=input_path,
+            output_path=output_path,
+            split_ratios=split_ratios,
+            include_test_split=include_test_split,
+            image_ext=image_ext,
+            yaml_filename=yaml_filename,
+            random_seed=random_seed
+        )
 
-        convert_yolo_to_ul(yolo_path, ul_path, split_ratios, include_test_split, image_ext, yaml_filename, random_seed)
+    if not completed:
+        log.error("Something during conversion went wrong")
+        return None
+
+    return output_path
 
 
 def seg_yolo_to_bbox_yolo():
