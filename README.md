@@ -22,7 +22,7 @@ If Label Studio is not installed, you can do so by following the [official guide
 
 ### Tasks
 
-| Acronym | Explaination                                                                                                        |
+| Acronym | Explanation                                                                                                         |
 |---------|---------------------------------------------------------------------------------------------------------------------|
 | LS      | **Label Studio**: the software used for labeling.                                                                   |
 | UL      | **Ultralytics**: target library for object detection and segmentation.                                              |
@@ -53,31 +53,8 @@ It is a folder structured as follows.
 * A subfolder `images` containing the labelled images in `jpg` or `png` format.
 * A subfolder `labels` containing, for each image in the `images` subfolder, a `png` image describing the segmask associated with the corresponding image.
 * A `classes.txt` file describing the classes contained in the binary mask.
-
-* A subfolder `images` containing the images in `jpg` or `png` format, split in three subfolders:
-  * A subfolder `train` containing the training images.
-  * A subfolder `val` containing the validation images.
-  * An optional subfolder `test` containing the test images.
-* A subfolder `labels` containing, for each image in `images`, the corresponding labels in YOLO format, split in three subfolders:
-  * A subfolder `train` containing the training labels.
-  * A subfolder `val` containing the validation labels.
-  * An optional subfolder `test` containing the test labels.
-* A configuration file in `yaml` format with the same name of the dataset formatted as follows:
-   ```yaml
-   # Dataset name
-   path: /path/to/dataset        # Path of the dataset
-   train: /train/images          # Path of training images (relative to path)
-   val: /val/images              # Path of validation images  (relative to path)
-   test: /test/images            # Path of test images (relative to path, optional)
-
-   # Classes names
-   names:
-      0: first class
-      1: second class
-      2: ...
-   ```
    
-The structure can be summarised as follows.
+The structure can be summarised as follows:
 
 ```
 binmask_dset
@@ -104,7 +81,7 @@ It is a folder containing:
  ```
 * A text file `classes.txt` highlighting the labelled classes, in which each row contains a single string with the name of the corresponding class. Each row's index represents the class's identifier in the `class_id` field of the text file contained in `labels`.
 
-The structure can be summarised as follows.
+The structure can be summarised as follows:
 
 ```
 yolo_dset
@@ -128,23 +105,23 @@ It is a folder containing:
 * A subfolder `images` containing the labelled images in `jpg` or `png` format.
 * A file in `JSON` format containing information about images and their labels.
 * A file in `XML` format for the configuration of the labelling interface:
- ```xml
-   <View>
-      <!-- View the image to be labelled -->
-      <Image name="image" value="$image" />
-      <!-- Define the bbox's label -->
-      <Labels name="label" toName="image">
-         <Label value="Object" />
-      </Labels>
-      
-      <!-- Tool for drawing bboxes -->
-      <RectangleLabels name="bbox" toName="image">
-         <Label value="Object" />
-      </RectangleLabels>
-   </View>
- ```
+  ```xml
+    <View>
+       <!-- View the image to be labelled -->
+       <Image name="image" value="$image" />
+       <!-- Define the bbox's label -->
+       <Labels name="label" toName="image">
+          <Label value="Object" />
+       </Labels>
+       
+       <!-- Tool for drawing bboxes -->
+       <RectangleLabels name="bbox" toName="image">
+          <Label value="Object" />
+       </RectangleLabels>
+    </View>
+  ```
 
-The structure can be summarised as follows.
+The structure can be summarised as follows:
 
 ```
 ls_dset
@@ -162,30 +139,30 @@ ls_dset
 
 It is a folder named as the dataset, e.g., `xylella`, containing:
 
-* A `train` subfolder containing the portion of the dataset where training data will be stored, including:
-   * A subfolder `images` containing the images in `jpg` or `png` format.
-   * A subfolder `labels` containing the corresponding labels in YOLO format for each image in `images`.
-* A `val` subfolder containing the portion of the dataset where validation data will be stored, including:
-   * A subfolder `images` containing the images in `jpg` or `png` format.
-   * A subfolder `labels` containing the corresponding labels in YOLO format for each image in `images`.
-* An optional `test` subfolder containing the portion of the dataset where testing data will be stored, including:
-   * A subfolder `images` containing the images in `jpg` or `png` format.
-   * A subfolder `labels` containing the corresponding labels in YOLO format for each image in `images`.
+* A subfolder `images` containing the images in `jpg` or `png` format, split in three subfolders:
+  * A subfolder `train` containing the training images.
+  * A subfolder `val` containing the validation images.
+  * An optional subfolder `test` containing the test images.
+* A subfolder `labels` containing, for each image in `images`, the corresponding labels in YOLO format, split in three subfolders:
+  * A subfolder `train` containing the training labels.
+  * A subfolder `val` containing the validation labels.
+  * An optional subfolder `test` containing the test labels.
 * A configuration file in `yaml` format with the same name of the dataset formatted as follows:
+   ```yaml
+   # Dataset name
+   path: /path/to/dataset        # Path of the dataset
+   train: /train/images          # Path of training images (relative to path)
+   val: /val/images              # Path of validation images  (relative to path)
+   test: /test/images            # Path of test images (relative to path, optional)
 
-```yaml
-# Dataset name
-path: /path/to/dataset        # Path of the dataset
-train: /train/images          # Path of training images (relative to path)
-val: /val/images              # Path of validation images  (relative to path)
-test: /test/images            # Path of test images (relative to path, optional)
+   # Classes names
+   names:
+      0: first class
+      1: second class
+      2: ...
+   ```
 
-# Classes names
-names:
-    0: first class
-    1: second class
-    ...
-```
+The structure can be summarised as follows:
 
 ```
 ul_dset
