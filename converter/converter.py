@@ -1395,7 +1395,7 @@ def yolo_to_ul(
         input_dir = yolo_dir
         output_dir = ul_dir
         output_suffix = "ul"
-
+    
     if input_dir is None:
         log.error("The input dataset path was not specified. Conversion aborted.")
         return None
