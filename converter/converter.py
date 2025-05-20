@@ -706,7 +706,7 @@ def convert_yolo_to_ls(
     yolo_images = yolo_path / "images"
     log.info(f"Converting labels from {yolo_labels}")
 
-    image_ext = [x.strip() for x in image_ext.split(",")]
+    image_ext = [x.strip().lower() for x in image_ext.split(",")]
 
     if label_type == "bbox":
         build_value = build_bbox_value
@@ -716,12 +716,9 @@ def convert_yolo_to_ls(
         log.error(f"The specified label type '{label_type}' is not supported. Please use 'bbox' or 'seg'.")
         return False
 
-    num_yolo = sum(1 for image_path in yolo_images.iterdir() if image_path.suffix in image_ext)
+    image_list = [image_path for image_path in yolo_images.iterdir() if image_path.suffix.lower() in image_ext]
 
-    for image_path in tqdm(yolo_images.iterdir(), total=num_yolo, ascii="░▒█", desc="Convert YOLO annotations to LS"):
-        if not image_path.suffix in image_ext:
-            continue
-
+    for image_path in tqdm(image_list, total=len(image_list), ascii="░▒█", desc="Convert YOLO annotations to LS"):
         image_root_url += "" if image_root_url.endswith("/") else "/"
         task = {
             "data": {
@@ -846,19 +843,21 @@ def convert_ls_to_yolo(ls_path: Path, yolo_path: Path, label_type: str, image_ex
         log.error("No tasks found in the task file.")
         return False
 
-    image_ext = [x.strip() for x in image_ext.split(",")]
+    image_ext = [x.strip().lower() for x in image_ext.split(",")]
 
     for task in tqdm(tasks, total=len(tasks), ascii="░▒█", desc="Converting LS annotations to YOLO: "):
         image_filename: str = task["data"]["image"].split("/")[-1]
         image_path = ls_images / image_filename
 
         if not image_path.exists():
+            log.warning(f"Missing image file: {image_path}")
             continue
 
-        if image_path.suffix not in image_ext:
+        if image_path.suffix.lower() not in image_ext:
+            log.warning(f"Unsupported image file format \"{image_path.suffix}\" for file path: {image_path}")
             continue
 
-        label_filename = image_filename.replace('.jpg', '.txt').replace('.png', '.txt')
+        label_filename = f"{image_path.stem}.txt"
         label_path = labels_path / label_filename
 
         parse_value = parse_bbox_value if label_type == "bbox" else parse_seg_value
@@ -920,7 +919,8 @@ def yolo_to_ls(label_type: str, yolo_dir: str = None, ls_base_name: str = None, 
         default_output_path = Path("..", "out")
     else:
         input_dir_name = input_dir = yolo_dir
-        output_dir = LS_ROOT_PATH / ls_base_name if ls_base_name else None
+        output_name = ls_base_name
+        output_dir = (LS_ROOT_PATH / ls_base_name) if ls_base_name else None
         output_suffix = "ls"
         default_output_path = LS_ROOT_PATH
 
@@ -944,7 +944,7 @@ def yolo_to_ls(label_type: str, yolo_dir: str = None, ls_base_name: str = None, 
     if reverse:
         completed = convert_ls_to_yolo(input_path, output_path, label_type)
     else:
-        image_root = f"/data/local-files/?d={ls_base_name}/images"
+        image_root = f"/data/local-files/?d={output_name}/images"
         completed = convert_yolo_to_ls(input_path, output_path, label_type, image_root_url=image_root)
 
     if not completed:
@@ -1000,11 +1000,10 @@ def build_filenames_list(yolo_images_path: Path, yolo_labels_path: Path, image_e
         A list of base filenames (without extensions) that have both image and label files.
     """
     all_files = []
-    valid_image_exts_lower = [ext.lower() for ext in image_ext]
     log.info(f"Scanning for images in {yolo_images_path} with extensions: {image_ext}")
 
     for img_path in yolo_images_path.iterdir():
-        if img_path.is_file() and img_path.suffix.lower() in valid_image_exts_lower:
+        if img_path.is_file() and img_path.suffix.lower() in image_ext:
             base_name = img_path.stem
             label_path = yolo_labels_path / f"{base_name}.txt"
             if label_path.is_file():
@@ -1145,7 +1144,7 @@ def convert_yolo_to_ul(
         random_seed: Optional integer seed for the random number generator to ensure
                      reproducible train/val/test splits.
     """
-    image_ext = [ext.strip() for ext in image_ext.split(",")]
+    image_ext = [ext.strip().lower() for ext in image_ext.split(",")]
 
     yolo_images_path = yolo_path / "images"
     yolo_labels_path = yolo_path / "labels"
@@ -1184,7 +1183,7 @@ def convert_yolo_to_ul(
         for base_name in tqdm(file_list, total=len(file_list), ascii="░▒█", desc=f"Generating {split_name} directory"):
             original_img_path = None
             for image_path in yolo_images_path.glob(f"{base_name}.*"):
-                if image_path.suffix in image_ext:
+                if image_path.suffix.lower() in image_ext:
                     original_img_path = image_path
                     break
 
