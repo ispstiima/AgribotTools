@@ -1172,12 +1172,12 @@ def convert_yolo_to_ul(
     }
 
     for split_name, file_list in split_data.items():
-        img_dest_dir = output_path / "images" / split_name
-        lbl_dest_dir = output_path / "labels" / split_name
+        img_dest_dir = output_path / split_name / "images"
+        lbl_dest_dir = output_path / split_name / "labels"
         img_dest_dir.mkdir(parents=True, exist_ok=True)
         lbl_dest_dir.mkdir(parents=True, exist_ok=True)
 
-        yaml_data[split_name] = str(Path("images") / split_name)
+        yaml_data[split_name] = str(split_name / Path("images"))
 
         log.info(f"Copying {len(file_list)} files to {split_name}...")
         for base_name in tqdm(file_list, total=len(file_list), ascii="░▒█", desc=f"Generating {split_name} directory"):
@@ -1305,6 +1305,9 @@ def convert_ul_to_yolo(ul_path: str | Path, yolo_path: str | Path) -> bool:
     """
     log.info(f"Starting conversion from Ultralytics format ({ul_path}) to YOLO format ({yolo_path})")
 
+    if isinstance(ul_path, str):
+        ul_path = Path(ul_path)
+
     if not ul_path.is_dir():
         log.error(f"Source Ultralytics directory not found: {ul_path}")
         return False
@@ -1320,15 +1323,6 @@ def convert_ul_to_yolo(ul_path: str | Path, yolo_path: str | Path) -> bool:
     yolo_images_path = yolo_path / "images"
     yolo_labels_path = yolo_path / "labels"
 
-    ul_images_root = ul_path / "images"
-    ul_labels_root = ul_path / "labels"
-
-    if not ul_images_root.is_dir():
-        log.warning(f"Standard 'images' directory not found in {ul_path}. Attempting to find splits based on YAML.")
-    if not ul_labels_root.is_dir():
-        log.warning(
-            f"Standard 'labels' directory not found in {ul_path}. Copying labels might fail if paths are non-standard.")
-
     try:
         yolo_path.mkdir(parents=True, exist_ok=True)
         yolo_images_path.mkdir(exist_ok=True)
@@ -1342,8 +1336,8 @@ def convert_ul_to_yolo(ul_path: str | Path, yolo_path: str | Path) -> bool:
     save_yolo_txt_file("classes", yolo_path, class_names)
 
     log.info("Starting file copy process...")
-    sq_cp_dir_monitored(ul_images_root, yolo_images_path, ".jpg, .png", description="Copying images: ")
-    sq_cp_dir_monitored(ul_labels_root, yolo_labels_path, ".txt", description="Copying labels: ")
+    sq_cp_dir_monitored(ul_path, yolo_images_path, ".jpg, .png, .JPG, .PNG", description="Copying images: ")
+    sq_cp_dir_monitored(ul_path, yolo_labels_path, ".txt", description="Copying labels: ")
 
     log.info(f"Conversion complete. Standard YOLO dataset created at: {yolo_path}")
     return True
@@ -1415,6 +1409,10 @@ def yolo_to_ul(
     if reverse:
         completed = convert_ul_to_yolo(input_path, output_path)
     else:
+        if include_test_split and len(split_ratios) < 3:
+            log.warning("Using default split ratios: (TRAIN 60%, VAL 20%, TEST 20%)")
+            split_ratios = (0.6, 0.2, 0.2)
+
         completed = convert_yolo_to_ul(
             yolo_path=input_path,
             output_path=output_path,

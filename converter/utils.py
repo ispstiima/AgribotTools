@@ -53,19 +53,3 @@ def sq_cp_dir_monitored(source_path: Path, dest_path: Path, files_ext: str, desc
             shutil.copy2(source_file, dest_file)
         except Exception as e:
             log.error(f"Error copying {source_file} to {dest_file}: {e}")
-
-    # total_files_copied = 0
-    # for src_dir in source_dirs:
-    #     if src_dir.is_dir():
-    #         files_to_copy = [f for f in src_dir.iterdir() if f.is_file()]
-    #         log.info(f"Found {len(files_to_copy)} files in {src_dir}")
-    #         for src_file in tqdm(files_to_copy, desc=f"Copying {description} from {src_dir.name}", leave=False):
-    #             dest_file = dest_path / src_file.name
-    #             try:
-    #                 shutil.copy2(src_file, dest_file) # copy2 preserves metadata
-    #                 total_files_copied += 1
-    #             except Exception as e:
-    #                 log.error(f"Error copying {src_file} to {dest_file}: {e}")
-    #     else:
-    #          log.warning(f"Source directory not found, skipping: {src_dir}")
-    # log.info(f"Finished copying {description}. Total files copied: {total_files_copied}")
