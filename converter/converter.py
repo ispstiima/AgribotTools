@@ -6,6 +6,7 @@ import numpy as np
 import shutil
 import random
 import yaml
+from itertools import chain
 from os import PathLike
 from pathlib import Path
 from PIL import Image
@@ -294,7 +295,7 @@ def mask_to_rle(mask: np.ndarray) -> list:
     return rle
 
 
-def yolo_to_mask(contour: list[float], img_width: int, img_height: int = None) -> np.ndarray:
+def yolo_to_mask(contour: list, img_width: int, img_height: int = None) -> np.ndarray:
     """Convert a YOLO segmentation mask (polygon format) into a uint8 2D mask.
 
     Args:
@@ -317,7 +318,7 @@ def yolo_to_mask(contour: list[float], img_width: int, img_height: int = None) -
     return mask
 
 
-def mask_to_yolo(mask: np.ndarray, seg: bool = True, bbox: bool = False) -> tuple:
+def mask_to_yolo(mask: np.ndarray, seg: bool = True, bbox: bool = False):
     """Convert a binary mask to YOLO segmentation or bounding box format.
 
     Args:
@@ -326,34 +327,34 @@ def mask_to_yolo(mask: np.ndarray, seg: bool = True, bbox: bool = False) -> tupl
         bbox: If True, generate bounding box annotations. Defaults to False.
 
     Returns:
-        A tuple containing segmentation coordinates and/or bounding box coordinates in YOLO format.
+        A list containing YOLO-formatted segmentation or bounding box annotations.
     """
-    # TODO add the logic introduced by this function into binmask_to_yolo()
     img_height, img_width = mask.shape
+
+    yolo_lines = []
 
     contours, _ = cv2.findContours(
         (mask == 255).astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
     )
-
-    seg_yolo = [] if seg else None
-    bbox_yolo = [] if bbox else None
 
     for contour in contours:
         if len(contour) >= 3:
             contour = contour.squeeze()
 
             seg_line = []
+
             for point in contour:
                 seg_line.append(round(point[0] / img_width, 6))
                 seg_line.append(round(point[1] / img_height, 6))
 
             if seg:
-                seg_yolo.append(seg_line)
+               yolo_lines.append(seg_line)
 
             if bbox:
-                bbox_yolo.append(seg_to_bbox(seg_line))
+                bbox_line = seg_to_bbox(seg_line)
+                yolo_lines.append(bbox_line)
 
-    return seg_yolo, bbox_yolo
+    return yolo_lines
 
 
 def build_bbox_value(line: str, categories: dict[int, str], image_width: int, image_height: int) -> dict:
@@ -380,7 +381,7 @@ def build_bbox_value(line: str, categories: dict[int, str], image_width: int, im
         float(height),
     )
 
-    item = {
+    item: dict = {
         "id": uuid.uuid4().hex[0:10],
         "type": "rectanglelabels",
         "value": {
@@ -414,21 +415,22 @@ def build_seg_value(line: str, categories: dict[int, str], image_width: int, ima
         Label Studio compatible annotation for a segmentation mask.
     """
     values = line.split()
-    label_id = values[0]
+    label_id = 0  # TODO implementare un sistema multiclasse
+    mask_class = categories[label_id]
     mask = yolo_to_mask(values[1:], image_width, image_height)
     rle = mask_to_rle(mask)
 
     item = {
         "id": str(uuid.uuid4())[0:8],
         "type": "brushlabels",
-        "value": {"rle": rle, "format": "rle", "brushlabels": [categories[int(label_id)]]},
+        "value": {"rle": rle, "format": "rle", "brushlabels": [mask_class]},
         "origin": "manual",
     }
 
     return item
 
 
-def parse_bbox_value(value: dict, img_w: int, img_h: int) -> tuple:
+def parse_bbox_value(value: dict, img_w: int, img_h: int) -> list | None:
     """Convert Label Studio annotation to YOLO bounding box format.
 
     Args:
@@ -444,6 +446,8 @@ def parse_bbox_value(value: dict, img_w: int, img_h: int) -> tuple:
     if not ("x" in value and "y" in value and "width" in value and "height" in value):
         return None
 
+    class_id = 0  # TODO implementare un sistema multiclasse
+
     w = value["width"]
     h = value["height"]
 
@@ -452,7 +456,7 @@ def parse_bbox_value(value: dict, img_w: int, img_h: int) -> tuple:
     w = w / 100
     h = h / 100
 
-    return x, y, w, h
+    return [class_id, x, y, w, h]
 
 
 def parse_seg_value(value: dict, img_w: int, img_h: int) -> list:
@@ -466,10 +470,19 @@ def parse_seg_value(value: dict, img_w: int, img_h: int) -> list:
     Returns:
         If successful, returns a list containing the normalized polygon coordinates in YOLO format.
     """
+    class_id = 0  # TODO implementare un sistema multiclasse
+
     flat_binmask = decode_rle(value["rle"])
     binmask = np.reshape(flat_binmask, [img_h, img_w, 4])[:, :, 3]
-    seg_yolo, _ = mask_to_yolo(binmask)
-    return seg_yolo[0]
+    seg_lines = mask_to_yolo(binmask)
+
+    # `value` contains a single segmentation mask, so we merge multiple found contours into one
+    if len(seg_lines) > 1:
+        seg_line = list(chain(*seg_lines))
+    else:
+        seg_line = seg_lines[0]
+
+    return [class_id, *seg_line]
 
 
 def validate_dataset(images_dir_path, labels_dir_path):
@@ -542,7 +555,7 @@ def seg_to_bbox(seg_info: list) -> list:
     width, height = x_max - x_min, y_max - y_min
     x_center, y_center = (x_min + x_max) / 2, (y_min + y_max) / 2
 
-    bbox_info = [int(class_id) - 1, x_center, y_center, width, height]
+    bbox_info = [int(class_id), x_center, y_center, width, height]
 
     return bbox_info
 
@@ -866,13 +879,11 @@ def convert_ls_to_yolo(ls_path: Path, yolo_path: Path, label_type: str, image_ex
         yolo_lines = []
 
         for annotation in task["annotations"]:
-
             for result in annotation["result"]:
                 img_w, img_h = result["original_width"], result["original_height"]
                 value = result["value"]
-                yolo_class = 0  # TODO allow multiclass convertion
 
-                yolo_line = [yolo_class, *parse_value(value, img_w, img_h)]
+                yolo_line = parse_value(value, img_w, img_h)
 
                 yolo_lines.append(' '.join([str(x) for x in yolo_line]))
 
@@ -1383,6 +1394,10 @@ def yolo_to_ul(
                  If False, converts from YOLO format to Ultralytics format.
                  Defaults to False.
     """
+    if len(split_ratios) not in (2, 3):
+        log.error("split_ratios must be a tuple of 2 or 3 floats.")
+        return None
+
     if reverse:
         input_dir = ul_dir
         output_dir = yolo_dir
