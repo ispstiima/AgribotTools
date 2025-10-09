@@ -8,3 +8,5 @@ datasets
 venv
 out
 logs
+
+*.egg-info

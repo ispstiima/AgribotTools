@@ -2,6 +2,34 @@
 
 ## Setup
 
+### Installation
+
+To install AgribotTools, you can clone the repository and install it in editable mode:
+
+```bash
+git clone https://github.com/LambdaLekter/AgribotTools.git
+cd AgribotTools
+pip install -e .
+```
+
+Note: we recommend using a virtual environment.  
+This will install all the required dependencies.
+
+### Usage
+
+You can use the provided scripts in the `scripts` folder to convert datasets between different formats.  
+For example, to convert a dataset from YOLO format to Label Studio format, you can use the following command:
+
+```bash
+python scripts/yolo_to_ls.py seg /mnt/c/Dataset/yolo_dir_path --ls_base_name ls_dir_name
+```
+
+For more information on the available scripts and their usage, you can run:
+
+```bash
+python scripts/<script_name>.py -h
+```
+
 ### Label Studio
 If Label Studio is not installed, you can do so by following the [official guide](https://labelstud.io/guide/install.html).
 
@@ -30,19 +58,19 @@ If Label Studio is not installed, you can do so by following the [official guide
 | Segmask | **Segmentation mask**: mask used to highlight an object of interest.                                                |
 | Bbox    | **Bounding box**: box used to highlight an object of interest.                                                      |
 
-| Acronym | Definition | Brief description |
-| ------- | ---------- | ----------------- |
-| S | **Segmentation** | A segmentation task. |
-| OD | **Object detection** | An object detection task. |
+| Acronym | Definition           | Brief description         |
+|---------|----------------------|---------------------------|
+| S       | **Segmentation**     | A segmentation task.      |
+| OD      | **Object detection** | An object detection task. |
 
 ### Formats
 
-| Acronym | Definition | Brief description |
-| ------- | ---------- | ----------------- |
-| BinMask | **Binary mask** | Segmentation mask for several classes in a grayscale format. |
-| YOLO | **YOLO format** | Standard YOLOv1-v3 format. |
-| LS | **Label Studio** | Format used by Label Studio. |
-| UL | **Ultralytics** | Format used by Ultralytics. |
+| Acronym | Definition       | Brief description                                            |
+|---------|------------------|--------------------------------------------------------------|
+| BinMask | **Binary mask**  | Segmentation mask for several classes in a grayscale format. |
+| YOLO    | **YOLO format**  | Standard YOLOv1-v3 format.                                   |
+| LS      | **Label Studio** | Format used by Label Studio.                                 |
+| UL      | **Ultralytics**  | Format used by Ultralytics.                                  |
 
 ## Formats Definition
 
@@ -135,6 +163,10 @@ ls_dset
 
 > **Note**: the LS format can be used for segmentation and object detection according to the labels' structure.
 
+> **Note**: Label Studio only supports JSON task files up to 250.000 tasks or 50 MB. If you need to import bigger files,
+> the utility `scripts/import_tasks_ls.py` is able to chunk the files and upload them separately on a local instance of
+> Label Studio.
+
 ### UL format
 
 It is a folder named as the dataset, e.g., `xylella`, containing:
@@ -202,16 +234,16 @@ ul_dset
 
 ## Converters
 
-| Input format | Output format | Description | Implemented by | Tasks |
-| ------------ | ------------- | ----------- | -------------- | ----- |
-| BinMask | YOLO | Converts from binary masks to the YOLO format. | `binmask_to_yolo()` | S/OD |
-| YOLO | BinMask | Converts from the YOLO to the binary masks format. | `binmask_to_yolo(reverse)` | S |
-| YOLO | UL | Converts from the YOLO to the UL format. | `yolo_to_ul()` | S/OD |
-| UL | YOLO | Converts from the UL to the YOLO format. | `yolo_to_ul(reverse)` | S/OD |
-| YOLO | LS | Converts from the YOLO to the LS format. | `yolo_to_ls()` | S/OD |
-| LS | YOLO | Converts from the LS to the YOLO format. | `yolo_to_ls(reverse)` | S/OD |
-| LS | UL | Converts from the LS to the UL format. | `ls_to_ul()` | S/OD |
-| UL | LS | Converts from the UL to the LS format. | `ls_to_ul(reverse)` | S/OD |
+| Input format | Output format | Description                                        | Implemented by             | Tasks |
+|--------------|---------------|----------------------------------------------------|----------------------------|-------|
+| BinMask      | YOLO          | Converts from binary masks to the YOLO format.     | `binmask_to_yolo()`        | S/OD  |
+| YOLO         | BinMask       | Converts from the YOLO to the binary masks format. | `binmask_to_yolo(reverse)` | S     |
+| YOLO         | UL            | Converts from the YOLO to the UL format.           | `yolo_to_ul()`             | S/OD  |
+| UL           | YOLO          | Converts from the UL to the YOLO format.           | `yolo_to_ul(reverse)`      | S/OD  |
+| YOLO         | LS            | Converts from the YOLO to the LS format.           | `yolo_to_ls()`             | S/OD  |
+| LS           | YOLO          | Converts from the LS to the YOLO format.           | `yolo_to_ls(reverse)`      | S/OD  |
+| LS           | UL            | Converts from the LS to the UL format.             | `ls_to_ul()`               | S/OD  |
+| UL           | LS            | Converts from the UL to the LS format.             | `ls_to_ul(reverse)`        | S/OD  |
 
 ## Workflow
 
@@ -219,25 +251,25 @@ ul_dset
 flowchart TB
     subgraph S
         direction LR
-        YOLOS(YOLO-S) -- yolo_to_ls(s) --> LSS(LS-S)
-        LSS -- yolo_to_ls(s, reverse) --> YOLOS
-        YOLOS -- yolo_to_ul(s) --> ULS(UL-S)
-        ULS -- yolo_to_ul(s, reverse) --> YOLOS
-        LSS -- ls_to_ul(s) --> ULS
-        ULS -- ls_to_ul(s, reverse) --> LSS
+        YOLOS(YOLO-S) -- "yolo_to_ls(s)" --> LSS(LS-S)
+        LSS -- "yolo_to_ls(s, reverse)" --> YOLOS
+        YOLOS -- "yolo_to_ul(s)" --> ULS(UL-S)
+        ULS -- "yolo_to_ul(s, reverse)" --> YOLOS
+        LSS -- "ls_to_ul(s)" --> ULS
+        ULS -- "ls_to_ul(s, reverse)" --> LSS
     end
     subgraph OD
         direction LR
-        YOLOD(YOLO-OD) -- yolo_to_ls(d) --> LSD(LS-OD)
-        LSD -- yolo_to_ls(d, reverse) --> YOLOD
-        YOLOD -- yolo_to_ul(d) --> ULD(UL-OD)
-        ULD -- yolo_to_ul(d, reverse) --> YOLOD
-        LSD -- ls_to_ul(d) --> ULD
-        ULD -- ls_to_ul(d, reverse) --> LSD
+        YOLOD(YOLO-OD) -- "yolo_to_ls(d)" --> LSD(LS-OD)
+        LSD -- "yolo_to_ls(d, reverse)" --> YOLOD
+        YOLOD -- "yolo_to_ul(d)" --> ULD(UL-OD)
+        ULD -- "yolo_to_ul(d, reverse)" --> YOLOD
+        LSD -- "ls_to_ul(d)" --> ULD
+        ULD -- "ls_to_ul(d, reverse)" --> LSD
     end
-    BM(BinMask) -- binmask_to_yolo(s) --> YOLOS
-    BM -- binmask_to_yolo(d) --> YOLOD
-    YOLOS -- binmask_to_yolo(s, reverse) --> BM
+    BM(BinMask) -- "binmask_to_yolo(s)" --> YOLOS
+    BM -- "binmask_to_yolo(d)" --> YOLOD
+    YOLOS -- "binmask_to_yolo(s, reverse)" --> BM
     style BM fill:#03ab
     style S fill:#b03a
     style OD fill:#ab03
