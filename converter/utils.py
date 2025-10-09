@@ -9,6 +9,17 @@ logging.basicConfig(format='%(asctime)s - %(name)s [%(levelname)s] | %(message)s
 
 
 def copy_files_monitored(source_path: Path, dest_path: Path, dirs_exist_ok: bool = True, desc: str = "Copying files") -> bool:
+    """
+    Copies all files from a source directory to a destination directory with progress monitoring.
+    Args:
+        source_path (Path): Path to the source directory.
+        dest_path (Path): Path to the destination directory.
+        dirs_exist_ok (bool): If True, allows overwriting existing directories. Default is True.
+        desc (str): Description for the progress bar. Default is "Copying files".
+    Returns:
+        bool: True if the copy operation was successful, False otherwise.
+    """
+
     log.info(f"Copying folder <{source_path}> to <{dest_path}>")
 
     if not source_path.exists():
@@ -36,8 +47,18 @@ def copy_files_monitored(source_path: Path, dest_path: Path, dirs_exist_ok: bool
     return True
 
 
-def sq_cp_dir_monitored(source_path: Path, dest_path: Path, files_ext: str, description: str):
-    """Copies all files from a list of source directories to a destination directory."""
+def copy_filtered_dir_monitored(source_path: Path, dest_path: Path, files_ext: str, description: str):
+    """
+    Copies all files from a source directory and its subfolders to a destination directory,
+    but only if its extension belongs to the specified inclusion list.
+
+    Args:
+        source_path (Path): Path to the source directory.
+        dest_path (Path): Path to the destination directory.
+        files_ext (str): Comma-separated string of file extensions to include (e.g., ".jpg,.png").
+        description (str): Description for the progress bar.
+    """
+
     if not dest_path.exists():
          dest_path.mkdir(parents=True)
 

@@ -4,7 +4,6 @@ import cv2
 import logging
 import numpy as np
 import shutil
-import os
 import random
 import yaml
 from os import PathLike
@@ -13,9 +12,9 @@ from PIL import Image
 from typing import Optional, Tuple
 from urllib.request import pathname2url
 from tqdm import tqdm
-from converter import LS_ROOT_PATH
+from converter import load_env
 from converter.colors import COLORS
-from converter.utils import copy_files_monitored, sq_cp_dir_monitored
+from converter.utils import copy_files_monitored, copy_filtered_dir_monitored
 
 log = logging.getLogger("Converter")
 logging.basicConfig(filename="converter.log", level=logging.INFO, format="%(asctime)s %(message)s")
@@ -32,7 +31,7 @@ LABELING_CONFIG = """<View>
 {# BODY #}</View>
 """
 
-OUT_DIR = "./out"
+OUT_PATH = Path("out")
 
 
 class InputStream:
@@ -256,23 +255,23 @@ def decode_rle(rle: list) -> np.ndarray:
     Returns:
         A flattened numpy uint8 image [width, height, channel].
     """
-    input = InputStream(bytes2bit(rle))
-    num = input.read(32)
-    word_size = input.read(5) + 1
-    rle_sizes = [input.read(4) + 1 for _ in range(4)]
+    input_ = InputStream(bytes2bit(rle))
+    num = input_.read(32)
+    word_size = input_.read(5) + 1
+    rle_sizes = [input_.read(4) + 1 for _ in range(4)]
 
     i = 0
     out = np.zeros(num, dtype=np.uint8)
     while i < num:
-        x = input.read(1)
-        j = i + 1 + input.read(rle_sizes[input.read(2)])
+        x = input_.read(1)
+        j = i + 1 + input_.read(rle_sizes[input_.read(2)])
         if x:
-            val = input.read(word_size)
+            val = input_.read(word_size)
             out[i:j] = val
             i = j
         else:
             while i < j:
-                val = input.read(word_size)
+                val = input_.read(word_size)
                 out[i] = val
                 i += 1
     return out
@@ -474,13 +473,11 @@ def parse_seg_value(value: dict, img_w: int, img_h: int) -> list:
 
 
 def validate_dataset(images_dir_path, labels_dir_path):
-    assert os.path.exists(images_dir_path), f"Path {images_dir_path} does not exist"
-    assert os.path.exists(labels_dir_path), f"Path {labels_dir_path} does not exist"
+    assert images_dir_path.exists(), f"Path {images_dir_path} does not exist"
+    assert labels_dir_path.exists(), f"Path {labels_dir_path} does not exist"
 
-    image_files = {os.path.splitext(file)[0] for file in os.listdir(images_dir_path) if
-                   os.path.isfile(os.path.join(images_dir_path, file))}
-    binmask_files = {os.path.splitext(file)[0] for file in os.listdir(labels_dir_path) if
-                     os.path.isfile(os.path.join(labels_dir_path, file))}
+    image_files = {file.stem for file in images_dir_path.iterdir() if file.is_file()}
+    binmask_files = {file.stem for file in labels_dir_path.iterdir() if file.is_file()}
 
     missing_in_labels = image_files - binmask_files
     missing_in_images = binmask_files - image_files
@@ -493,7 +490,7 @@ def validate_dataset(images_dir_path, labels_dir_path):
     return True
 
 
-def save_yolo_txt_file(file_name: str, output_dir: str, data: list) -> None:
+def save_txt_file(file_name: str, output_path: Path, data: list) -> None:
     """Saves YOLO-formatted data to text files.
 
     This function creates a text file in the specified output directory and writes each item
@@ -501,17 +498,17 @@ def save_yolo_txt_file(file_name: str, output_dir: str, data: list) -> None:
 
     Args:
         file_name: The base name for the output file (without extension).
-        output_dir: The directory where the file will be saved.
+        output_path: The directory where the file will be saved.
         data: A list of items to be written to the file. Each item will become a separate line.
 
     Raises:
         AssertionError: If data is empty, file_name is empty, or data is not a list.
     """
-    assert data, "Data is empty"
     assert file_name, "File name is empty"
-    assert isinstance(data, list), "Data should be a list"
-    os.makedirs(output_dir, exist_ok=True)
-    output_path = Path(output_dir) / f"{file_name}.txt"
+
+    output_path.mkdir(parents=True, exist_ok=True)
+    output_path = output_path / f"{file_name}.txt"
+
     with open(output_path, "w", encoding="utf-8") as file:
         for item in data:
             line = " ".join(map(str, item))
@@ -550,7 +547,7 @@ def seg_to_bbox(seg_info: list) -> list:
     return bbox_info
 
 
-def binmask_to_yolo(dataset_path, should_make_seg, should_make_bbox):
+def binmask_to_yolo(binmask_dir, should_make_seg, should_make_bbox, yolo_path=None):
     """
     Converts binary segmentation mask images to YOLO format for segmentation and bounding boxes annotations types.
 
@@ -558,9 +555,11 @@ def binmask_to_yolo(dataset_path, should_make_seg, should_make_bbox):
     and/or bounding boxes annotations types.
 
         Args:
-            dataset_path (str): The path to the directory containing the dataset with subdirectory containing images (png or jpg format) and labels containing binary masks.
+            binmask_dir (str): The path to the directory containing the dataset with subdirectory containing images (png or jpg format) and labels containing binary masks.
             should_make_seg (bool): Flag to indicate whether YOLO segmentation labels should be generated.
             should_make_bbox (bool): Flag to indicate whether YOLO bounding box labels should be generated.
+            yolo_path (str, optional): The path where the YOLO formatted dataset will be saved.
+                If not provided, a new directory will be created in the 'out' folder with a name based on the original dataset name and annotation type.
 
         Notes:
             - At least one of the flags should be set to True.
@@ -615,40 +614,42 @@ def binmask_to_yolo(dataset_path, should_make_seg, should_make_bbox):
         )
     """
 
-    normalized_dataset_path = os.path.normpath(dataset_path)
-
-    images_dir_path = f"{normalized_dataset_path}/images"
-    binmasks_dir_path = f"{normalized_dataset_path}/labels"
-    validate_dataset(images_dir_path, binmasks_dir_path)
-
     assert should_make_seg or should_make_bbox, "At least one of the flags --seg --bbox should be set to True"
     assert not (should_make_bbox and should_make_seg), "Both flags --seg and --bbox cannot be set to True at the same time"
 
-    dataset_name = os.path.basename(normalized_dataset_path)
-    yolo_dataset_path = f"{OUT_DIR}/{dataset_name}"
+    binmask_path = Path(binmask_dir)
 
-    if should_make_seg:
-        yolo_dataset_path = f"{yolo_dataset_path}_yolo_seg"
-    elif should_make_bbox:
-        yolo_dataset_path = f"{yolo_dataset_path}_yolo_bbox"
-    yolo_images_path_dir = f"{yolo_dataset_path}/images"
-    yolo_labels_path_dir = f"{yolo_dataset_path}/labels"
-    os.makedirs(yolo_images_path_dir, exist_ok=True)
-    os.makedirs(yolo_labels_path_dir, exist_ok=True)
+    images_dir_path = binmask_path / "images"
+    binmasks_dir_path = binmask_path / "labels"
+    classes_path = binmask_path / "classes.txt"
 
-    shutil.copytree(images_dir_path, yolo_images_path_dir, dirs_exist_ok=True)
-    shutil.copy(f"{normalized_dataset_path}/classes.txt", f"{yolo_dataset_path}/classes.txt")
+    validate_dataset(images_dir_path, binmasks_dir_path)
 
-    for binmask_file_path in Path(binmasks_dir_path).iterdir():
-        assert binmask_file_path.suffix in [".png", ".jpg"], f"Unsupported file format: {binmask_file_path.suffix}"
-        print(f"Converting labels from {binmask_file_path} \n")
-        mask = cv2.imread(str(binmask_file_path), cv2.IMREAD_GRAYSCALE)  # binmask_Read the mask image in grayscale
-        seg_list, bbox_list = mask_to_yolo(mask, should_make_seg, should_make_bbox)
-        if should_make_seg:
-            label_list = seg_list
-        if should_make_bbox:
-            label_list = bbox_list
-        save_yolo_txt_file(binmask_file_path.stem, yolo_labels_path_dir, label_list)
+    if yolo_path:
+        yolo_path = Path(yolo_path)
+    else:
+        suffix = "seg" if should_make_seg else "bbox"
+        dataset_name = f"{binmask_path.name}_{suffix}"
+        yolo_path = OUT_PATH / dataset_name
+
+    yolo_images_path = yolo_path / "images"
+    yolo_labels_path = yolo_path / "labels"
+    yolo_classes_path = yolo_path / "classes.txt"
+    
+    yolo_images_path.mkdir(parents=True, exist_ok=True)
+    yolo_labels_path.mkdir(parents=True, exist_ok=True)
+
+    copy_files_monitored(images_dir_path, yolo_images_path, dirs_exist_ok=True, desc="Copying images")
+    shutil.copy(classes_path, yolo_classes_path)
+
+    binmask_paths = [path for path in binmasks_dir_path.iterdir() if path.is_file()]
+    for binmask_file in tqdm(binmask_paths, total=len(binmask_paths), ascii="░▒█", desc="Converting binmasks to YOLO"):
+        assert binmask_file.suffix.lower() in [".png", ".jpg"], f"Unsupported file format: {binmask_file.suffix}"
+
+        mask = cv2.imread(str(binmask_file), cv2.IMREAD_GRAYSCALE)
+        label_list = list(mask_to_yolo(mask, should_make_seg, should_make_bbox))
+
+        save_txt_file(binmask_file.stem, yolo_labels_path, label_list)
 
 
 def convert_yolo_to_ls(
@@ -720,7 +721,7 @@ def convert_yolo_to_ls(
 
     for image_path in tqdm(image_list, total=len(image_list), ascii="░▒█", desc="Convert YOLO annotations to LS"):
         image_root_url += "" if image_root_url.endswith("/") else "/"
-        task = {
+        task: dict = {
             "data": {
                 "image": image_root_url + pathname2url(image_path.name)
             }
@@ -837,7 +838,7 @@ def convert_ls_to_yolo(ls_path: Path, yolo_path: Path, label_type: str, image_ex
     log.info(f"Reading LS JSON from: {json_path}")
 
     with json_path.open("r", encoding="utf-8") as task_file:
-        tasks = json.load(task_file)
+        tasks: list[dict] = json.load(task_file)
 
     if tasks is None:
         log.error("No tasks found in the task file.")
@@ -910,6 +911,8 @@ def yolo_to_ls(label_type: str, yolo_dir: str = None, ls_base_name: str = None, 
     """
     if label_type not in ("bbox", "seg"):
         raise ValueError("label_type must be either 'bbox' or 'seg'")
+
+    LS_ROOT_PATH = load_env("../.env")["LS_ROOT_PATH"]
 
     if reverse:
         input_dir_name = ls_base_name
@@ -1167,7 +1170,7 @@ def convert_yolo_to_ul(
     all_files = build_filenames_list(yolo_images_path, yolo_labels_path, image_ext)
     split_data = shuffle_and_split(all_files, split_ratios, include_test_split)
 
-    yaml_data: dict[str, any] = {
+    yaml_data: dict = {
         'path': str(output_path.resolve()),
     }
 
@@ -1229,7 +1232,7 @@ def find_yaml_file(directory: Path) -> Optional[Path]:
     return yaml_files[0]
 
 
-def read_yaml_data(yaml_file_path: str | Path) -> dict[str, any] | None:
+def read_yaml_data(yaml_file_path: str | Path) -> dict | None:
     """Reads and parses a YAML file.
 
     Opens a YAML file at the specified path and returns its contents as a dictionary.
@@ -1333,11 +1336,11 @@ def convert_ul_to_yolo(ul_path: str | Path, yolo_path: str | Path) -> bool:
         return False
 
     class_names = [[name] for name in class_names]
-    save_yolo_txt_file("classes", yolo_path, class_names)
+    save_txt_file("classes", yolo_path, class_names)
 
     log.info("Starting file copy process...")
-    sq_cp_dir_monitored(ul_path, yolo_images_path, ".jpg, .png, .JPG, .PNG", description="Copying images: ")
-    sq_cp_dir_monitored(ul_path, yolo_labels_path, ".txt", description="Copying labels: ")
+    copy_filtered_dir_monitored(ul_path, yolo_images_path, ".jpg, .png, .JPG, .PNG", description="Copying images: ")
+    copy_filtered_dir_monitored(ul_path, yolo_labels_path, ".txt", description="Copying labels: ")
 
     log.info(f"Conversion complete. Standard YOLO dataset created at: {yolo_path}")
     return True
@@ -1346,7 +1349,7 @@ def convert_ul_to_yolo(ul_path: str | Path, yolo_path: str | Path) -> bool:
 def yolo_to_ul(
         yolo_dir: str = None,
         ul_dir: str = None,
-        split_ratios: Tuple[float, float, Optional[float]] = (0.8, 0.2),
+        split_ratios: tuple = (0.8, 0.2),
         include_test_split: bool = False,
         image_ext: str = '.jpg, .png',
         yaml_filename: Optional[str] = None,
@@ -1399,7 +1402,7 @@ def yolo_to_ul(
         old_suffix = "_ul" if reverse else "_yolo"
         output_name = input_path.stem.replace(old_suffix, "")
         output_name += f"_{output_suffix}"
-        output_path = Path("..", "out", output_name)
+        output_path = OUT_PATH / output_name
         log.warning(f"The output YOLO dataset dir was not specified. Defaulting to: {output_path}")
     else:
         output_path = Path(output_dir)
@@ -1424,7 +1427,7 @@ def yolo_to_ul(
         )
 
     if not completed:
-        log.error("Something during conversion went wrong")
+        log.error("Something went wrong during the conversion")
         return None
 
     return output_path
@@ -1468,7 +1471,7 @@ def ls_to_ul(label_type: str, ls_base_name: str = None, ul_dir: str = None, reve
         output_path = yolo_to_ul(
             yolo_dir=str(yolo_out),
             ul_dir=ul_dir,
-            split_ratios=kwargs.get("split_ratios", (0.8, 0.2, None)),
+            split_ratios=kwargs.get("split_ratios", (0.8, 0.2)),
             include_test_split=kwargs.get("include_test_split", False)
         )
 
