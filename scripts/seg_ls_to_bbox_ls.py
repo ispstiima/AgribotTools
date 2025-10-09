@@ -2,9 +2,9 @@ import argparse
 
 
 def main():
-    desc = 'Converts the segmentation masks in a Label Studio dataset to bounding boxes'
+    desc = 'Converts a Label Studio dataset from segmentation masks to bounding boxes'
     parser = argparse.ArgumentParser(description=desc)
-    parser.add_argument('dataset_path', type=str)
+    parser.add_argument('ls_base_name', type=str)
 
     args = parser.parse_args()
 
