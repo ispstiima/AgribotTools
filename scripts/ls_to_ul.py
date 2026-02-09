@@ -1,5 +1,5 @@
 import argparse
-from converter.converter import ls_to_ul
+from cvtoolkit.converter import ls_to_ul
 
 
 def main():

@@ -1,5 +1,5 @@
 import argparse
-from converter.converter import yolo_to_ls
+from cvtoolkit.converter import yolo_to_ls
 
 
 def main():

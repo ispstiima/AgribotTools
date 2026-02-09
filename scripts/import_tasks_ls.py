@@ -1,3 +1,8 @@
+'''
+This script serves as a utility to upload to Label Studio
+JSON files that exceed the maximum size of the Web App GUI. 
+'''
+
 import json
 import requests
 import os

@@ -1,5 +1,5 @@
 import argparse
-from converter.converter import binmask_to_yolo
+from cvtoolkit.converter import binmask_to_yolo
 
 
 def main():
