@@ -54,7 +54,7 @@ def validate_source_folder(source_format: str, source_path: str) -> tuple:
     is_valid, message = validator.validate()
     
     if is_valid:
-        return f"✅ Valid {source_format} dataset structure.", True
+        return f"✅ Valid {source_format} dataset: {source_path.resolve()}", True
     else:
         return f"❌ Validation failed: {message}", False
 

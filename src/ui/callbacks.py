@@ -1,7 +1,8 @@
-import os
 import logging
+import shutil
 import gradio as gr
 from pathlib import Path
+from tempfile import TemporaryDirectory
 from src.cvtoolkit import FormatType, FormatRegistry, ConversionError
 from cvtoolkit.formats import TaskType
 from src.ui.formats import get_format_type_by_name, get_target_choices, validate_source_folder
@@ -60,7 +61,7 @@ def run_conversion(
     target_format: str,
     task_type_str: str,
     source_path: str,
-    target_path: str,
+    output_name: str,
     train_ratio: float,
     val_ratio: float,
     test_ratio: float,
@@ -88,6 +89,7 @@ def run_conversion(
     Returns:
         A string containing the conversion result or error message.
     """
+    success = False
     result_messages = []
     
     # Convert string to TaskType enum
@@ -116,19 +118,12 @@ def run_conversion(
         if conversion_class is None:
             return f"❌ Error: No conversion available from {source_format} to {target_format}"
         
-        # Determine output path
-        if not target_path:
-            source_suffix = source_format.lower().replace(" ", "_")
-            target_suffix = target_format.lower().replace(" ", "_")
-            output_name = f"{source_path.name}_{target_suffix}"
+        if not output_name:
+            output_name = source_path.name + "_" + target_format.lower()
 
-            if target_type == FormatType.LABEL_STUDIO:
-                ls_base_path = os.environ.get("LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT", source_path.parent)
-                target_path = Path(ls_base_path) / output_name
-            else:
-                target_path = source_path.parent / output_name
-        else:
-            target_path = Path(target_path)
+        out_path = Path("out")
+        out_path.mkdir(exist_ok=True)
+        target_path = out_path / output_name
         
         result_messages.append(f"🔄 Starting conversion: {source_format} → {target_format}")
         result_messages.append(f"📂 Source: {source_path}")
@@ -146,9 +141,14 @@ def run_conversion(
         
         # Build kwargs based on target format
         kwargs = {}
+
+        if target_type == FormatType.LABEL_STUDIO:
+            kwargs.update({
+                "image_root_url": f"/data/local-files/?d={target_path.name}/images",
+            })
         
         # Add split options for Ultralytics targets
-        if "ultralytics" in target_format.lower():
+        if target_type == FormatType.ULTRALYTICS:
             split_ratios = (train_ratio, val_ratio, test_ratio) if include_test else (train_ratio, val_ratio)
             kwargs.update({
                 "split_ratios": split_ratios,
@@ -164,6 +164,17 @@ def run_conversion(
         
         result_messages.append("✅ Conversion completed successfully!")
         result_messages.append(f"📁 Output saved to: {result}")
+
+        # Zip the output directory for download
+        zip_path = shutil.make_archive(
+            base_name=str(target_path),
+            format="zip",
+            root_dir=target_path.parent,
+            base_dir=target_path.name,
+        )
+        result_messages.append(f"📦 Download ready: {zip_path}")
+
+        success = True
         
     except ConversionError as e:
         result_messages.append(f"❌ Conversion failed: {str(e)}")
@@ -174,5 +185,21 @@ def run_conversion(
         result_messages.append(f"❌ Unexpected error: {str(e)}")
         log.exception("Unexpected error")
     
-    return "\n".join(result_messages)
+    if success:
+        dl_update = gr.update(interactive=True, value=zip_path)
+    else:
+        dl_update = gr.update(interactive=False)
+    
+    return "\n".join(result_messages), dl_update
+
+
+def update_source_text(path):
+    if path is None:
+        text = "Invalid path"
+    elif not Path(path).is_dir():
+        text = f"❌ ERROR: The selected source path is not a directory"
+    else:
+        text = f"{str(Path(path))}"
+    
+    return gr.update(value=text)
 

@@ -73,25 +73,25 @@ class BinmaskToYolo(Conversion):
         
         for i, mask_file in enumerate(tqdm(mask_paths, ascii="░▒█", desc="Converting masks to YOLO")):
             if mask_file.suffix.lower() not in [".png", ".jpg", ".jpeg"]:
-                log.warning(f"Unsupported mask format: {mask_file.suffix}")
+                # log.warning(f"Unsupported mask format: {mask_file.suffix}")
                 continue
             
             mask = cv2.imread(str(mask_file), cv2.IMREAD_GRAYSCALE)
             if mask is None:
-                log.warning(f"Could not read mask: {mask_file}")
+                # log.warning(f"Could not read mask: {mask_file}")
                 continue
             
             # Debug: log mask statistics
             unique_vals = np.unique(mask)
-            log.info(f"Mask {mask_file.name}: shape={mask.shape}, unique values={unique_vals}")
+            # log.info(f"Mask {mask_file.name}: shape={mask.shape}, unique values={unique_vals}")
             
             label_list = list(mask_to_yolo(mask, self.task_type))
             
             # Debug: log conversion result
-            log.info(f"  -> Generated {len(label_list)} annotations for task_type={self.task_type}")
+            # log.info(f"  -> Generated {len(label_list)} annotations for task_type={self.task_type}")
 
             if label_list is None:
-                log.error(f"Could not convert mask: {mask_file}")
+                # log.error(f"Could not convert mask: {mask_file}")
                 raise ConversionError(f"Could not convert mask: {mask_file}")
 
             save_yolo_file(mask_file.stem, yolo_labels, label_list)

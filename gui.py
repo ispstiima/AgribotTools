@@ -68,47 +68,55 @@ def create_gui():
                 | **Format** | **Description** |
                 |--------|-------------|
                 | **Binary Mask** | Grayscale mask images (255=foreground, 0=background) |
-                | **YOLO (Segmentation)** | Polygon annotations in normalized coordinates |
-                | **YOLO (Detection)** | Bounding box annotations in normalized coordinates |
-                | **Label Studio (Segmentation)** | JSON format with RLE-encoded masks |
-                | **Label Studio (Detection)** | JSON format with rectangle annotations |
-                | **Ultralytics (Segmentation)** | YOLO format with train/val/test splits |
-                | **Ultralytics (Detection)** | YOLO format with train/val/test splits |
-                
+                | **YOLO (Detection/Segmentation)** | Bounding box / Polygon annotations in normalized coordinates |
+                | **Label Studio (Detection/Segmentation)** | JSON format with RLE-encoded masks / Rectangle annotations |
+                | **Ultralytics (Detection/Segmentation)** | YOLO format with train/val/test splits |
+
                 ### Directory Structures
-                
-                **YOLO / Binary Mask:**
-                ```
-                dataset/
-                ├── images/
-                ├── labels/
-                └── classes.txt
-                ```
-                
-                **Ultralytics:**
-                ```
-                dataset/
-                ├── train/
-                │   ├── images/
-                │   └── labels/
-                ├── val/
-                │   ├── images/
-                │   └── labels/
-                ├── test/
-                │   ├── images/
-                │   └── labels/
-                └── dataset.yaml
-                ```
-                
-                **Label Studio:**
-                ```
-                dataset/
-                ├── images/
-                ├── task.json
-                └── template.label_config.xml
-                ```
                 """
             )
+
+            with gr.Row():
+                gr.Markdown(
+                    """
+                    **YOLO / Binary Mask:**
+                    ```
+                    dataset/
+                    ├── images/
+                    ├── labels/
+                    └── classes.txt
+                    ```
+                    """
+                )
+                gr.Markdown(
+                    """
+                    **Ultralytics:**
+                    ```
+                    dataset/
+                    ├── train/
+                    │   ├── images/
+                    │   └── labels/
+                    ├── val/
+                    │   ├── images/
+                    │   └── labels/
+                    ├── test/
+                    │   ├── images/
+                    │   └── labels/
+                    └── dataset.yaml
+                    ```
+                    """
+                )
+                gr.Markdown(
+                    """
+                    **Label Studio:**
+                    ```
+                    dataset/
+                    ├── images/
+                    ├── task.json
+                    └── template.label_config.xml
+                    ```
+                    """
+                )
         
         # Show warning if Label Studio environment is not configured
         if LS_ENV_WARNING:
@@ -119,50 +127,49 @@ def create_gui():
                 """,
             )
         
-        # Format Selection
-        gr.Markdown("## Format Selection")
         
-        with gr.Column():
+        with gr.Row():
             source_format = gr.Dropdown(
                 choices=source_formats,
                 value=initial_source,
                 label="Source Format",
+                scale=3
             )
 
-            with gr.Row():
-                target_format = gr.Dropdown(
-                    choices=initial_targets,
-                    value=initial_target,
-                    label="Target Format",
-                    scale=3
-                )
+            target_format = gr.Dropdown(
+                choices=initial_targets,
+                value=initial_target,
+                label="Target Format",
+                scale=3
+            )
 
-                task_type = gr.Radio(
-                    choices=task_choices,
-                    value=initial_task,
-                    label="Target Task Type",
-                    show_label=True,
-                    interactive=True,
-                    visible=True
-                )
-        
-        # Path Selection
-        gr.Markdown("## Datasets")
+            task_type = gr.Radio(
+                choices=task_choices,
+                value=initial_task,
+                label="Target Task Type",
+                show_label=True,
+                interactive=True,
+                visible=True,
+                scale=3
+            )
 
-        source_path = gr.Textbox(
-            label="Source Dataset Path",
-            placeholder="Enter the path to the source dataset",
-            scale=2
-        )
-        
-        target_path = gr.Textbox(
-            label="(Optional) Target Dataset Path",
-            placeholder="Enter the path to the target dataset",
-        )
+        with gr.Column():
+            with gr.Accordion(label="Source Dataset Path"):
+                source_path = gr.FileExplorer(
+                    show_label=False,
+                    root_dir=".",
+                    file_count="single",
+                    max_height=230,
+                )
         
         validation_status = gr.Markdown(
             "⚠️ Enter a source path to validate.",
             elem_id="validation-status"
+        )
+
+        output_name = gr.Textbox(
+            label="(Optional)  Target Dataset Name",
+            placeholder="Enter a name for the output folder"
         )
 
         # Split Options (for Ultralytics)
@@ -196,12 +203,19 @@ def create_gui():
                 info="0 = random, or set seed for reproducibility",
             )
         
-        convert_btn = gr.Button(
-            "Convert",
-            variant="primary",
-            size="lg",
-            interactive=False,
-        )
+        with gr.Row():
+            convert_btn = gr.Button(
+                "Convert",
+                variant="primary",
+                size="lg",
+                interactive=False,
+            )
+
+            dl_button = gr.DownloadButton(
+                label=f"Download {target_format.value} Dataset",
+                variant="stop",
+                interactive=False,
+            )
 
         output_log = gr.Textbox(
             label="Conversion Log",
@@ -244,14 +258,20 @@ def create_gui():
                 target_format,
                 task_type,
                 source_path,
-                target_path,
+                output_name,
                 train_ratio,
                 val_ratio,
                 test_ratio,
                 include_test,
                 random_seed,
             ],
-            outputs=[output_log],
+            outputs=[output_log, dl_button],
+        )
+
+        target_format.change(
+            fn=lambda target: gr.update(label=f"Download {target} Dataset"),
+            inputs=[target_format],
+            outputs=[dl_button]
         )
     
     return demo
