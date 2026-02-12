@@ -49,23 +49,138 @@ def create_gui():
     task_choices = [TaskType.DETECTION.value, TaskType.SEGMENTATION.value]
     initial_task = task_choices[0] if task_choices else None
     
-    with gr.Blocks(
-        title="AgRibot Format Converter"
-    ) as demo:
+    with gr.Blocks(title="AgRibot Format Converter") as demo:
         gr.Markdown(
             """
             # 🌱 AgRibot Format Converter
-            
-            > Convert between different dataset annotation formats for computer vision tasks.
             """,
             elem_classes=["main-header"]
         )
 
+        # Show warning if Label Studio environment is not configured
+        if LS_ENV_WARNING:
+            gr.Markdown(
+                """
+                > ⚠️ **Warning:** `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT` is not set.
+                > Label Studio conversions will use `/tmp/label_studio_data`.
+                """,
+            )
+        
+        with gr.Row(scale=1):
+            with gr.Column():
+                source_format = gr.Dropdown(
+                    choices=source_formats,
+                    value=initial_source,
+                    label="Source Format",
+                )
+
+                target_format = gr.Dropdown(
+                    choices=initial_targets,
+                    value=initial_target,
+                    label="Target Format",
+                )
+
+                task_type = gr.Radio(
+                    choices=task_choices,
+                    value=initial_task,
+                    label="Target Task Type",
+                    show_label=True,
+                    interactive=True,
+                    visible=True,
+                )
+            
+            with gr.Column(scale=3):
+                source_path = gr.FileExplorer(
+                    label="Source Path Dataset",
+                    root_dir="data/",
+                    file_count="single",
+                    max_height=230,
+                )
+
+                source_validation = gr.Markdown(
+                    "⚠️ Select the source folder path.",
+                    elem_id="validation-status"
+                )
+
+        with gr.Accordion("🛠️ Ultralytics Options", open=False, visible=False) as split_options:
+            with gr.Row():
+                with gr.Column(scale=1):
+                    random_seed = gr.Number(
+                        label="Random Seed",
+                        value=0,
+                        precision=0,
+                        info="0 = random, or set seed for reproducibility",
+                    )
+
+                    include_test = gr.Checkbox(
+                        label="Include Test Split",
+                        value=False,
+                        info="Create a separate test set",
+                    )
+
+                with gr.Column(scale=3):
+                    train_ratio = gr.Slider(
+                        minimum=0.0, maximum=1.0, value=0.7, step=0.05,
+                        label="Train Ratio",
+                    )
+                    val_ratio = gr.Slider(
+                        minimum=0.0, maximum=1.0, value=0.3, step=0.05,
+                        label="Validation Ratio",
+                    )
+                    test_ratio = gr.Slider(
+                        visible="hidden",
+                        minimum=0.0, maximum=1.0, value=0.0, step=0.05,
+                        label="Test Ratio",
+                    )
+            
+            splits_validation = gr.Markdown("✅ The splits will be created.")
+
+        gr.Markdown("---")
+
+        with gr.Row():
+            with gr.Column():
+                output_name = gr.Textbox(
+                    label="(Optional)  Target Dataset Name",
+                    placeholder="Enter a name for the output folder"
+                )
+
+                convert_btn = gr.Button(
+                    "Convert",
+                    variant="primary",
+                    size="lg",
+                    interactive=False,
+                )
+
+                progress_text = gr.Textbox(
+                    container=False,
+                    placeholder="Waiting for conversion to start...",
+                    show_label=False,
+                    interactive=False,
+                    lines=3,
+                    visible=False
+                )
+                
+                dl_button = gr.DownloadButton(
+                    label=f"Download {target_format.value} Dataset",
+                    variant="stop",
+                    size="lg",
+                    interactive=False,
+                )
+
+            output_log = gr.Textbox(
+                label="Conversion Log",
+                lines=12,
+                max_lines=20,
+                interactive=False,
+                scale=4,
+                elem_id="conversion-log"
+            )
+        
         # Info section
         with gr.Accordion("ℹ️ Supported Formats & Structures", open=False):
             gr.Markdown(
                 """
-                | **Format** | **Description** |
+                | **FORMAT** | **DESCRIPTION** |
                 |--------|-------------|
                 | **Binary Mask** | Grayscale mask images (255=foreground, 0=background) |
                 | **YOLO (Detection/Segmentation)** | Bounding box / Polygon annotations in normalized coordinates |
@@ -118,113 +233,8 @@ def create_gui():
                     """
                 )
         
-        # Show warning if Label Studio environment is not configured
-        if LS_ENV_WARNING:
-            gr.Markdown(
-                """
-                > ⚠️ **Warning:** `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT` is not set.
-                > Label Studio conversions will use `/tmp/label_studio_data`.
-                """,
-            )
-        
-        
-        with gr.Row():
-            source_format = gr.Dropdown(
-                choices=source_formats,
-                value=initial_source,
-                label="Source Format",
-                scale=3
-            )
+        # ========================== Event handlers ==========================
 
-            target_format = gr.Dropdown(
-                choices=initial_targets,
-                value=initial_target,
-                label="Target Format",
-                scale=3
-            )
-
-            task_type = gr.Radio(
-                choices=task_choices,
-                value=initial_task,
-                label="Target Task Type",
-                show_label=True,
-                interactive=True,
-                visible=True,
-                scale=3
-            )
-
-        with gr.Column():
-            with gr.Accordion(label="Source Dataset Path"):
-                source_path = gr.FileExplorer(
-                    show_label=False,
-                    root_dir=".",
-                    file_count="single",
-                    max_height=230,
-                )
-        
-        validation_status = gr.Markdown(
-            "⚠️ Enter a source path to validate.",
-            elem_id="validation-status"
-        )
-
-        output_name = gr.Textbox(
-            label="(Optional)  Target Dataset Name",
-            placeholder="Enter a name for the output folder"
-        )
-
-        # Split Options (for Ultralytics)
-        with gr.Accordion("📊 Split Options", open=False, visible=False) as split_accordion:
-            gr.Markdown("Configure train/validation/test splits for Ultralytics format")
-            
-            with gr.Row():
-                train_ratio = gr.Slider(
-                    minimum=0.1, maximum=0.9, value=0.7, step=0.05,
-                    label="Train Ratio",
-                )
-                val_ratio = gr.Slider(
-                    minimum=0.05, maximum=0.5, value=0.2, step=0.05,
-                    label="Validation Ratio",
-                )
-                test_ratio = gr.Slider(
-                    minimum=0.0, maximum=0.3, value=0.1, step=0.05,
-                    label="Test Ratio",
-                )
-
-            include_test = gr.Checkbox(
-                label="Include Test Split",
-                value=False,
-                info="Create a separate test set",
-            )
-            
-            random_seed = gr.Number(
-                label="Random Seed",
-                value=0,
-                precision=0,
-                info="0 = random, or set seed for reproducibility",
-            )
-        
-        with gr.Row():
-            convert_btn = gr.Button(
-                "Convert",
-                variant="primary",
-                size="lg",
-                interactive=False,
-            )
-
-            dl_button = gr.DownloadButton(
-                label=f"Download {target_format.value} Dataset",
-                variant="stop",
-                interactive=False,
-            )
-
-        output_log = gr.Textbox(
-            label="Conversion Log",
-            lines=12,
-            max_lines=20,
-            interactive=False
-        )
-        
-        # Event handlers
         source_format.change(
             fn=update_target_dropdown,
             inputs=[source_format, task_type],
@@ -241,16 +251,29 @@ def create_gui():
         target_format.change(
             fn=update_split_visibility,
             inputs=[target_format],
-            outputs=[split_accordion],
+            outputs=[split_options],
         )
 
         for el in [source_format, source_path, target_format, task_type]:
             el.change(
                 fn=update_validation_and_convert,
                 inputs=[source_format, source_path, target_format, task_type],
-                outputs=[validation_status, convert_btn],
+                outputs=[source_validation, convert_btn],
             )
         
+        include_test.select(
+            fn=lambda selected: gr.update(visible=True if selected else "hidden", value=0.0),
+            inputs=[include_test],
+            outputs=[test_ratio],
+        )
+
+        for el in [train_ratio, val_ratio, test_ratio, include_test]:
+            el.change(
+                fn=update_split_validation,
+                inputs=[train_ratio, val_ratio, test_ratio, include_test],
+                outputs=[splits_validation],
+            )
+
         convert_btn.click(
             fn=run_conversion,
             inputs=[
@@ -263,9 +286,9 @@ def create_gui():
                 val_ratio,
                 test_ratio,
                 include_test,
-                random_seed,
+                random_seed
             ],
-            outputs=[output_log, dl_button],
+            outputs=[progress_text, output_log, dl_button],
         )
 
         target_format.change(
@@ -288,5 +311,6 @@ if __name__ == "__main__":
         server_port=7860,
         share=False,
         show_error=True,
+        css="#conversion-log div[data-testid=\"status-tracker\"] { display: none !important; }"
     )
 

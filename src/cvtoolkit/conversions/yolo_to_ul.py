@@ -153,6 +153,8 @@ class YoloToUltralytics(Conversion):
         if random_seed is not None:
             random.seed(random_seed)
         
+        self._report_progress(0.25, "Building file list & splitting...")
+        
         # Create target directory
         self.target_path.mkdir(parents=True, exist_ok=True)
         self._track_path(self.target_path)
@@ -172,7 +174,14 @@ class YoloToUltralytics(Conversion):
             'path': str(self.target_path.resolve()),
         }
         
-        for split_name, file_list in split_data.items():
+        # Distribute progress across splits (0.30 to 0.90)
+        num_splits = len(split_data)
+        split_progress_range = 0.60  # 0.30 to 0.90
+        
+        for split_idx, (split_name, file_list) in enumerate(split_data.items()):
+            split_start = 0.30 + (split_progress_range * split_idx / num_splits)
+            split_end = 0.30 + (split_progress_range * (split_idx + 1) / num_splits)
+            
             img_dest = self.target_path / split_name / "images"
             lbl_dest = self.target_path / split_name / "labels"
             img_dest.mkdir(parents=True, exist_ok=True)
@@ -181,8 +190,9 @@ class YoloToUltralytics(Conversion):
             yaml_data[split_name] = f"{split_name}/images"
             
             log.info(f"Copying {len(file_list)} files to {split_name}...")
+            total_files = len(file_list)
             
-            for base_name in tqdm(file_list, ascii="░▒█", desc=f"Creating {split_name}"):
+            for i, base_name in enumerate(tqdm(file_list, ascii="░▒█", desc=f"Creating {split_name}")):
                 # Find the original image file
                 original_img = None
                 for img_path in yolo_images.glob(f"{base_name}.*"):
@@ -200,6 +210,12 @@ class YoloToUltralytics(Conversion):
                         shutil.copy2(original_lbl, dest_lbl)
                     except Exception as e:
                         log.error(f"Error copying {base_name}: {e}")
+                
+                # Report per-file progress within this split's range
+                progress = split_start + (split_end - split_start) * (i + 1) / total_files
+                self._report_progress(progress, f"Copying {split_name} {i + 1}/{total_files}")
+        
+        self._report_progress(0.95, "Writing YAML config...")
         
         yaml_data['names'] = classes_dict
         

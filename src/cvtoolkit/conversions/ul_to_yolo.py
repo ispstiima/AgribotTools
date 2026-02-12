@@ -75,6 +75,8 @@ class UltralyticsToYolo(Conversion):
         """
         log.info(f"Converting from Ultralytics ({self.source_path}) to YOLO ({self.target_path})")
         
+        self._report_progress(0.25, "Reading YAML & creating directories...")
+        
         # Find and read YAML config
         yaml_path = find_yaml_file(self.source_path)
         if yaml_path is None:
@@ -97,10 +99,14 @@ class UltralyticsToYolo(Conversion):
         yolo_labels.mkdir(exist_ok=True)
         self._track_path(self.target_path)
         
+        self._report_progress(0.35, "Writing classes.txt...")
+        
         # Write classes.txt
         class_data = [[name] for name in class_names]
         save_txt_file("classes", self.target_path, class_data)
         log.info(f"Created classes.txt with {len(class_names)} classes")
+        
+        self._report_progress(0.45, "Copying images...")
         
         # Copy images and labels from all splits
         log.info("Copying files from split directories...")
@@ -111,6 +117,8 @@ class UltralyticsToYolo(Conversion):
             ".jpg,.png,.JPG,.PNG,.jpeg,.JPEG", 
             description="Copying images"
         )
+        
+        self._report_progress(0.75, "Copying labels...")
         
         copy_filtered_dir_monitored(
             self.source_path, 

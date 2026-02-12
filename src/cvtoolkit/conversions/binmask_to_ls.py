@@ -40,16 +40,18 @@ class BinmaskToLabelStudio(Conversion):
         with TemporaryDirectory() as temp_dir:
             temp_yolo = Path(temp_dir) / "yolo_temp"
             
-            log.info("Step 1: Converting BinMask → YOLO...")
+            self._report_progress(0.20, "Step 1: Converting BinMask → YOLO...")
             
             # Step 1: BinMask → YOLO
-            yolo_converter = BinmaskToYolo(self.source_path, temp_yolo)
+            yolo_converter = BinmaskToYolo(self.source_path, temp_yolo, self.task_type)
+            yolo_converter.set_progress_callback(self._sub_progress_callback(0.20, 0.55))
             yolo_converter.convert()
             
-            log.info("Step 2: Converting YOLO → Label Studio...")
+            self._report_progress(0.55, "Step 2: Converting YOLO → Label Studio...")
             
             # Step 2: YOLO → Label Studio  
-            ls_converter = YoloToLabelStudio(temp_yolo, self.target_path)
+            ls_converter = YoloToLabelStudio(temp_yolo, self.target_path, self.task_type)
+            ls_converter.set_progress_callback(self._sub_progress_callback(0.55, 0.95))
             self._track_path(self.target_path)
             result = ls_converter.convert(**ls_kwargs)
             

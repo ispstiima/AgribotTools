@@ -94,6 +94,13 @@ class Conversion(abc.ABC):
         if self._progress_callback:
             self._progress_callback(progress, message)
     
+    def _sub_progress_callback(self, start: float, end: float):
+        """Create a callback that maps 0.0-1.0 to a sub-range of the parent progress."""
+        def callback(progress, message):
+            mapped = start + (end - start) * progress
+            self._report_progress(mapped, message)
+        return callback
+    
     def validate_source(self) -> Tuple[bool, str]:
         """
         Validate the source dataset.
