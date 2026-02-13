@@ -1,7 +1,0 @@
-opencv-python
-numpy
-python-dotenv
-tqdm
-PyYAML
-pillow
-requests

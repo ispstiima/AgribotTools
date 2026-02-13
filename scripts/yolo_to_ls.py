@@ -1,20 +1,46 @@
+"""
+Script to convert YOLO format to Label Studio format.
+"""
 import argparse
-from converter.converter import yolo_to_ls
+from pathlib import Path
+from cvtoolkit.conversions.yolo_to_ls import YoloToLabelStudio
+from cvtoolkit.formats import TaskType
+
+
+TASK_TYPE_MAP = {
+    "seg": TaskType.SEGMENTATION,
+    "bbox": TaskType.DETECTION,
+}
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Convert YOLO segmentation masks/bounding boxes to Label Studio format')
-    parser.add_argument('label_type', choices=["seg", "bbox"])
-    parser.add_argument('yolo_path', type=str)
-    parser.add_argument('--ls_base_name', type=str)
-
+    parser = argparse.ArgumentParser(
+        description='Convert YOLO segmentation masks/bounding boxes to Label Studio format'
+    )
+    parser.add_argument('task_type', choices=["seg", "bbox"],
+                        help='Task type: "seg" for segmentation, "bbox" for detection')
+    parser.add_argument('yolo_path', type=str,
+                        help='Path to the YOLO dataset directory')
+    parser.add_argument('--ls_path', type=str, default=None,
+                        help='Output path for Label Studio dataset')
+    parser.add_argument('--image_root_url', type=str, default=None,
+                        help='Root URL path where images will be hosted in Label Studio')
     args = parser.parse_args()
 
-    yolo_to_ls(
-        label_type=args.label_type,
-        yolo_dir=args.yolo_path,
-        ls_base_name=args.ls_base_name
-    )
+    source = Path(args.yolo_path)
+    target = Path(args.ls_path) if args.ls_path else source.parent / f"{source.name}_ls"
+    task_type = TASK_TYPE_MAP[args.task_type]
+
+    converter = YoloToLabelStudio(source, target, task_type)
+
+    kwargs = {}
+    if args.image_root_url:
+        kwargs["image_root_url"] = args.image_root_url
+
+    result = converter.run(**kwargs)
+
+    print(f"Conversion complete: {result}")
+
 
 if __name__ == '__main__':
     main()

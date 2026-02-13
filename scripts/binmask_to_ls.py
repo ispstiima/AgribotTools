@@ -1,26 +1,39 @@
+"""
+Script to convert binary segmentation masks to Label Studio format.
+"""
 import argparse
-from converter.converter import binmask_to_yolo
+from pathlib import Path
+from cvtoolkit.conversions.binmask_to_ls import BinmaskToLabelStudio
+from cvtoolkit.formats import TaskType
+
+
+TASK_TYPE_MAP = {
+    "seg": TaskType.SEGMENTATION,
+    "bbox": TaskType.DETECTION,
+}
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Convert binary segmentation masks to Label Studio format')
-    parser.add_argument('--seg',  '-s', action='store_true')
-    parser.add_argument('--bbox', '-b', action='store_true')
-    parser.add_argument('--output_seg_path', default="./out/seg", type=str)
-    parser.add_argument('--output_box_path', default="./out/box", type=str)
-    parser.add_argument('binmask_path', type=str)
-
+    parser = argparse.ArgumentParser(
+        description='Convert binary segmentation masks to Label Studio format'
+    )
+    parser.add_argument('binmask_path', type=str,
+                        help='Path to the dataset directory containing images and masks')
+    parser.add_argument('task_type', choices=["seg", "bbox"],
+                        help='Task type: "seg" for segmentation, "bbox" for detection')
+    parser.add_argument('--output_path', type=str, default=None,
+                        help='Output path for Label Studio dataset')
     args = parser.parse_args()
 
-    dataset_dir = args.binmask_path
-    dataset_name = dataset_dir.split("/")[-1].replace("/", "")
+    source = Path(args.binmask_path)
+    target = Path(args.output_path) if args.output_path else source.parent / f"{source.name}_ls"
+    task_type = TASK_TYPE_MAP[args.task_type]
 
-    yolo_root = "./yolo_temp"
+    converter = BinmaskToLabelStudio(source, target, task_type)
+    result = converter.run()
 
-    yolo_seg_path = f"{yolo_root}/{dataset_name}_seg" if args.seg else None
-    yolo_bbox_path = f"{yolo_root}/{dataset_name}_bbox" if args.bbox else None
+    print(f"Conversion complete: {result}")
 
-    binmask_to_yolo(f"{dataset_dir}/", args.seg, args.bbox)
 
 if __name__ == '__main__':
     main()

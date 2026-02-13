@@ -2,11 +2,14 @@
 .qodo
 .env
 
-converter/__pycache__
+__pycache__
 
+data
 datasets
 venv
 out
 logs
 
 *.egg-info
+site
+.venv
