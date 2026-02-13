@@ -32,14 +32,14 @@ def main():
         target_path=ul_path,
         task_type=TaskType.GENERIC
     )
-    
+
     result = converter.run(
         split_ratios=tuple(args.split_ratios),
         include_test_split=args.include_test_split,
         image_ext=args.image_ext,
         random_seed=args.random_seed,
     )
-    
+
     print(f"Conversion complete: {result}")
 
 

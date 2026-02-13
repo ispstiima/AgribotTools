@@ -12,7 +12,7 @@ from typing import Optional, List
 from cvtoolkit.formats.format import FormatType
 from cvtoolkit.conversions.conversion import Conversion, register_conversion
 from cvtoolkit.formats.yolo import save_txt_file
-from src.file_utils import copy_filtered_dir_monitored
+from file_utils import copy_filtered_dir_monitored
 
 
 log = logging.getLogger("UlToYolo")

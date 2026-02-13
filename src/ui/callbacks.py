@@ -3,9 +3,9 @@ import shutil
 import gradio as gr
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from src.cvtoolkit import FormatType, FormatRegistry, ConversionError
+from cvtoolkit import FormatType, FormatRegistry, ConversionError
 from cvtoolkit.formats import TaskType
-from src.ui.formats import get_format_type_by_name, get_target_choices, validate_source_folder
+from ui.formats import get_format_type_by_name, get_target_choices, validate_source_folder
 
 log = logging.getLogger("ConverterGUI")
 

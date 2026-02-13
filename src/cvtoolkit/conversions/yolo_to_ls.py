@@ -18,7 +18,7 @@ from cvtoolkit.formats.format import FormatType
 from cvtoolkit.formats.ls import DEFAULT_IMAGE_ROOT_URL
 from cvtoolkit.conversions.conversion import Conversion, register_conversion
 from cvtoolkit.colors import COLORS
-from src.file_utils import copy_files_monitored
+from file_utils import copy_files_monitored
 
 
 log = logging.getLogger("YoloToLs")

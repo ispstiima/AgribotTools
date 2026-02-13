@@ -29,10 +29,10 @@ else:
 
 import sys
 sys.path.insert(0, str(Path(__file__).parent / "src"))
-from src.cvtoolkit import FormatType, FormatRegistry, ConversionError
+from cvtoolkit import FormatType, FormatRegistry, ConversionError
 from cvtoolkit.formats import TaskType
-from src.ui.formats import *
-from src.ui.callbacks import *
+from ui.formats import *
+from ui.callbacks import *
 
 log = logging.getLogger("ConverterGUI")
 

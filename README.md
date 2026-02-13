@@ -4,16 +4,13 @@
 
 ### Installation
 
-To install AgribotTools, you can clone the repository and install it in editable mode:
+To install AgribotTools, you can clone the repository and install it using `uv`:
 
 ```bash
 git clone https://github.com/LambdaLekter/AgribotTools.git
 cd AgribotTools
-pip install -e .
+uv sync
 ```
-
-Note: we recommend using a virtual environment.  
-This will install all the required dependencies.
 
 ### Usage
 
@@ -21,13 +18,13 @@ You can use the provided scripts in the `scripts` folder to convert datasets bet
 For example, to convert a dataset from YOLO format to Label Studio format, you can use the following command:
 
 ```bash
-python scripts/yolo_to_ls.py seg /mnt/c/Dataset/yolo_dir_path --ls_base_name ls_dir_name
+uv run scripts/yolo_to_ls.py seg /mnt/c/Dataset/yolo_dir_path --ls_base_name ls_dir_name
 ```
 
 For more information on the available scripts and their usage, you can run:
 
 ```bash
-python scripts/<script_name>.py -h
+uv run scripts/<script_name>.py -h
 ```
 
 ### Label Studio
@@ -41,10 +38,9 @@ If Label Studio is not installed, you can do so by following the [official guide
 > The __Label Studio Document Root__ is the folder where all the datasets in Label Studio format are stored
 > (see [below](#ls-format)).  
 > These environment variables allow to access and locate the local files that we need to import in Label Studio.
-> > For example, when importing the binary masks, we need to place the corresponding images in a local storage
-> > located under the __Label Studio Document Root__.
-> 
-> If needed, using a `.env` file placed in the root directory of AgribotTools is also supported.
+>
+> For example, when importing the binary masks, we need to place the corresponding images in a local storage
+> located under the __Label Studio Document Root__.
 
 ## Acronyms and Definitions
 
