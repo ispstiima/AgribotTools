@@ -23,7 +23,7 @@ AgribotTools is a Python toolkit developed by [CNR STIIMA](https://www.stiima.cn
 # Clone and install
 git clone https://github.com/LambdaLekter/AgribotTools.git
 cd AgribotTools
-pip install -e .
+uv sync
 
 # Convert YOLO segmentation to Label Studio
 python scripts/yolo_to_ls.py seg /path/to/yolo_dataset --ls_base_name my_ls_output

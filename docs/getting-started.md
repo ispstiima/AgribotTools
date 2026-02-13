@@ -10,39 +10,16 @@
 
 ## Installation
 
-We recommend using a virtual environment:
-
-=== "Linux / macOS"
-
-    ```bash
-    python -m venv venv
-    source venv/bin/activate
-    ```
-
-=== "Windows"
-
-    ```powershell
-    python -m venv venv
-    .\venv\Scripts\Activate.ps1
-    ```
-
-Then clone and install:
+We recommend using a virtual environment managed by `uv`.
 
 ```bash
+# Clone and sync
 git clone https://github.com/LambdaLekter/AgribotTools.git
 cd AgribotTools
-pip install -e .
+uv sync
 ```
 
-This will install all required dependencies:
-
-- `opencv-python`
-- `numpy`
-- `python-dotenv`
-- `tqdm`
-- `PyYAML`
-- `pillow`
-- `requests`
+This will automatically create a virtual environment and install all dependencies from `pyproject.toml` and `uv.lock`.
 
 ---
 
