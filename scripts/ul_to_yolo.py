@@ -24,9 +24,9 @@ def main():
         target_path=yolo_path,
         task_type=TaskType.GENERIC
     )
-    
+
     result = converter.run()
-    
+
     print(f"Conversion complete: {result}")
 
 

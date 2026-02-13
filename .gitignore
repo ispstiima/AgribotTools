@@ -12,3 +12,4 @@ logs
 
 *.egg-info
 site
+.venv

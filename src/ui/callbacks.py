@@ -3,9 +3,9 @@ import shutil
 import gradio as gr
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from src.cvtoolkit import FormatType, FormatRegistry, ConversionError
+from cvtoolkit import FormatType, FormatRegistry, ConversionError
 from cvtoolkit.formats import TaskType
-from src.ui.formats import get_format_type_by_name, get_target_choices, validate_source_folder
+from ui.formats import get_format_type_by_name, get_target_choices, validate_source_folder
 
 log = logging.getLogger("ConverterGUI")
 
@@ -32,6 +32,25 @@ def update_split_visibility(target_format: str):
     """Show/hide split options based on target format."""
     show_splits = target_format and "ultralytics" in target_format.lower()
     return gr.update(visible=show_splits)
+
+
+def update_split_validation(train_ratio, val_ratio, test_ratio, include_test):
+    val_msg = "✅ The splits will be created as specified."
+    total_ratio = train_ratio + val_ratio + test_ratio
+
+    if train_ratio <= 0 or val_ratio <= 0:
+        val_msg = f"❌ The training and validation ratios must be greater than 0."
+    elif abs(total_ratio - 1.0) > 1e-6:
+        train_ratio /= total_ratio
+        val_ratio /= total_ratio
+        test_ratio /= total_ratio
+
+        val_msg = f"⚠️ Split ratios do not sum to 1. They will be normalized to: {train_ratio:.2f} / {val_ratio:.2f}"
+
+        if include_test:
+            val_msg +=  f" / {test_ratio:.2f}"
+    
+    return gr.update(value=val_msg)
 
 
 def update_task_visibility(source_format: str, target_format: str):
@@ -69,35 +88,39 @@ def run_conversion(
     random_seed: int,
     image_ext: str = ".jpg,.png",
     progress: gr.Progress = gr.Progress(),
-) -> str:
+):
     """
-    Execute the selected conversion operation.
+    Execute the selected conversion operation (generator for live log updates).
     
-    Args:
-        source_format: Display name of source format
-        target_format: Display name of target format
-        source_path: list of files from the input dataset
-        target_path: Path for the output dataset
-        train_ratio: Training set ratio for splits
-        val_ratio: Validation set ratio for splits
-        test_ratio: Test set ratio for splits
-        include_test: Whether to include a test split
-        random_seed: Random seed for reproducible splits
-        image_ext: Comma-separated list of image extensions
-        progress: Gradio progress tracker
-    
-    Returns:
-        A string containing the conversion result or error message.
+    Yields tuples of (progress_text, output_log, dl_button) as the conversion
+    progresses, so the UI updates in real time.
     """
     success = False
     result_messages = []
     
+    def _emit(msg: str):
+        """Append a message to the log and return the current state to yield."""
+        result_messages.append(msg)
+        return (
+            gr.update(),
+            "\n".join(result_messages),
+            gr.update(),
+        )
+    
     # Convert string to TaskType enum
     task_type = TaskType(task_type_str)
     
+    # Immediately disable the download button when conversion starts
+    yield (
+        gr.update(visible=True, placeholder="Converting..."),
+        "",
+        gr.update(interactive=False),
+    )
+    
     try:
         if not source_path:
-            return "❌ Error: Source path is required."
+            yield _emit("❌ Error: Source path is required.")
+            return
         
         source_path = Path(source_path)
         
@@ -108,27 +131,33 @@ def run_conversion(
         target_type = get_format_type_by_name(target_format)
         
         if source_type is None:
-            return f"❌ Error: Unknown source format: {source_format}"
+            yield _emit(f"❌ Error: Unknown source format: {source_format}")
+            return
         
         if target_type is None:
-            return f"❌ Error: Unknown target format: {target_format}"
+            yield _emit(f"❌ Error: Unknown target format: {target_format}")
+            return
         
         # Get conversion class
         conversion_class = FormatRegistry.get_conversion_class(source_type, target_type)
         if conversion_class is None:
-            return f"❌ Error: No conversion available from {source_format} to {target_format}"
+            yield _emit(f"❌ Error: No conversion available from {source_format} to {target_format}")
+            return
         
         if not output_name:
             output_name = source_path.name + "_" + target_format.lower()
 
+        # Clean the out/ folder before starting a new conversion
         out_path = Path("out")
+        if out_path.exists():
+            shutil.rmtree(out_path)
         out_path.mkdir(exist_ok=True)
         target_path = out_path / output_name
         
-        result_messages.append(f"🔄 Starting conversion: {source_format} → {target_format}")
-        result_messages.append(f"📂 Source: {source_path}")
-        result_messages.append(f"📁 Target: {target_path}")
-        result_messages.append(f"🎯 Task Type: {task_type_str} → {task_type}")
+        yield _emit(f"🔄 Starting conversion: {source_format} → {target_format}")
+        yield _emit(f"📂 Source: {source_path}")
+        yield _emit(f"📁 Target: {target_path}")
+        yield _emit(f"🎯 Task Type: {task_type_str}")
         
         # Create converter
         converter = conversion_class(source_path, target_path, task_type)
@@ -161,9 +190,15 @@ def run_conversion(
         result = converter.run(**kwargs)
         
         progress(1.0, desc="Complete!")
+
+        yield (
+            gr.update(placeholder="Compressing output dataset..."),
+            gr.update(),
+            gr.update(),
+        )
         
-        result_messages.append("✅ Conversion completed successfully!")
-        result_messages.append(f"📁 Output saved to: {result}")
+        yield _emit("✅ Conversion completed successfully!")
+        yield _emit(f"📁 Output saved to: {result}")
 
         # Zip the output directory for download
         zip_path = shutil.make_archive(
@@ -172,17 +207,17 @@ def run_conversion(
             root_dir=target_path.parent,
             base_dir=target_path.name,
         )
-        result_messages.append(f"📦 Download ready: {zip_path}")
+        yield _emit(f"📦 Download ready: {zip_path}")
 
         success = True
         
     except ConversionError as e:
-        result_messages.append(f"❌ Conversion failed: {str(e)}")
-        result_messages.append("🔄 Changes have been rolled back.")
+        yield _emit(f"❌ Conversion failed: {str(e)}")
+        yield _emit("🔄 Changes have been rolled back.")
         log.exception("Conversion error")
     
     except Exception as e:
-        result_messages.append(f"❌ Unexpected error: {str(e)}")
+        yield _emit(f"❌ Unexpected error: {str(e)}")
         log.exception("Unexpected error")
     
     if success:
@@ -190,7 +225,11 @@ def run_conversion(
     else:
         dl_update = gr.update(interactive=False)
     
-    return "\n".join(result_messages), dl_update
+    yield (
+        gr.update(visible=False),
+        "\n".join(result_messages),
+        dl_update,
+    )
 
 
 def update_source_text(path):

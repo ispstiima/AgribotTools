@@ -15,7 +15,7 @@ from cvtoolkit.formats.format import FormatType
 from cvtoolkit.conversions.conversion import Conversion, register_conversion
 from cvtoolkit.mask import mask_to_yolo
 from cvtoolkit.formats.yolo import save_yolo_file
-from src.file_utils import copy_files_monitored
+from file_utils import copy_files_monitored
 
 
 log = logging.getLogger("BinmaskToYolo")

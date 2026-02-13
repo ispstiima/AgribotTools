@@ -23,6 +23,7 @@ from cvtoolkit.conversions.yolo_to_ul import YoloToUltralytics
 log = logging.getLogger("LsToUl")
 
 
+@register_conversion(FormatType.LABEL_STUDIO, FormatType.ULTRALYTICS)
 class LabelStudioToUltralytics(Conversion):
     """Base class for Label Studio to Ultralytics conversions."""
     
@@ -56,14 +57,16 @@ class LabelStudioToUltralytics(Conversion):
             temp_yolo_path = Path(temp_dir) / "yolo_intermediate"
             
             # Step 1: Label Studio -> YOLO
-            log.info("Step 1: Converting Label Studio to YOLO (intermediate)...")
+            self._report_progress(0.20, "Step 1: Converting Label Studio → YOLO...")
             ls_to_yolo = LabelStudioToYolo(self.source_path, temp_yolo_path, self.task_type)
+            ls_to_yolo.set_progress_callback(self._sub_progress_callback(0.20, 0.55))
             ls_to_yolo.convert(image_ext=image_ext)
             
             # Step 2: YOLO -> Ultralytics
-            log.info("Step 2: Converting YOLO to Ultralytics...")
+            self._report_progress(0.55, "Step 2: Converting YOLO → Ultralytics...")
             self._track_path(self.target_path)
-            yolo_to_ul = YoloToUltralytics(self.source_path, temp_yolo_path, self.task_type)
+            yolo_to_ul = YoloToUltralytics(temp_yolo_path, self.target_path, self.task_type)
+            yolo_to_ul.set_progress_callback(self._sub_progress_callback(0.55, 0.95))
             yolo_to_ul.convert(
                 split_ratios=split_ratios,
                 include_test_split=include_test_split,

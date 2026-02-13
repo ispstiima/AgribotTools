@@ -15,9 +15,10 @@ from PIL import Image
 from tqdm import tqdm
 from cvtoolkit.formats import TaskType
 from cvtoolkit.formats.format import FormatType
+from cvtoolkit.formats.ls import DEFAULT_IMAGE_ROOT_URL
 from cvtoolkit.conversions.conversion import Conversion, register_conversion
 from cvtoolkit.colors import COLORS
-from src.file_utils import copy_files_monitored
+from file_utils import copy_files_monitored
 
 
 log = logging.getLogger("YoloToLs")
@@ -33,8 +34,6 @@ LABELING_CONFIG_TEMPLATE = """<View>
   <Image name="{to_name}" value="$image"/>
 {body}</View>
 """
-
-DEFAULT_IMAGE_ROOT_URL = "/data/local-files/?d=images"
 
 
 def generate_label_config(
@@ -185,6 +184,8 @@ class YoloToLabelStudio(Conversion):
         Returns:
             Path to the Label Studio dataset
         """
+        self._report_progress(0.25, "Creating output directories & loading classes...")
+        
         # Create target directory
         self.target_path.mkdir(parents=True, exist_ok=True)
         self._track_path(self.target_path)
@@ -204,6 +205,8 @@ class YoloToLabelStudio(Conversion):
             None
         )
         
+        self._report_progress(0.30, "Generating label config...")
+        
         # Generate label config
         generate_label_config(config_path, categories, {from_name: label_tag}, to_name)
         
@@ -222,9 +225,10 @@ class YoloToLabelStudio(Conversion):
             img for img in yolo_images.iterdir() 
             if img.suffix.lower() in image_ext_list
         ]
+        total_images = len(image_list)
         
         tasks = []
-        for image_path in tqdm(image_list, ascii="░▒█", desc="Converting YOLO to LS"):
+        for i, image_path in enumerate(tqdm(image_list, ascii="░▒█", desc="Converting YOLO to LS")):
             url = image_root_url + ("" if image_root_url.endswith("/") else "/")
             task = {
                 "data": {
@@ -261,12 +265,20 @@ class YoloToLabelStudio(Conversion):
                         task[out_type][0]["result"].append(item)
             
             tasks.append(task)
+            
+            # Report progress (0.35 to 0.85 range for image conversion)
+            progress = 0.35 + (0.50 * (i + 1) / total_images)
+            self._report_progress(progress, f"Converting image {i + 1}/{total_images}")
+        
+        self._report_progress(0.90, "Saving JSON...")
         
         # Save JSON
         if tasks:
             with json_path.open("w") as out:
                 json.dump(tasks, out, indent=4)
             log.info(f"Saved {len(tasks)} tasks to {json_path}")
+        
+        self._report_progress(0.95, "Copying images...")
         
         # Copy images
         ls_images = self.target_path / "images"

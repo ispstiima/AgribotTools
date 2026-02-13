@@ -26,7 +26,7 @@ AgribotTools is a Python toolkit developed by [CNR STIIMA](https://www.stiima.cn
 ```bash
 git clone https://github.com/LambdaLekter/AgribotTools.git
 cd AgribotTools
-pip install -e .
+uv sync
 ```
 
 ```bash

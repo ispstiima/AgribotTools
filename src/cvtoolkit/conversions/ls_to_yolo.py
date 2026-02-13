@@ -15,7 +15,7 @@ from cvtoolkit.formats import TaskType
 from cvtoolkit.formats.format import FormatType
 from cvtoolkit.conversions.conversion import Conversion, register_conversion
 from cvtoolkit.formats.yolo import save_yolo_file
-from src.file_utils import copy_files_monitored
+from file_utils import copy_files_monitored
 
 
 log = logging.getLogger("LsToYolo")
@@ -68,15 +68,17 @@ def parse_seg_value(value: dict, img_w: int, img_h: int) -> list:
 
     flat_binmask = decode_rle(value["rle"])
     binmask = np.reshape(flat_binmask, [img_h, img_w, 4])[:, :, 3]
-    seg_lines = mask_to_yolo(binmask, self.task_type)
+    seg_lines = mask_to_yolo(binmask, TaskType.SEGMENTATION)
+
+    seg_line = [class_id]
 
     # Merge multiple found contours into one if needed
     if len(seg_lines) > 1:
-        seg_line = list(chain(*seg_lines))
+        seg_line.extend(list(chain(*[line[1:] for line in seg_lines])))
     else:
-        seg_line = seg_lines[0] if seg_lines else []
+        seg_line.extend(seg_lines[0][1:] if seg_lines else [])
 
-    return [class_id, *seg_line]
+    return seg_line
 
 
 @register_conversion(FormatType.LABEL_STUDIO, FormatType.YOLO)
@@ -93,6 +95,8 @@ class LabelStudioToYolo(Conversion):
         Returns:
             Path to the YOLO dataset
         """
+        self._report_progress(0.25, "Reading JSON & creating directories...")
+        
         # Create target directories
         labels_path = self.target_path / "labels"
         labels_path.mkdir(parents=True, exist_ok=True)
@@ -117,8 +121,9 @@ class LabelStudioToYolo(Conversion):
         
         image_ext_list = [x.strip().lower() for x in image_ext.split(",")]
         parse_value = parse_bbox_value if self.task_type == TaskType.DETECTION else parse_seg_value
+        total_tasks = len(tasks)
         
-        for task in tqdm(tasks, ascii="░▒█", desc="Converting LS to YOLO"):
+        for i, task in enumerate(tqdm(tasks, ascii="░▒█", desc="Converting LS to YOLO")):
             image_filename = task["data"]["image"].split("/")[-1]
             image_path = ls_images / image_filename
             
@@ -147,13 +152,21 @@ class LabelStudioToYolo(Conversion):
             with label_path.open("w", encoding="utf-8") as f:
                 for line in yolo_lines:
                     f.write(line + "\n")
+            
+            # Report progress (0.30 to 0.80 range for task conversion)
+            progress = 0.30 + (0.50 * (i + 1) / total_tasks)
+            self._report_progress(progress, f"Converting task {i + 1}/{total_tasks}")
         
         log.info(f"Saved YOLO annotations to: {labels_path}")
+        
+        self._report_progress(0.85, "Writing classes.txt...")
         
         # Create classes.txt (default single class for now)
         classes_path = self.target_path / "classes.txt"
         with classes_path.open("w", encoding="utf-8") as f:
             f.write("object\n")  # TODO: extract class names from LS config
+        
+        self._report_progress(0.90, "Copying images...")
         
         # Copy images
         yolo_images = self.target_path / "images"
