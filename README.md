@@ -1,107 +1,85 @@
 # AgribotTools
 
-## Converter
+[![Docs](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://lambdalekter.github.io/AgribotTools/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.md)
+[![Python ≥3.8](https://img.shields.io/badge/python-≥3.8-blue.svg)](https://www.python.org/downloads/)
 
-### Acronyms and Definitions
+**Utilities to convert datasets between Label Studio, YOLO and Ultralytics formats.**
 
-| Acronym | Explaination |
-| ------- | ------------ |
-| LS | **Label Studio**: the software used for labeling. |
-| UL | **Ultralytics**: target library for object detection and segmentation. |
-| Binmask | **Binary mask**: binary image where a $1$ represents a foreground pixel, while a $0$ represents a background pixel. |
-| Segmask | **Segmentation mask**: mask used to highlight an object of interest. |
-| Bbox | **Bounding box**: box used to highlight an object of interest. |
+AgribotTools is a Python toolkit developed by [CNR STIIMA](https://www.stiima.cnr.it/) for converting computer-vision annotation datasets across popular formats used in object detection and segmentation tasks.
 
-### Format Definition
+---
 
-##### BinMask format
+## Features
 
-It is a folder containing:
+- **Format conversion** — Seamless conversion between Binary Mask, YOLO, Label Studio, and Ultralytics formats.
+- **Validation** — Automatic dataset structure validation before conversion.
+- **Reversible conversions** — Many conversions support reverse mode.
+- **Gradio GUI** — Web-based graphical interface for point-and-click conversions.
+- **CLI scripts** — Ready-to-use command-line scripts for each conversion.
+- **Extensible architecture** — Add new formats and conversions via decorators.
 
-* A subfolder `images` containing the labeled images in `jpg` or `png` format.
-* A subfolder `labels` containing, for each image in the `images` subfolder, a `png` image which describes the segmask associated to the corresponding image.
+---
 
-##### YOLO format
+## Quick Start
 
-It is a folder containing:
+```bash
+git clone https://github.com/LambdaLekter/AgribotTools.git
+cd AgribotTools
+uv sync
+```
 
-* A subfolder `images` containing the labeled images in `jpg` or `png` format.
-* A subfolder `labels` containing, for each image in the `images` subfolder, a text file with the same name of the corresponding image, in which each row describes a segmmask or a bbox in the following format:
-   ```
-   <class_id><x1><y1><x2><y2>...<xn><yn>
-   <class_id><x_center><y_canter><width><height>
-   ```
-* A text file `classes.txt` highlighting the labelled classes, in which each row contains a single string with the name of the corresponding class. The index of each row represents the identifier of the class contained in the `class_id` field of the text file contained in `labels`.
+```bash
+# Example: Convert YOLO segmentation to Label Studio format
+python scripts/yolo_to_ls.py seg /path/to/yolo_dataset --ls_base_name my_ls_output
+```
 
-##### LS format
+---
 
-It is a folder containing:
+## Conversion Workflow
 
-* A subfolder `images` containing the labeled images in `jpg` or `png` format.
-* A file in `json` format, containing information relative to images and their respective labels.
-* A file in `xml` format for the configuration of the labeling interface:
-   ```xml
-   <View>
-      <!-- View the image to be labeled -->
-      <Image name="image" value="$image" />
-      <!-- Define the bbox's label -->
-      <Labels name="label" toName="image">
-         <Label value="Object" />
-      </Labels>
-      
-      <!-- Tool for drawing bboxes -->
-      <RectangleLabels name="bbox" toName="image">
-         <Label value="Object" />
-      </RectangleLabels>
-   </View>
-   ```
+```mermaid
+flowchart TB
+    subgraph S
+        direction LR
+        YOLOS(YOLO-S) -- "yolo_to_ls(s)" --> LSS(LS-S)
+        LSS -- "yolo_to_ls(s, reverse)" --> YOLOS
+        YOLOS -- "yolo_to_ul(s)" --> ULS(UL-S)
+        ULS -- "yolo_to_ul(s, reverse)" --> YOLOS
+        LSS -- "ls_to_ul(s)" --> ULS
+        ULS -- "ls_to_ul(s, reverse)" --> LSS
+    end
+    subgraph OD
+        direction LR
+        YOLOD(YOLO-OD) -- "yolo_to_ls(d)" --> LSD(LS-OD)
+        LSD -- "yolo_to_ls(d, reverse)" --> YOLOD
+        YOLOD -- "yolo_to_ul(d)" --> ULD(UL-OD)
+        ULD -- "yolo_to_ul(d, reverse)" --> YOLOD
+        LSD -- "ls_to_ul(d)" --> ULD
+        ULD -- "ls_to_ul(d, reverse)" --> LSD
+    end
+    BM(BinMask) -- "binmask_to_yolo(s)" --> YOLOS
+    BM -- "binmask_to_yolo(d)" --> YOLOD
+    YOLOS -- "binmask_to_yolo(s, reverse)" --> BM
+    style BM fill:#03ab
+    style S fill:#b03a
+    style OD fill:#ab03
+```
 
-##### UL format
+---
 
-It is a folder named as the dataset, e.g., `xylella`, containing:
+## Documentation
 
-* A subfolder `train` containing the portion of the dataset where training data will be stored, containing:
-   * A subfolder `images` containing the images in `jpg` or `png` format.
-   * A subfolder `labels` containing, for each image in `images`, the corresponding labels in YOLO format.
-* A subfolder `val` containing the portion of the dataset where training data will be stored, containing:
-   * A subfolder `images` containing the images in `jpg` or `png` format.
-   * A subfolder `labels` containing, for each image in `images`, the corresponding labels in YOLO format.
-* A configuration file in `yaml` format with the same name of the dataset formatted as follows:
-   ```yaml
-   # Dataset name
-   path: /path/to/dataset        # Path of the dataset
-   train: /train/images          # Path of training images (relative to path)
-   val: /val/images              # Path of validation images  (relative to path)
-   test: /test/images            # Path of test images (relative to path, optional)
+📖 **Full documentation** is available at **[lambdalekter.github.io/AgribotTools](https://lambdalekter.github.io/AgribotTools/)**, including:
 
-   # Classes names
-   names:
-      0: first class
-      1: second class
-      ...
-   ```
+- [Getting Started](https://lambdalekter.github.io/AgribotTools/getting-started/) — Installation and environment setup
+- [Formats](https://lambdalekter.github.io/AgribotTools/formats/overview/) — Detailed format specifications
+- [Conversions](https://lambdalekter.github.io/AgribotTools/conversions/overview/) — Conversion matrix and usage guide
+- [GUI](https://lambdalekter.github.io/AgribotTools/gui/usage/) — Gradio interface documentation
+- [API Reference](https://lambdalekter.github.io/AgribotTools/api/formats/) — Python API documentation
+- [Contributing](https://lambdalekter.github.io/AgribotTools/contributing/) — How to extend AgribotTools
 
-> **Note**: the `train` and `val` subfolders share the same structure.
-
-### Use cases
-
-##### Edit segmentations masks on Label Studio
-
-1. Import the dataset on Label Studio using the module `binmask_to_ls`.
-2. Edit the segmentation masks.
-
-##### Edit bounding boxes on Label Studio
-
-1. Import the dataset on Label Studio:
-   a. Using the `binmask_to_ls` module, if the labels are in the binmask format.
-   b. Using the moduel `seg_ls_to_bbox_ls`, if the labels are segmasks in LS format.
-   c. Directly from the dataset saved in the root folder.
-2. Edit bboxes.
-
-##### Convert LS labels in an UL dataset
-
-1. Select JSON as export type.
-2. Convert from the LS format to the UL format using the `ls_to_ul` module.
+---
 
 ## References
 
@@ -109,3 +87,9 @@ It is a folder named as the dataset, e.g., `xylella`, containing:
 * [Ultralytics - Instance Segmentation Datasets Overview](https://docs.ultralytics.com/datasets/segment/)
 * [Label Studio - Understanding the Label Studio JSON format](https://labelstud.io/blog/understanding-the-label-studio-json-format/#breaking-down-the-label-studio-json-format)
 * [Label Studio - Labeling configuration](https://labelstud.io/templates/named_entity#Labeling-Configuration)
+
+---
+
+## License
+
+This project is licensed under the MIT License — see [LICENSE.md](LICENSE.md) for details.

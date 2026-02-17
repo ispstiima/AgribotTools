@@ -1,0 +1,76 @@
+import shutil
+import logging
+from tqdm import tqdm
+from pathlib import Path
+
+
+log = logging.getLogger("Utils")
+logging.basicConfig(format='%(asctime)s - %(name)s [%(levelname)s] | %(message)s', level=logging.INFO)
+
+
+def copy_files_monitored(source_path: Path, dest_path: Path, dirs_exist_ok: bool = True, desc: str = "Copying files") -> bool:
+    """
+    Copies all files from a source directory to a destination directory with progress monitoring.
+    Args:
+        source_path (Path): Path to the source directory.
+        dest_path (Path): Path to the destination directory.
+        dirs_exist_ok (bool): If True, allows overwriting existing directories. Default is True.
+        desc (str): Description for the progress bar. Default is "Copying files".
+    Returns:
+        bool: True if the copy operation was successful, False otherwise.
+    """
+
+    log.info(f"Copying folder <{source_path}> to <{dest_path}>")
+
+    if not source_path.exists():
+        log.error("Source path for copy tree does not exist.")
+        return False
+
+    if dest_path.exists():
+        if not dirs_exist_ok:
+            log.error("Destination folder already exists. [Set dirs_exist_ok=True to overwrite]")
+            return False
+        log.warning("Overwriting destination folder.")
+    else:
+        dest_path.mkdir(parents=True, exist_ok=True)
+
+    num_files = sum(1 for file in source_path.iterdir() if file.is_file())
+
+    for source_file_path in tqdm(source_path.iterdir(), total=num_files, ascii="░▒█", desc=desc):
+        if source_file_path.is_dir():
+            log.warning("Directory found. Skipping it.")
+            continue
+        filename = source_file_path.name
+        dest_file_path = dest_path / filename
+        shutil.copy(source_file_path, dest_file_path)
+
+    return True
+
+
+def copy_filtered_dir_monitored(source_path: Path, dest_path: Path, files_ext: str, description: str):
+    """
+    Copies all files from a source directory and its subfolders to a destination directory,
+    but only if its extension belongs to the specified inclusion list.
+
+    Args:
+        source_path (Path): Path to the source directory.
+        dest_path (Path): Path to the destination directory.
+        files_ext (str): Comma-separated string of file extensions to include (e.g., ".jpg,.png").
+        description (str): Description for the progress bar.
+    """
+
+    if not dest_path.exists():
+         dest_path.mkdir(parents=True)
+
+    files_ext = [ext.strip() for ext in files_ext.split(",")]
+
+    source_files = []
+    for ext in files_ext:
+        source_files.extend(source_path.rglob(f"*{ext}"))
+
+    for source_file in tqdm(source_files, total=len(source_files), ascii="░▒█", desc=description):
+        dest_file = dest_path / source_file.name
+        try:
+            shutil.copy2(source_file, dest_file)
+        except Exception as e:
+            log.error(f"Error copying {source_file} to {dest_file}: {e}")

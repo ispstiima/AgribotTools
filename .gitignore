@@ -1,2 +1,15 @@
 .idea
+.qodo
+.env
+
+__pycache__
+
+data
+datasets
+venv
 out
+logs
+
+*.egg-info
+site
+.venv
