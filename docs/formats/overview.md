@@ -27,7 +27,7 @@ AgribotTools supports four annotation formats used in computer vision for **obje
 
 | Acronym | Definition | Description |
 |---------|------------|-------------|
-| **BinMask** | Binary Mask | Segmentation mask for several classes in a grayscale format. |
+| **BinMask** | Binary Mask | Segmentation mask for several classes in a binary format. |
 | **YOLO** | YOLO format | Standard YOLOv1-v3 annotation format. |
 | **LS** | Label Studio | Format used by Label Studio. |
 | **UL** | Ultralytics | Format used by Ultralytics. |
@@ -38,10 +38,10 @@ AgribotTools supports four annotation formats used in computer vision for **obje
 
 | Format | Segmentation | Object Detection | Details |
 |--------|:---:|:---:|---------|
-| [Binary Mask](binmask.md) | ✅ | ✅ | Grayscale PNG masks |
-| [YOLO](yolo.md) | ✅ | ✅ | Polygon or bbox text annotations |
-| [Label Studio](label-studio.md) | ✅ | ✅ | JSON + XML configuration |
-| [Ultralytics](ultralytics.md) | ✅ | ✅ | Train/val/test split with YAML config |
+| [Binary Mask](binmask.md) | :check: | :check: | Binary PNG masks |
+| [YOLO](yolo.md) | :check: | :check: | Polygon or bbox text annotations |
+| [Label Studio](label-studio.md) | :check: | :check: | JSON + XML configuration |
+| [Ultralytics](ultralytics.md) | :check: | :check: | Train/val/test split with YAML config |
 
 ---
 

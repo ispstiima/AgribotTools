@@ -17,19 +17,17 @@ import gradio as gr
 from pathlib import Path
 import logging
 import sys
-import io
 import os
 
 # Set a default for Label Studio root if not set (allows GUI to start)
-if "LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT" not in os.environ:
-    os.environ["LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT"] = "/tmp/label_studio_data"
-    LS_ENV_WARNING = True
-else:
-    LS_ENV_WARNING = False
+# if "LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT" not in os.environ:
+#     os.environ["LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT"] = "/tmp/label_studio_data"
+#     LS_ENV_WARNING = True
+# else:
+#     LS_ENV_WARNING = False
 
 import sys
 sys.path.insert(0, str(Path(__file__).parent / "src"))
-from cvtoolkit import FormatType, FormatRegistry, ConversionError
 from cvtoolkit.formats import TaskType
 from ui.formats import *
 from ui.callbacks import *
@@ -58,13 +56,13 @@ def create_gui():
         )
 
         # Show warning if Label Studio environment is not configured
-        if LS_ENV_WARNING:
-            gr.Markdown(
-                """
-                > ⚠️ **Warning:** `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT` is not set.
-                > Label Studio conversions will use `/tmp/label_studio_data`.
-                """,
-            )
+        # if LS_ENV_WARNING:
+        #     gr.Markdown(
+        #         """
+        #         > ⚠️ **Warning:** `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT` is not set.
+        #         > Label Studio conversions will use `/tmp/label_studio_data`.
+        #         """,
+        #     )
         
         with gr.Row(scale=1):
             with gr.Column():
@@ -182,7 +180,7 @@ def create_gui():
                 """
                 | **FORMAT** | **DESCRIPTION** |
                 |--------|-------------|
-                | **Binary Mask** | Grayscale mask images (255=foreground, 0=background) |
+                | **Binary Mask** | Binary mask images (255=foreground, 0=background) |
                 | **YOLO (Detection/Segmentation)** | Bounding box / Polygon annotations in normalized coordinates |
                 | **Label Studio (Detection/Segmentation)** | JSON format with RLE-encoded masks / Rectangle annotations |
                 | **Ultralytics (Detection/Segmentation)** | YOLO format with train/val/test splits |

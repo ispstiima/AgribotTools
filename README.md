@@ -14,7 +14,7 @@ AgribotTools is a Python toolkit developed by [CNR STIIMA](https://www.stiima.cn
 
 - **Format conversion** — Seamless conversion between Binary Mask, YOLO, Label Studio, and Ultralytics formats.
 - **Validation** — Automatic dataset structure validation before conversion.
-- **Reversible conversions** — Many conversions support reverse mode.
+<!-- - **Reversible conversions** — Many conversions support reverse mode. -->
 - **Gradio GUI** — Web-based graphical interface for point-and-click conversions.
 - **CLI scripts** — Ready-to-use command-line scripts for each conversion.
 - **Extensible architecture** — Add new formats and conversions via decorators.

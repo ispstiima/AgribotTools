@@ -62,11 +62,7 @@ The `FormatRegistry` provides a dynamic lookup of available conversions:
 ```python
 from cvtoolkit.formats.format import FormatType, FormatRegistry
 
-# Get all available source formats
-sources = FormatRegistry.get_all_source_formats()
-
-# Get valid target formats for a source
-targets = FormatRegistry.get_supported_targets(FormatType.YOLO)
+# ...
 
 # Get the conversion class
 converter_class = FormatRegistry.get_conversion_class(
@@ -105,7 +101,7 @@ result = converter.run(
 )
 ```
 
-### Reverse Conversions
+<!-- ### Reverse Conversions
 
 For reversible conversions, use `run_reverse()`:
 
@@ -120,7 +116,7 @@ converter = YoloToUltralytics(
     task_type=TaskType.GENERIC
 )
 result = converter.run_reverse()
-```
+``` -->
 
 ### Progress Tracking
 

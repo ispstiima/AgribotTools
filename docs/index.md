@@ -8,12 +8,12 @@ AgribotTools is a Python toolkit developed by [CNR STIIMA](https://www.stiima.cn
 
 ## Features
 
-- :material-swap-horizontal: **Format conversion** — Convert seamlessly between Binary Mask, YOLO, Label Studio, and Ultralytics formats.
-- :material-check-circle: **Validation** — Automatically validate dataset structure before conversion.
-- :material-undo: **Reversible conversions** — Many conversions support reverse mode out of the box.
-- :material-monitor: **Gradio GUI** — A web-based graphical interface for point-and-click conversions.
-- :material-console: **CLI scripts** — Ready-to-use command-line scripts for each conversion.
-- :material-puzzle: **Extensible architecture** — Add new formats and conversions via simple decorators.
+- **Format conversion** — Convert seamlessly between Binary Mask, YOLO, Label Studio, and Ultralytics formats.
+- :**Validation** — Automatically validate dataset structure before conversion.
+<!-- - **Reversible conversions** — Many conversions support reverse mode out of the box. -->
+- **Gradio GUI** — A web-based graphical interface for point-and-click conversions.
+- **CLI scripts** — Ready-to-use command-line scripts for each conversion.
+- **Extensible architecture** — Add new formats and conversions via simple decorators.
 
 ---
 
@@ -21,7 +21,7 @@ AgribotTools is a Python toolkit developed by [CNR STIIMA](https://www.stiima.cn
 
 ```bash
 # Clone and install
-git clone https://github.com/LambdaLekter/AgribotTools.git
+git clone https://github.com/ispstiima/AgribotTools.git
 cd AgribotTools
 uv sync
 
@@ -37,7 +37,7 @@ For detailed setup instructions, see [Getting Started](getting-started.md).
 
 | Format | Description |
 |--------|-------------|
-| **Binary Mask** | Grayscale segmentation masks |
+| **Binary Mask** | Binary segmentation masks |
 | **YOLO** | Standard YOLO annotation format (segmentation & detection) |
 | **Label Studio** | JSON + XML format used by Label Studio |
 | **Ultralytics** | Train/val/test split format used by Ultralytics |

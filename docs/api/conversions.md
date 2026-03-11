@@ -13,7 +13,7 @@ This page documents the conversion base classes, error types, and decorators.
       heading_level: 3
 
 ---
-
+<!-- 
 ## ReversibleConversion
 
 ::: cvtoolkit.conversions.conversion.ReversibleConversion
@@ -22,7 +22,7 @@ This page documents the conversion base classes, error types, and decorators.
       members: true
       heading_level: 3
 
----
+--- -->
 
 ## ConversionError
 

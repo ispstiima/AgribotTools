@@ -56,6 +56,10 @@ The GUI is implemented across three modules:
 
 ---
 
-## Dev Container Support
+## Base data root
 
-The repository includes a `.devcontainer/` configuration for running AgribotTools (including the GUI) inside a Docker-based development container. This is useful for consistent environments and remote development.
+By default, the data root points at the root of the filesystem. This behaviour is changed if a symlink to a `data` folder is provided within the working directory.
+
+<!-- ## Dev Container Support
+
+The repository includes a `.devcontainer/` configuration for running AgribotTools (including the GUI) inside a Docker-based development container. This is useful for consistent environments and remote development. -->

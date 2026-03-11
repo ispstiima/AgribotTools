@@ -3,8 +3,8 @@
 ## Prerequisites
 
 - **Python** >= 3.8
-- **pip** (Python package manager)
-- (Optional) **Label Studio** for label-studio format conversions
+- **uv** (Python package manager)
+<!-- - (Optional) **Label Studio** for label-studio format conversions -->
 
 ---
 
@@ -23,7 +23,7 @@ This will automatically create a virtual environment and install all dependencie
 
 ---
 
-## Environment Variables
+<!-- ## Environment Variables
 
 Some conversions involving **Label Studio** require environment variables to be set.
 
@@ -43,7 +43,7 @@ LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true
 LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/path/to/label_studio_data
 ```
 
----
+--- -->
 
 ## Label Studio Setup
 
