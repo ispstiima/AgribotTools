@@ -7,7 +7,7 @@ Binary mask datasets expect the following structure:
     ├── labels/        # Directory containing binary mask images (same names as images)
     └── classes.txt    # File listing class names (one per line)
 
-Binary masks should be grayscale images where:
+Binary masks should be binary images where:
 - 255 (white) represents the object/foreground
 - 0 (black) represents the background
 """
@@ -22,7 +22,7 @@ class Binmask(Format):
     """
     Binary mask format for segmentation datasets.
     
-    Binary masks are grayscale images where each pixel indicates whether
+    Binary masks are binary images where each pixel indicates whether
     it belongs to the foreground (255) or background (0).
     """
     

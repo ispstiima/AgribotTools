@@ -80,9 +80,9 @@ Conversions involving Label Studio require specific environment variables. See t
 | Direction | Function |
 |-----------|----------|
 | YOLO → Label Studio | `yolo_to_ls()` |
-| Label Studio → YOLO | `yolo_to_ls(reverse)` |
+| Label Studio → YOLO | `ls_to_yolo()` |
 | Label Studio → Ultralytics | `ls_to_ul()` |
-| Ultralytics → Label Studio | `ls_to_ul(reverse)` |
+| Ultralytics → Label Studio | `ul_to_ls()` |
 | BinMask → Label Studio | `binmask_to_ls()` |
 
 See the [Conversions Usage Guide](../conversions/usage.md) for CLI and API examples.

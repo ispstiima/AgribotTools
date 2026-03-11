@@ -81,8 +81,8 @@ names:
 | Direction | Function |
 |-----------|----------|
 | YOLO → Ultralytics | `yolo_to_ul()` |
-| Ultralytics → YOLO | `yolo_to_ul(reverse)` |
+| Ultralytics → YOLO | `ul_to_yolo()` |
 | Label Studio → Ultralytics | `ls_to_ul()` |
-| Ultralytics → Label Studio | `ls_to_ul(reverse)` |
+| Ultralytics → Label Studio | `ul_to_ls()` |
 
 See the [Conversions Usage Guide](../conversions/usage.md) for CLI and API examples.

@@ -51,40 +51,40 @@ def get_supported_conversions() -> dict:
 SUPPORTED_CONVERSIONS = get_supported_conversions()
 
 
-def load_env(dotenv_path: str | Path | None = None, raise_on_missing: bool = True) -> dict:
-    """
-    Load environment variables from a .env file.
+# def load_env(dotenv_path: str | Path | None = None, raise_on_missing: bool = True) -> dict:
+#     """
+#     Load environment variables from a .env file.
     
-    Args:
-        dotenv_path: Path to .env file. If None, looks in repository root.
-        raise_on_missing: If True, raise error when required vars are missing.
+#     Args:
+#         dotenv_path: Path to .env file. If None, looks in repository root.
+#         raise_on_missing: If True, raise error when required vars are missing.
     
-    Returns:
-        Dictionary with loaded environment values.
-    """
-    if dotenv_path is None:
-        dotenv_path = Path(__file__).resolve().parents[2] / ".env"
+#     Returns:
+#         Dictionary with loaded environment values.
+#     """
+#     if dotenv_path is None:
+#         dotenv_path = Path(__file__).resolve().parents[2] / ".env"
 
-    try:
-        load_dotenv(dotenv_path)
-    except Exception as e:
-        log.debug("Ignored error loading dotenv %s: %s", dotenv_path, e)
+#     try:
+#         load_dotenv(dotenv_path)
+#     except Exception as e:
+#         log.debug("Ignored error loading dotenv %s: %s", dotenv_path, e)
 
-    ls_root = os.getenv("LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT", None)
-    if ls_root is None:
-        msg = (
-            "LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT environment variable not set. "
-            "Please set it to the root directory of your Label Studio installation."
-        )
-        if raise_on_missing:
-            raise EnvironmentError(msg)
-        else:
-            log.warning(msg)
-            ls_root = "/tmp/label_studio_data"
+    # ls_root = os.getenv("LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT", None)
+    # if ls_root is None:
+    #     msg = (
+    #         "LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT environment variable not set. "
+    #         "Please set it to the root directory of your Label Studio installation."
+    #     )
+    #     if raise_on_missing:
+    #         raise EnvironmentError(msg)
+    #     else:
+    #         log.warning(msg)
+    #         ls_root = "/tmp/label_studio_data"
 
-    return {
-        "LS_ROOT_PATH": Path(ls_root)
-    }
+    # return {
+    #     "LS_ROOT_PATH": Path(ls_root)
+    # }
 
 
 def initialize_registry():

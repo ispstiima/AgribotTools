@@ -68,10 +68,10 @@ A bounding box defined by its center and dimensions, all normalized to `[0, 1]`.
 | Direction | Function |
 |-----------|----------|
 | YOLO → Label Studio | `yolo_to_ls()` |
-| Label Studio → YOLO | `yolo_to_ls(reverse)` |
+| Label Studio → YOLO | `ls_to_yolo()` |
 | YOLO → Ultralytics | `yolo_to_ul()` |
-| Ultralytics → YOLO | `yolo_to_ul(reverse)` |
+| Ultralytics → YOLO | `ul_to_yolo()` |
 | BinMask → YOLO | `binmask_to_yolo()` |
-| YOLO → BinMask | `binmask_to_yolo(reverse)` |
+<!-- | YOLO → BinMask | `yolo_to_binmask()` | -->
 
 See the [Conversions Usage Guide](../conversions/usage.md) for CLI and API examples.
