@@ -15,7 +15,6 @@ from PIL import Image
 from tqdm import tqdm
 from cvtoolkit.formats import TaskType
 from cvtoolkit.formats.format import FormatType
-from cvtoolkit.formats.ls import DEFAULT_IMAGE_ROOT_URL
 from cvtoolkit.conversions.conversion import Conversion, register_conversion
 from cvtoolkit.colors import COLORS
 from file_utils import copy_files_monitored
@@ -34,6 +33,19 @@ LABELING_CONFIG_TEMPLATE = """<View>
   <Image name="{to_name}" value="$image"/>
 {body}</View>
 """
+
+
+def build_image_root_url(target_path: Path):
+    """
+    Build the image root URL for Label Studio.
+    
+    Args:
+        target_path: Path to the Label Studio dataset
+    
+    Returns:
+        Image root URL
+    """
+    return f"/data/local-files/?d={target_path.name}/images"
 
 
 def generate_label_config(
@@ -166,7 +178,7 @@ class YoloToLabelStudio(Conversion):
         to_name: str = "image",
         from_name: str = "label",
         out_type: str = "annotations",
-        image_root_url: str = DEFAULT_IMAGE_ROOT_URL,
+        image_root_url: str = None,
         image_ext: str = ".jpg,.png",
         image_dims: Optional[Tuple[int, int]] = None,
     ) -> Path:
@@ -189,6 +201,9 @@ class YoloToLabelStudio(Conversion):
         # Create target directory
         self.target_path.mkdir(parents=True, exist_ok=True)
         self._track_path(self.target_path)
+
+        if image_root_url is None:
+            image_root_url = build_image_root_url(self.target_path)
         
         # Load classes
         classes_path = self.source_path / "classes.txt"

@@ -32,12 +32,7 @@ def main():
     task_type = TASK_TYPE_MAP[args.task_type]
 
     converter = YoloToLabelStudio(source, target, task_type)
-
-    kwargs = {}
-    if args.image_root_url:
-        kwargs["image_root_url"] = args.image_root_url
-
-    result = converter.run(**kwargs)
+    result = converter.run()
 
     print(f"Conversion complete: {result}")
 
