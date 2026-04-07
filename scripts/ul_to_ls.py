@@ -5,12 +5,7 @@ import argparse
 from pathlib import Path
 from cvtoolkit.conversions.ul_to_ls import UltralyticsToLabelStudio
 from cvtoolkit.formats import TaskType
-
-
-TASK_TYPE_MAP = {
-    "seg": TaskType.SEGMENTATION,
-    "bbox": TaskType.DETECTION,
-}
+from utils import TASK_TYPE_MAP
 
 
 def main():

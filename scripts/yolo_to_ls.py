@@ -5,12 +5,7 @@ import argparse
 from pathlib import Path
 from cvtoolkit.conversions.yolo_to_ls import YoloToLabelStudio
 from cvtoolkit.formats import TaskType
-
-
-TASK_TYPE_MAP = {
-    "seg": TaskType.SEGMENTATION,
-    "bbox": TaskType.DETECTION,
-}
+from utils import TASK_TYPE_MAP
 
 
 def main():
