@@ -24,16 +24,14 @@ def main():
 
     args = parser.parse_args()
 
-    yolo_path = Path(args.yolo_path)
-    ul_path = Path(args.ul_path) if args.ul_path else yolo_path.parent / f"{yolo_path.name}_ultralytics"
+    source = Path(args.yolo_path)
+    target = Path(args.ul_path) if args.ul_path else source.parent / f"{source.name}_ul"
+    task_type = TaskType.GENERIC
 
-    converter = YoloToUltralytics(
-        source_path=yolo_path,
-        target_path=ul_path,
-        task_type=TaskType.GENERIC
-    )
+    converter = YoloToUltralytics(source, target, task_type)
 
     result = converter.run(
+        path_in_yaml=str(target.resolve()),
         split_ratios=tuple(args.split_ratios),
         include_test_split=args.include_test_split,
         image_ext=args.image_ext,

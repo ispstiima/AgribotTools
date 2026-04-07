@@ -117,6 +117,7 @@ class YoloToUltralytics(Conversion):
     
     def convert(
         self,
+        path_in_yaml: str,
         split_ratios: Tuple[float, float, Optional[float]] = (0.8, 0.2),
         include_test_split: bool = False,
         image_ext: str = ".jpg,.png",
@@ -127,6 +128,7 @@ class YoloToUltralytics(Conversion):
         Convert YOLO dataset to Ultralytics format.
         
         Args:
+            path_in_yaml: Path to the dataset in the YAML file
             split_ratios: Train/val/(test) split ratios
             include_test_split: Whether to create a test split
             image_ext: Comma-separated list of image extensions
@@ -171,7 +173,7 @@ class YoloToUltralytics(Conversion):
             raise ValueError("Failed to split data")
         
         yaml_data = {
-            'path': str(self.target_path.resolve()),
+            'path': path_in_yaml,
         }
         
         # Distribute progress across splits (0.30 to 0.90)
