@@ -14,7 +14,6 @@ import tempfile
 from pathlib import Path
 from typing import Optional, Tuple
 from cvtoolkit.formats.format import FormatType
-from cvtoolkit.formats.ls import DEFAULT_IMAGE_ROOT_URL
 from cvtoolkit.conversions.conversion import Conversion, register_conversion
 from cvtoolkit.conversions.ul_to_yolo import UltralyticsToYolo
 from cvtoolkit.conversions.yolo_to_ls import YoloToLabelStudio
@@ -32,7 +31,7 @@ class UltralyticsToLabelStudio(Conversion):
         to_name: str = "image",
         from_name: str = "label",
         out_type: str = "annotations",
-        image_root_url: str = DEFAULT_IMAGE_ROOT_URL,
+        image_root_url: str = None,
         image_ext: str = ".jpg,.png",
         image_dims: Optional[Tuple[int, int]] = None,
     ) -> Path:
