@@ -1,6 +1,6 @@
 # Conversions Usage
 
-AgribotTools provides two ways to run format conversions: **CLI scripts** and the **Python API**.
+ROSETTA provides two ways to run format conversions: **CLI scripts** and the **Python API**.
 
 ---
 

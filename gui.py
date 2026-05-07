@@ -1,5 +1,5 @@
 """
-Gradio-based GUI for AgribotTools Format Converter.
+Gradio-based GUI for ROSETTA Format Converter.
 
 This module provides a unified graphical interface for converting between
 different dataset annotation formats used in computer vision tasks.
@@ -47,10 +47,10 @@ def create_gui():
     task_choices = [TaskType.DETECTION.value, TaskType.SEGMENTATION.value]
     initial_task = task_choices[0] if task_choices else None
     
-    with gr.Blocks(title="AgRibot Format Converter") as demo:
+    with gr.Blocks(title="ROSETTA Format Converter") as demo:
         gr.Markdown(
             """
-            # 🌱 AgRibot Format Converter
+            # 🌱 ROSETTA Format Converter
             """,
             elem_classes=["main-header"]
         )
@@ -80,7 +80,7 @@ def create_gui():
             
             with gr.Column(scale=3):
                 source_path = gr.FileExplorer(
-                    label="Source Path Dataset",
+                    label="Source Dataset Path",
                     root_dir="data/" if Path("data/").exists() else "/",
                     file_count="single",
                     max_height=262,
@@ -327,6 +327,7 @@ if __name__ == "__main__":
             .code_wrap > .copy_code_button {
                 display: none !important;
             }
-        """
+        """,
+        pwa=True
     )
 
