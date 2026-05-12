@@ -1,6 +1,6 @@
 # Formats Overview
 
-AgribotTools supports four annotation formats used in computer vision for **object detection** and **segmentation** tasks.
+ROSETTA supports four annotation formats used in computer vision for **object detection** and **segmentation** tasks.
 
 ---
 

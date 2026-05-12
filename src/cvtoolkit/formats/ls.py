@@ -13,9 +13,6 @@ from typing import Tuple
 from cvtoolkit.formats.format import Format, FormatType, register_format
 
 
-DEFAULT_IMAGE_ROOT_URL = "/data/local-files/?d=images"
-
-
 @register_format(FormatType.LABEL_STUDIO)
 class LabelStudio(Format):
     """

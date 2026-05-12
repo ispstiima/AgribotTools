@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for your interest in contributing to AgribotTools! This guide explains how to set up a development environment and add new formats or conversions.
+Thank you for your interest in contributing to ROSETTA! This guide explains how to set up a development environment and add new formats or conversions.
 
 ---
 
@@ -9,8 +9,8 @@ Thank you for your interest in contributing to AgribotTools! This guide explains
 1. **Clone** the repository and install in editable mode:
 
     ```bash
-    git clone https://github.com/LambdaLekter/AgribotTools.git
-    cd AgribotTools
+    git clone https://github.com/ispstiima/rosetta.git
+    cd rosetta
     pip install -e .
     ```
 
@@ -31,7 +31,7 @@ Thank you for your interest in contributing to AgribotTools! This guide explains
 ## Project Structure
 
 ```
-AgribotTools/
+rosetta/
 ├── src/
 │   ├── cvtoolkit/
 │   │   ├── formats/        # Format definitions and validators

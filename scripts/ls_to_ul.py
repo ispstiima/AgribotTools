@@ -5,12 +5,7 @@ import argparse
 from pathlib import Path
 from cvtoolkit.conversions.ls_to_ul import LabelStudioToUltralytics
 from cvtoolkit.formats import TaskType
-
-
-TASK_TYPE_MAP = {
-    "seg": TaskType.SEGMENTATION,
-    "bbox": TaskType.DETECTION,
-}
+from utils import TASK_TYPE_MAP
 
 
 def main():
@@ -27,6 +22,10 @@ def main():
                         help='Split ratios (train, val) or (train, val, test)')
     parser.add_argument('--include_test_split', action='store_true', default=False,
                         help='Whether to create a test split')
+    parser.add_argument('--image_ext', type=str, default='.jpg,.png',
+                        help='Comma-separated list of image extensions')
+    parser.add_argument('--random_seed', type=int, default=None,
+                        help='Random seed for reproducible splits')
     args = parser.parse_args()
 
     source = Path(args.ls_path)
@@ -35,8 +34,11 @@ def main():
 
     converter = LabelStudioToUltralytics(source, target, task_type)
     result = converter.run(
+        path_in_yaml=str(target.resolve()),
         split_ratios=tuple(args.split_ratios),
         include_test_split=args.include_test_split,
+        image_ext=args.image_ext,
+        random_seed=args.random_seed,
     )
 
     print(f"Conversion complete: {result}")

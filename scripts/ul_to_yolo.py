@@ -21,8 +21,7 @@ def main():
 
     converter = UltralyticsToYolo(
         source_path=ul_path,
-        target_path=yolo_path,
-        task_type=TaskType.GENERIC
+        target_path=yolo_path
     )
 
     result = converter.run()
