@@ -17,15 +17,22 @@ def update_target_dropdown(source_format: str, source_task: str):
     return gr.update(choices=targets, value=default_value)
 
 
-def update_validation_and_convert(source_format: str, source_path: str, target_format: str, task_type: str):
+def update_validation_and_convert(source_format: str, source_path: str, target_format: str, task_type: str, path_in_yaml: str):
     """Validate source and update convert button state."""
     message, source_valid = validate_source_folder(source_format, source_path)
+
+    if not source_valid:
+        return message, gr.update(interactive=False)
     
-    if source_valid and not target_format:
-        source_valid = False
-        message = "⚠️ Please select a target format."
+    if not target_format:
+        return "⚠️ Please select a target format.", gr.update(interactive=False)
     
-    return message, gr.update(interactive=source_valid)
+    target_type = get_format_type_by_name(target_format)
+
+    if target_type == FormatType.ULTRALYTICS and not path_in_yaml.strip():
+        return "⚠️ Please fill the Dataset Path in the Ultralytics Options.", gr.update(interactive=False)
+    
+    return message, gr.update(interactive=True)
 
 
 def update_split_visibility(target_format: str):
@@ -86,6 +93,7 @@ def run_conversion(
     test_ratio: float,
     include_test: bool,
     random_seed: int,
+    path_in_yaml: str,
     image_ext: str = ".jpg,.png",
     progress: gr.Progress = gr.Progress(),
 ):
@@ -105,6 +113,7 @@ def run_conversion(
             gr.update(),
             "\n".join(result_messages),
             gr.update(),
+            gr.update()
         )
     
     # Convert string to TaskType enum
@@ -112,8 +121,9 @@ def run_conversion(
     
     # Immediately disable the download button when conversion starts
     yield (
-        gr.update(visible=True, placeholder="Converting..."),
+        gr.update(placeholder="Converting..."),
         "",
+        gr.update(interactive=False),
         gr.update(interactive=False),
     )
     
@@ -170,15 +180,17 @@ def run_conversion(
         
         # Build kwargs based on target format
         kwargs = {}
-
-        if target_type == FormatType.LABEL_STUDIO:
-            kwargs.update({
-                "image_root_url": f"/data/local-files/?d={target_path.name}/images",
-            })
         
         # Add split options for Ultralytics targets
         if target_type == FormatType.ULTRALYTICS:
             split_ratios = (train_ratio, val_ratio, test_ratio) if include_test else (train_ratio, val_ratio)
+
+            if path_in_yaml.strip():
+                kwargs["path_in_yaml"] = path_in_yaml.strip()
+            else:
+                yield _emit(f"❌ Error: Path in YAML is required for Label Studio to Ultralytics conversion.")
+                return
+            
             kwargs.update({
                 "split_ratios": split_ratios,
                 "include_test_split": include_test,
@@ -193,6 +205,7 @@ def run_conversion(
 
         yield (
             gr.update(placeholder="Compressing output dataset..."),
+            gr.update(),
             gr.update(),
             gr.update(),
         )
@@ -222,13 +235,16 @@ def run_conversion(
     
     if success:
         dl_update = gr.update(interactive=True, value=zip_path)
+        convert_update = gr.update()
     else:
-        dl_update = gr.update(interactive=False)
+        dl_update = gr.update()
+        convert_update = gr.update(interactive=True)
     
     yield (
-        gr.update(visible=False),
+        gr.update(placeholder="Waiting for the conversion to start..."),
         "\n".join(result_messages),
         dl_update,
+        convert_update,
     )
 
 

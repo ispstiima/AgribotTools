@@ -1,6 +1,6 @@
 # Conversions Overview
 
-AgribotTools supports **bidirectional conversions** between all four annotation formats, with YOLO acting as the central interchange hub.
+ROSETTA supports **bidirectional conversions** between all four annotation formats, with YOLO acting as the central interchange hub.
 
 ---
 
@@ -60,12 +60,12 @@ flowchart TB
 
 <!-- ### Reversible Conversions
 
-Many conversions in AgribotTools are **reversible** — a single converter class can perform both forward and reverse transformations. This is implemented via the `ReversibleConversion` base class. -->
+Many conversions in ROSETTA are **reversible** — a single converter class can perform both forward and reverse transformations. This is implemented via the `ReversibleConversion` base class. -->
 
 ### Validation
 
-Before any conversion runs, AgribotTools **automatically validates** the source dataset structure to catch issues early (missing folders, wrong file types, etc.).
+Before any conversion runs, ROSETTA **automatically validates** the source dataset structure to catch issues early (missing folders, wrong file types, etc.).
 
 ### Rollback
 
-If a conversion fails mid-way, AgribotTools automatically **rolls back** any partially created files and directories to keep your filesystem clean.
+If a conversion fails mid-way, ROSETTA automatically **rolls back** any partially created files and directories to keep your filesystem clean.

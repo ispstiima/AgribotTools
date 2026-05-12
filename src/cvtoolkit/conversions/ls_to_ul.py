@@ -29,6 +29,7 @@ class LabelStudioToUltralytics(Conversion):
     
     def convert(
         self,
+        path_in_yaml: str,
         split_ratios: Tuple[float, float, Optional[float]] = (0.8, 0.2),
         include_test_split: bool = False,
         image_ext: str = ".jpg,.png",
@@ -41,6 +42,7 @@ class LabelStudioToUltralytics(Conversion):
         This performs a two-step conversion via an intermediate YOLO format.
         
         Args:
+            path_in_yaml: Path to the dataset in the YAML file
             split_ratios: Train/val/(test) split ratios
             include_test_split: Whether to create a test split
             image_ext: Comma-separated list of image extensions
@@ -68,6 +70,7 @@ class LabelStudioToUltralytics(Conversion):
             yolo_to_ul = YoloToUltralytics(temp_yolo_path, self.target_path, self.task_type)
             yolo_to_ul.set_progress_callback(self._sub_progress_callback(0.55, 0.95))
             yolo_to_ul.convert(
+                path_in_yaml=path_in_yaml,
                 split_ratios=split_ratios,
                 include_test_split=include_test_split,
                 image_ext=image_ext,

@@ -1,8 +1,8 @@
-site_name: AgribotTools
+site_name: ROSETTA
 site_description: Utilities to convert datasets between Label Studio, YOLO and Ultralytics formats
 site_author: CNR STIIMA
-repo_url: https://github.com/LambdaLekter/AgribotTools
-repo_name: LambdaLekter/AgribotTools
+repo_url: https://github.com/ispstiima/rosetta
+repo_name: ispstiima/rosetta
 
 theme:
   name: material

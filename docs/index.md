@@ -1,8 +1,8 @@
-# AgribotTools
+# ROSETTA
 
 **Utilities to convert datasets between Label Studio, YOLO and Ultralytics formats.**
 
-AgribotTools is a Python toolkit developed by [CNR STIIMA](https://www.stiima.cnr.it/) for converting computer-vision annotation datasets across popular formats used in object detection and segmentation tasks.
+ROSETTA is a Python toolkit developed by [CNR STIIMA](https://www.stiima.cnr.it/) for converting computer-vision annotation datasets across popular formats used in object detection and segmentation tasks.
 
 ---
 
@@ -21,8 +21,8 @@ AgribotTools is a Python toolkit developed by [CNR STIIMA](https://www.stiima.cn
 
 ```bash
 # Clone and install
-git clone https://github.com/ispstiima/AgribotTools.git
-cd AgribotTools
+git clone https://github.com/ispstiima/rosetta.git
+cd rosetta
 uv sync
 
 # Convert YOLO segmentation to Label Studio
@@ -48,5 +48,5 @@ See the full [Formats Overview](formats/overview.md) and [Conversion Matrix](con
 
 ## Project Links
 
-- :fontawesome-brands-github: [GitHub Repository](https://github.com/LambdaLekter/AgribotTools)
-- :material-license: [License (MIT)](https://github.com/LambdaLekter/AgribotTools/blob/main/LICENSE.md)
+- :fontawesome-brands-github: [GitHub Repository](https://github.com/ispstiima/rosetta)
+- :material-license: [License (MIT)](https://github.com/ispstiima/rosetta/blob/main/LICENSE.md)

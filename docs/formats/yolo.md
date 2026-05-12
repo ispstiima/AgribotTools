@@ -1,6 +1,6 @@
 # YOLO Format
 
-The **YOLO** format is the standard annotation format used by YOLO models (v1–v3 and compatible). It serves as the **central hub** in AgribotTools — most conversions pass through YOLO as an intermediate format.
+The **YOLO** format is the standard annotation format used by YOLO models (v1–v3 and compatible). It serves as the **central hub** in ROSETTA — most conversions pass through YOLO as an intermediate format.
 
 ---
 

@@ -14,8 +14,8 @@ We recommend using a virtual environment managed by `uv`.
 
 ```bash
 # Clone and sync
-git clone https://github.com/LambdaLekter/AgribotTools.git
-cd AgribotTools
+git clone https://github.com/ispstiima/rosetta.git
+cd rosetta
 uv sync
 ```
 
@@ -28,15 +28,15 @@ This will automatically create a virtual environment and install all dependencie
 Some conversions involving **Label Studio** require environment variables to be set.
 
 !!! warning "Required for Label Studio conversions"
-    Make sure to configure the following environment variables on the system that runs AgribotTools:
+    Make sure to configure the following environment variables on the system that runs ROSETTA:
 
     - `LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED` — set to `true`
     - `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT` — set to the path of your **Label Studio Document Root**
 
 The **Label Studio Document Root** is the folder where all datasets in Label Studio format are stored.
-These variables allow AgribotTools to access and locate local files for import into Label Studio.
+These variables allow ROSETTA to access and locate local files for import into Label Studio.
 
-You can set them in a **`.env` file** placed in the root directory of AgribotTools:
+You can set them in a **`.env` file** placed in the root directory of ROSETTA:
 
 ```env
 LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true

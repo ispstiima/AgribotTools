@@ -19,6 +19,8 @@ from file_utils import copy_files_monitored
 
 
 log = logging.getLogger("LsToYolo")
+DET = TaskType.DETECTION
+SEG = TaskType.SEGMENTATION
 
 
 def parse_bbox_value(value: dict, img_w: int, img_h: int) -> list | None:
@@ -68,7 +70,7 @@ def parse_seg_value(value: dict, img_w: int, img_h: int) -> list:
 
     flat_binmask = decode_rle(value["rle"])
     binmask = np.reshape(flat_binmask, [img_h, img_w, 4])[:, :, 3]
-    seg_lines = mask_to_yolo(binmask, TaskType.SEGMENTATION)
+    seg_lines = mask_to_yolo(binmask, SEG)
 
     seg_line = [class_id]
 
@@ -120,8 +122,9 @@ class LabelStudioToYolo(Conversion):
             raise ValueError("No tasks found in the task file.")
         
         image_ext_list = [x.strip().lower() for x in image_ext.split(",")]
-        parse_value = parse_bbox_value if self.task_type == TaskType.DETECTION else parse_seg_value
+        parse_value = parse_bbox_value if self.task_type == DET else parse_seg_value
         total_tasks = len(tasks)
+        classes = set()
         
         for i, task in enumerate(tqdm(tasks, ascii="░▒█", desc="Converting LS to YOLO")):
             image_filename = task["data"]["image"].split("/")[-1]
@@ -145,6 +148,9 @@ class LabelStudioToYolo(Conversion):
                     img_w, img_h = result["original_width"], result["original_height"]
                     value = result["value"]
                     
+                    label_name = "rectanglelabels" if self.task_type == DET else "brushlabels"
+                    classes.update(value[label_name])
+                    
                     yolo_line = parse_value(value, img_w, img_h)
                     if yolo_line:
                         yolo_lines.append(' '.join([str(x) for x in yolo_line]))
@@ -161,10 +167,10 @@ class LabelStudioToYolo(Conversion):
         
         self._report_progress(0.85, "Writing classes.txt...")
         
-        # Create classes.txt (default single class for now)
+        # Create classes.txt
         classes_path = self.target_path / "classes.txt"
         with classes_path.open("w", encoding="utf-8") as f:
-            f.write("object\n")  # TODO: extract class names from LS config
+            f.write("\n".join(sorted(list(classes))))
         
         self._report_progress(0.90, "Copying images...")
         
